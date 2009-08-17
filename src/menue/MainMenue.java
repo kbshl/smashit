@@ -55,7 +55,7 @@ public class MainMenue extends JPanel {
 				BaseFrame.getBaseFrame().setJPanel(new CreateLocalGameMenue());
 			}
 			if (e.getActionCommand().equals("btn_NewNetworkGame")){
-				
+				BaseFrame.getBaseFrame().setJPanel(new CreateNetworkGameMenue());
 			}
 			if (e.getActionCommand().equals("btn_Highscore")){
 				//Link für Highscore aufrufen
