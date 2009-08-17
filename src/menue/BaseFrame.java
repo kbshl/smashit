@@ -25,6 +25,7 @@ public  class BaseFrame extends JFrame {
 	public void setJPanel(JPanel p) {
 		cp.remove(0);
 		cp.add(p, BorderLayout.CENTER);
+		p.revalidate();
 		
 	}
 	
