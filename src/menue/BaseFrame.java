@@ -6,9 +6,10 @@ import java.awt.Container;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class BaseFrame extends JFrame {
+public  class BaseFrame extends JFrame {
 
 	private Container cp;
+	private static BaseFrame bF;
 
 	public BaseFrame() {
 		this.setSize(800, 600);
@@ -25,9 +26,16 @@ public class BaseFrame extends JFrame {
 		cp.remove(0);
 		cp.add(p, BorderLayout.CENTER);
 	}
+	
+	public static BaseFrame getBaseFrame(){
+		if(bF == null){
+			bF = new BaseFrame();
+		}
+		return bF;
+	}
 
 	public static void main(String[] args) {
-		new BaseFrame();
+		BaseFrame.getBaseFrame();
 	}
 
 }

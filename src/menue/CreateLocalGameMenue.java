@@ -1,5 +1,7 @@
 package menue;
 
-public class CreateLocalGameMenue {
+import javax.swing.JPanel;
+
+public class CreateLocalGameMenue extends JPanel{
 
 }

@@ -52,7 +52,7 @@ public class MainMenue extends JPanel {
 				//Link im Browser aufrufen
 			}
 			if (e.getActionCommand().equals("btn_NewLocalGame")){
-				new CreateLocalGameMenue();
+				BaseFrame.getBaseFrame().setJPanel(new CreateLocalGameMenue());
 			}
 			if (e.getActionCommand().equals("btn_NewNetworkGame")){
 				
