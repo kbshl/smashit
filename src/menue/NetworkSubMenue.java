@@ -16,13 +16,17 @@ public class NetworkSubMenue extends JPanel{
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 public NetworkSubMenue(){
-		
+		this.setLayout(null);
 		this.setSize(800, 600);
 		
 		//Buttons erstellen
 		btn_JoinGame = new JButton("Netzwerkspiel beitreten");
 		btn_HostGame = new JButton("Netzwerkspiel Starten");
 		btn_Back = new JButton("Zurück");
+		
+		btn_JoinGame.setBounds(300, 50, 200, 30);
+		btn_HostGame.setBounds(300, 100, 200, 30);
+		btn_Back.setBounds(300, 150, 200, 30);
 		
 		//ActionCommand
 		btn_JoinGame.setActionCommand("btn_JoinGame");
