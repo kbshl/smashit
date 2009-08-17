@@ -23,5 +23,9 @@ public class BaseFrame extends JFrame{
 		cp.remove(0);
 		cp.add(p, BorderLayout.CENTER);
 	}
+	
+	public void main(String[] args){
+		new BaseFrame();
+	}
 
 }
