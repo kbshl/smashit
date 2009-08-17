@@ -19,8 +19,8 @@ public NetworkSubMenue(){
 		this.setSize(800, 600);
 		
 		//Buttons erstellen
-		btn_JoinGame = new Button("Netzwerkspiel Starten");
-		btn_HostGame = new Button("Netzwerkspiel beitreten");
+		btn_JoinGame = new Button("Netzwerkspiel beitreten");
+		btn_HostGame = new Button("Netzwerkspiel Starten");
 		btn_Back = new Button("Zurück");
 		
 		//ActionCommand
