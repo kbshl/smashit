@@ -26,6 +26,7 @@ public  class BaseFrame extends JFrame {
 		cp.remove(0);
 		cp.add(p);
 		p.revalidate();
+		this.repaint();
 	}
 	
 	public static BaseFrame getBaseFrame(){
