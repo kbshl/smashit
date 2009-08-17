@@ -1,5 +1,5 @@
 package test;
 
-public class Tuut extends Thread{
+public class Tuut{
 
 }
