@@ -13,6 +13,8 @@ public class BaseFrame extends JFrame{
 	public BaseFrame(){
 		this.setSize(800, 600);
 		this.setTitle("SmashIt");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setVisible(true);
 		cp = getContentPane();
 		cp.setLayout(new BorderLayout());
 		cp.add(new MainMenue(),BorderLayout.CENTER);
@@ -24,7 +26,7 @@ public class BaseFrame extends JFrame{
 		cp.add(p, BorderLayout.CENTER);
 	}
 	
-	public void main(String[] args){
+	public static void main(String[] args){
 		new BaseFrame();
 	}
 
