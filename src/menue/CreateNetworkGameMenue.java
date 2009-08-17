@@ -33,7 +33,7 @@ public class CreateNetworkGameMenue extends JPanel{
 		this.setSize(800, 600);
 		
 		//Instanzen erstellen
-		btn_Start = new JButton("tuut");
+		btn_Start = new JButton("Start");
 		btn_PlayerListenerStartStop = new JButton("Netzwerkspiel beitreten");
 		btn_Back = new JButton("Zurück");
 		
@@ -52,18 +52,31 @@ public class CreateNetworkGameMenue extends JPanel{
 		txt_PlayerLife = new JTextField();
 		
 		//ActionCommand
-		
+		btn_Start.setActionCommand("btn_Start");
+		btn_PlayerListenerStartStop.setActionCommand("btn_PlayerListenerStartStop");
 		btn_Back.setActionCommand("btn_Back");
 		
 		//Actionlistener hinzufügen
-	
+		btn_Start.addActionListener(lis_BtnListener);
+		btn_PlayerListenerStartStop.addActionListener(lis_BtnListener);
 		btn_Back.addActionListener(lis_BtnListener);
 		
-		//Hinzufügen der Buttons
-	
+		//Hinzufügen der Objekte zum JPane
+		add(btn_Start);
+		add(btn_PlayerListenerStartStop);
 		add(btn_Back);
+		add(lbl_ServerName);
+		add(lbl_ServerPort);
+		add(lbl_IP);
+		add(lbl_PlayerName);
+		add(lbl_MaxPlayer);
+		add(lbl_PlayerLife);
+		add(txt_ServerName);
+		add(txt_ServerPort);
+		add(txt_IP);
+		add(txt_PlayerName);
+		add(txt_MaxPlayer);
 		
-	
 	}
 	
 	
@@ -72,14 +85,14 @@ public class CreateNetworkGameMenue extends JPanel{
 
 		public void actionPerformed(ActionEvent e) {
 
-			if(e.getActionCommand().equals("btn_JoinGame")){
-				BaseFrame.getBaseFrame().setJPanel(new JoinNetworkGameMenue());
+			if(e.getActionCommand().equals("btn_Start")){
+				System.out.println("btn_Start");
 			}
-			if (e.getActionCommand().equals("btn_HostGame")){
-				BaseFrame.getBaseFrame().setJPanel(new CreateNetworkGameMenue());
+			if (e.getActionCommand().equals("btn_PlayerListenerStartStop")){
+				System.out.println("btn_PlayerListenerStartStop");
 			}
 			if (e.getActionCommand().equals("btn_Back")){
-				BaseFrame.getBaseFrame().setJPanel(new MainMenue());
+				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
 			}
 			
 		}
