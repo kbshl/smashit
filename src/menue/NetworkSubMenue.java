@@ -4,14 +4,15 @@ import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 
 
 public class NetworkSubMenue extends JPanel{
-	private Button btn_HostGame;
-	private Button btn_JoinGame;
-	private Button btn_Back;
+	private JButton btn_HostGame;
+	private JButton btn_JoinGame;
+	private JButton btn_Back;
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 public NetworkSubMenue(){
@@ -19,9 +20,9 @@ public NetworkSubMenue(){
 		this.setSize(800, 600);
 		
 		//Buttons erstellen
-		btn_JoinGame = new Button("Netzwerkspiel beitreten");
-		btn_HostGame = new Button("Netzwerkspiel Starten");
-		btn_Back = new Button("Zurück");
+		btn_JoinGame = new JButton("Netzwerkspiel beitreten");
+		btn_HostGame = new JButton("Netzwerkspiel Starten");
+		btn_Back = new JButton("Zurück");
 		
 		//ActionCommand
 		btn_JoinGame.setActionCommand("btn_JoinGame");
