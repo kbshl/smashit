@@ -12,7 +12,7 @@ public class MainMenue extends JPanel {
 	private Button btn_NewLocalGame;
 	private Button btn_NewNetworkGame;
 	private Button btn_Highscore;
-	private ButtonListener lis_BtnListner = new ButtonListener();
+	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 	public MainMenue() {
 		this.setSize(800, 600);
@@ -31,10 +31,10 @@ public class MainMenue extends JPanel {
 		btn_Highscore.setActionCommand("btn_Highscore");
 		
 		//Actionlistener hinzufügen
-		btn_Help.addActionListener(lis_BtnListner);
-		btn_NewLocalGame.addActionListener(lis_BtnListner);
-		btn_NewNetworkGame.addActionListener(lis_BtnListner);
-		btn_Highscore.addActionListener(lis_BtnListner);
+		btn_Help.addActionListener(lis_BtnListener);
+		btn_NewLocalGame.addActionListener(lis_BtnListener);
+		btn_NewNetworkGame.addActionListener(lis_BtnListener);
+		btn_Highscore.addActionListener(lis_BtnListener);
 		
 		//Hinzufügen der Buttons
 		add(btn_Help);
@@ -55,7 +55,7 @@ public class MainMenue extends JPanel {
 				BaseFrame.getBaseFrame().setJPanel(new CreateLocalGameMenue());
 			}
 			if (e.getActionCommand().equals("btn_NewNetworkGame")){
-				BaseFrame.getBaseFrame().setJPanel(new CreateNetworkGameMenue());
+				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
 			}
 			if (e.getActionCommand().equals("btn_Highscore")){
 				//Link für Highscore aufrufen
