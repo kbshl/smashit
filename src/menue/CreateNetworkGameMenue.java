@@ -29,12 +29,12 @@ public class CreateNetworkGameMenue extends JPanel{
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 	public CreateNetworkGameMenue(){
-		
+		this.setLayout(null);
 		this.setSize(800, 600);
 		
 		//Instanzen erstellen
 		btn_Start = new JButton("Start");
-		btn_PlayerListenerStartStop = new JButton("Netzwerkspiel beitreten");
+		btn_PlayerListenerStartStop = new JButton("Auf Spieler warten");
 		btn_Back = new JButton("Zurück");
 		
 		lbl_ServerName = new JLabel("Servername");
@@ -50,6 +50,29 @@ public class CreateNetworkGameMenue extends JPanel{
 		txt_PlayerName = new JTextField();
 		txt_MaxPlayer = new JTextField();
 		txt_PlayerLife = new JTextField();
+		
+		lbl_ServerName.setBounds(100, 100, 100, 30);
+		txt_ServerName.setBounds(250, 100, 100, 30);
+		
+		lbl_ServerPort.setBounds(100, 150, 100, 30);
+		txt_ServerPort.setBounds(250, 150, 100, 30);
+		
+		lbl_IP.setBounds(100, 200, 100, 30);
+		txt_IP.setBounds(250, 200, 100, 30);
+		
+		lbl_PlayerName.setBounds(100, 250, 100, 30);
+		txt_PlayerName.setBounds(250, 250, 100, 30);
+		
+		lbl_MaxPlayer.setBounds(100, 350, 100, 30);
+		txt_MaxPlayer.setBounds(250, 350, 100, 30);
+		
+		lbl_PlayerLife.setBounds(100, 300, 100, 30);
+		txt_PlayerLife.setBounds(250, 300, 100, 30);
+		
+		btn_Back.setBounds(100, 400, 100, 30);
+		btn_PlayerListenerStartStop.setBounds(250, 400, 100, 30);
+		btn_Start.setBounds(400, 400, 100, 30);
+		
 		
 		//ActionCommand
 		btn_Start.setActionCommand("btn_Start");
