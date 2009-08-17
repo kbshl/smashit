@@ -1,5 +1,27 @@
 package menue;
 
-public class BaseFrame {
+import java.awt.BorderLayout;
+import java.awt.Container;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+public class BaseFrame extends JFrame{
+	
+	private Container cp;
+	
+	public BaseFrame(){
+		this.setSize(800, 600);
+		this.setTitle("SmashIt");
+		cp = getContentPane();
+		cp.setLayout(new BorderLayout());
+		cp.add(new MainMenue(),BorderLayout.CENTER);
+		
+	}
+	
+	public void setJPanel(JPanel p){
+		cp.remove(0);
+		cp.add(p, BorderLayout.CENTER);
+	}
 
 }
