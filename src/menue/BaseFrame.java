@@ -18,16 +18,14 @@ public  class BaseFrame extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		cp = getContentPane();
-		//cp.setLayout(null);
+		cp.setLayout(null);
 		cp.add(new MainMenue());
-
 	}
 
 	public void setJPanel(JPanel p) {
 		cp.remove(0);
 		cp.add(p);
 		p.revalidate();
-		
 	}
 	
 	public static BaseFrame getBaseFrame(){

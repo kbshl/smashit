@@ -1,28 +1,34 @@
 package menue;
 
-import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 public class MainMenue extends JPanel {
 
-	private Button btn_Help;
-	private Button btn_NewLocalGame;
-	private Button btn_NewNetworkGame;
-	private Button btn_Highscore;
+	private JButton btn_Help;
+	private JButton btn_NewLocalGame;
+	private JButton btn_NewNetworkGame;
+	private JButton btn_Highscore;
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 	public MainMenue() {
 		this.setSize(800, 600);
+		this.setLayout(null);
 		
 		
 		//Buttons erstellen
-		btn_Help = new Button("Hilfe");
-		btn_NewLocalGame = new Button("Neues lokales Spiel");
-		btn_NewNetworkGame = new Button("Neues NetzwerkSpiel");
-		btn_Highscore = new Button("Highscore");
+		btn_Help = new JButton("Hilfe");
+		btn_NewLocalGame = new JButton("Neues lokales Spiel");
+		btn_NewNetworkGame = new JButton("Neues NetzwerkSpiel");
+		btn_Highscore = new JButton("Highscore");
+		
+		btn_Help.setBounds(10, 20, 140, 30);
+		btn_Highscore.setBounds(10, 60, 140, 30);
+		btn_NewLocalGame.setBounds(10, 100, 140, 30);
+		btn_NewNetworkGame.setBounds(10, 140, 140, 30);
 		
 		//Actioncommand
 		btn_Help.setActionCommand("btn_Help");
