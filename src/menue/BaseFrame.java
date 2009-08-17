@@ -14,17 +14,18 @@ public  class BaseFrame extends JFrame {
 	public BaseFrame() {
 		this.setSize(800, 600);
 		this.setTitle("SmashIt");
+		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		cp = getContentPane();
-		cp.setLayout(new BorderLayout());
-		cp.add(new MainMenue(), BorderLayout.CENTER);
+		//cp.setLayout(null);
+		cp.add(new MainMenue());
 
 	}
 
 	public void setJPanel(JPanel p) {
 		cp.remove(0);
-		cp.add(p, BorderLayout.CENTER);
+		cp.add(p);
 		p.revalidate();
 		
 	}

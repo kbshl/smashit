@@ -25,6 +25,7 @@ public class CreateLocalGameMenue extends JPanel {
 
 	public CreateLocalGameMenue() {
 		this.setSize(800, 600);
+		
 
 		// Buttons erstellen und platzieren
 		btn_Back = new Button("Zurück");
