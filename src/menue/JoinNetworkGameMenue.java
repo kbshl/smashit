@@ -2,6 +2,9 @@ package menue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,13 +20,15 @@ public class JoinNetworkGameMenue extends JPanel{
 	private JLabel lbl_ServerPort;
 	private JLabel lbl_IP;
 	private JLabel lbl_PlayerName;
-
 	
 	private JTextField txt_ServerPort;
 	private JTextField txt_IP;
 	private JTextField txt_PlayerName;
 
 	private ButtonListener lis_BtnListener = new ButtonListener();
+	
+	private Socket clientSocket = null;
+	private PrintWriter sockout = null;
 	
 	public JoinNetworkGameMenue(){
 		this.setLayout(null);
@@ -81,6 +86,17 @@ public class JoinNetworkGameMenue extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getActionCommand().equals("btn_Connect")){
+				
+				try{
+					clientSocket = new Socket(txt_IP.getText(), Integer.parseInt(txt_ServerPort.getText()));
+					sockout = new PrintWriter(clientSocket.getOutputStream(), true);
+	
+					sockout.println(lbl_PlayerName.getText());
+					
+				}catch(IOException excep){
+					System.out.println(excep.getMessage());
+				}
+			
 				//tcp_connection aufbauen
 			}
 			if (e.getActionCommand().equals("btn_Back")){

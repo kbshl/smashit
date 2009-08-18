@@ -2,9 +2,12 @@ package menue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -26,11 +29,18 @@ public class CreateNetworkGameMenue extends JPanel{
 	private JTextField txt_PlayerName;
 	private JTextField txt_MaxPlayer;
 	private JTextField txt_PlayerLife;
+	private JList lst_ConnectedPlayer;
+	
+	private Object[][] playerData;
+	private PlayerListenerController pLC;
+	private CreateNetworkGameMenue cNGM;
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 	public CreateNetworkGameMenue(){
 		this.setLayout(null);
 		this.setSize(800, 600);
+		
+		cNGM = this;
 		
 		//Instanzen erstellen
 		btn_Start = new JButton("Start");
@@ -50,6 +60,8 @@ public class CreateNetworkGameMenue extends JPanel{
 		txt_PlayerName = new JTextField();
 		txt_MaxPlayer = new JTextField();
 		txt_PlayerLife = new JTextField();
+		
+		lst_ConnectedPlayer = new JList();
 		
 		lbl_ServerName.setBounds(100, 100, 100, 30);
 		txt_ServerName.setBounds(250, 100, 100, 30);
@@ -72,6 +84,8 @@ public class CreateNetworkGameMenue extends JPanel{
 		btn_Back.setBounds(100, 400, 100, 30);
 		btn_PlayerListenerStartStop.setBounds(250, 400, 100, 30);
 		btn_Start.setBounds(400, 400, 100, 30);
+		
+		lst_ConnectedPlayer.setBounds(550, 50, 200, 400);
 		
 		
 		//ActionCommand
@@ -100,17 +114,29 @@ public class CreateNetworkGameMenue extends JPanel{
 		add(txt_PlayerName);
 		add(txt_MaxPlayer);
 		add(txt_PlayerLife);
+		add(lst_ConnectedPlayer);
 		
 	}
 	
-	public String getPort(){
-		return txt_ServerPort.getText();
+	public int getPort(){
+		return Integer.parseInt(txt_ServerPort.getText());
 	}
 	
 	public void setPlayerListenerButton(Boolean b){
 		btn_PlayerListenerStartStop.setEnabled(b);
 	}
+	public void setPlayerList(Vector<Socket> l){
+		lst_ConnectedPlayer.setListData(l);
+	}
 	
+	
+	public void setPlayerData(Object[][] data){
+		this.playerData = data;
+	}
+	//erstellt die spieler/ map /sender receiver / und übergibt an LocalGameController
+	private void startGame(){
+		
+	}
 	
 	
 	private class ButtonListener implements ActionListener {
@@ -121,7 +147,19 @@ public class CreateNetworkGameMenue extends JPanel{
 				System.out.println("btn_Start");
 			}
 			if (e.getActionCommand().equals("btn_PlayerListenerStartStop")){
-				System.out.println("btn_PlayerListenerStartStop");
+				
+				if(btn_PlayerListenerStartStop.getText().equals("Auf Spieler warten")){
+					lst_ConnectedPlayer.setListData(new String[] {});
+					pLC = new PlayerListenerController(cNGM);
+					btn_PlayerListenerStartStop.setText("Genug gewartet");
+				}
+				else{
+					//pLC.interrupt();
+					pLC.destroy();
+					
+					btn_PlayerListenerStartStop.setText("Auf Spiler warten");
+				}
+				
 			}
 			if (e.getActionCommand().equals("btn_Back")){
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
