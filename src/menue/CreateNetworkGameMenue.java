@@ -103,6 +103,14 @@ public class CreateNetworkGameMenue extends JPanel{
 		
 	}
 	
+	public String getPort(){
+		return txt_ServerPort.getText();
+	}
+	
+	public void setPlayerListenerButton(Boolean b){
+		btn_PlayerListenerStartStop.setEnabled(b);
+	}
+	
 	
 	
 	private class ButtonListener implements ActionListener {
