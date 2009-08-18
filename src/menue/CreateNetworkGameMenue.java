@@ -99,6 +99,7 @@ public class CreateNetworkGameMenue extends JPanel{
 		add(txt_IP);
 		add(txt_PlayerName);
 		add(txt_MaxPlayer);
+		add(txt_PlayerLife);
 		
 	}
 	
