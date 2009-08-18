@@ -26,7 +26,7 @@ public class JoinNetworkGameMenue extends JPanel{
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 	public JoinNetworkGameMenue(){
-		
+		this.setLayout(null);
 		this.setSize(800, 600);
 		//Instanzen erstellen
 		btn_Connect = new JButton("Verbinden");
@@ -39,6 +39,18 @@ public class JoinNetworkGameMenue extends JPanel{
 		txt_ServerPort = new JTextField();
 		txt_IP = new JTextField();
 		txt_PlayerName = new JTextField();
+		
+		lbl_ServerPort.setBounds(100, 50, 100, 30);
+		txt_ServerPort.setBounds(250, 50, 100, 30);
+		
+		lbl_IP.setBounds(100, 100, 100, 30);
+		txt_IP.setBounds(250, 100, 100, 30);
+		
+		lbl_PlayerName.setBounds(100, 150, 100, 30);
+		txt_PlayerName.setBounds(250, 150, 100, 30);
+		
+		btn_Connect.setBounds(100, 200, 100, 30);
+		btn_Back.setBounds(250, 200, 100, 30);
 		
 		
 		//ActionCommand
