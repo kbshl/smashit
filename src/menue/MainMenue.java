@@ -91,7 +91,8 @@ public class MainMenue extends JPanel {
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
 			}
 			if (e.getActionCommand().equals("btn_Highscore")) {
-				openWebsite("http://golem.de");
+				//openWebsite("http://golem.de");
+				BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue());
 			}
 
 		}
