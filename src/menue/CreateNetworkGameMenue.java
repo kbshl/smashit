@@ -1,5 +1,9 @@
 package menue;
 
+import game.Player;
+import game.ServerPositionReceiver;
+import game.ServerPositionSender;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
@@ -34,8 +38,8 @@ public class CreateNetworkGameMenue extends JPanel{
 	private JList lst_ConnectedPlayer;
 	
 	private Object[][] playerData;
-	private Vector player;
-	//private playernames 
+	private Vector<Player> player;
+	private Vector<String> vtr_PlayerNames;
 	private PlayerListenerController pLC;
 	private CreateNetworkGameMenue cNGM;
 	private ButtonListener lis_BtnListener = new ButtonListener();
@@ -128,11 +132,14 @@ public class CreateNetworkGameMenue extends JPanel{
 	
 	public void setPlayerList(Vector<String> l){
 		lst_ConnectedPlayer.setListData(l);
+		vtr_PlayerNames = l;
 	}
 	
 	
 	public void setPlayerData(Object[][] data){
 		this.playerData = data;
+		//0 = SockIn
+		//1 = SockOut
 	}
 	//erstellt die spieler/ map /sender receiver / und übergibt an LocalGameController
 	private void startGame(){
@@ -143,7 +150,11 @@ public class CreateNetworkGameMenue extends JPanel{
 		int i = 0;
 		
 		while(playerData[i][0] != null){
-			//player.add(new Player());
+			player.add(new Player(vtr_PlayerNames.get(i)));
+			new ServerPositionReceiver(player.get(i), (Socket)playerData[i][0]);
+			new ServerPositionSender(player.get(i), (Socket)playerData[i][0], map, Integer.parseInt(txt_PlayerLife.getText()));
+			
+			
 		}
 	}
 	

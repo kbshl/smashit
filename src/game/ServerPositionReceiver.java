@@ -1,5 +1,11 @@
 package game;
 
-public class ServerPositionReceiver {
+import java.net.Socket;
+
+public class ServerPositionReceiver extends Thread{
+	
+	public ServerPositionReceiver(Player p, Socket sockIn){
+		start();
+	}
 
 }
