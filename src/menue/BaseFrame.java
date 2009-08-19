@@ -13,7 +13,7 @@ public  class BaseFrame extends JFrame {
 
 	public BaseFrame() {
 		this.setSize(800, 600);
-	
+		
 		this.setResizable(false);
 		this.setTitle("SmashIt");
 		this.setLayout(null);
