@@ -91,7 +91,7 @@ public class JoinNetworkGameMenue extends JPanel{
 					clientSocket = new Socket(txt_IP.getText(), Integer.parseInt(txt_ServerPort.getText()));
 					sockout = new PrintWriter(clientSocket.getOutputStream(), true);
 	
-					sockout.println(lbl_PlayerName.getText());
+					sockout.println(txt_PlayerName.getText());
 					
 				}catch(IOException excep){
 					System.out.println(excep.getMessage());

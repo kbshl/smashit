@@ -15,7 +15,7 @@ public class PlayerListenerController extends Thread{
 	private Socket clientSocket;
 	private BufferedReader sockIn = null;
 	private PrintWriter sockOut = null;
-	private Vector vtr_playerNames;
+	private Vector<String> vtr_playerNames;
 	
 	private Object[][] sockInOut;
 	private int connectCount;

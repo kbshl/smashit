@@ -11,6 +11,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import map.Map;
+
 
 public class CreateNetworkGameMenue extends JPanel{
 	
@@ -32,6 +34,8 @@ public class CreateNetworkGameMenue extends JPanel{
 	private JList lst_ConnectedPlayer;
 	
 	private Object[][] playerData;
+	private Vector player;
+	//private playernames 
 	private PlayerListenerController pLC;
 	private CreateNetworkGameMenue cNGM;
 	private ButtonListener lis_BtnListener = new ButtonListener();
@@ -122,10 +126,7 @@ public class CreateNetworkGameMenue extends JPanel{
 		return Integer.parseInt(txt_ServerPort.getText());
 	}
 	
-	public void setPlayerListenerButton(Boolean b){
-		btn_PlayerListenerStartStop.setEnabled(b);
-	}
-	public void setPlayerList(Vector<Socket> l){
+	public void setPlayerList(Vector<String> l){
 		lst_ConnectedPlayer.setListData(l);
 	}
 	
@@ -136,6 +137,14 @@ public class CreateNetworkGameMenue extends JPanel{
 	//erstellt die spieler/ map /sender receiver / und übergibt an LocalGameController
 	private void startGame(){
 		
+		//map erstellen
+		Map map = new Map();
+		//Spieler erstellen + sender Receiver erstellen
+		int i = 0;
+		
+		while(playerData[i][0] != null){
+			//player.add(new Player());
+		}
 	}
 	
 	
@@ -144,7 +153,7 @@ public class CreateNetworkGameMenue extends JPanel{
 		public void actionPerformed(ActionEvent e) {
 
 			if(e.getActionCommand().equals("btn_Start")){
-				System.out.println("btn_Start");
+				startGame();
 			}
 			if (e.getActionCommand().equals("btn_PlayerListenerStartStop")){
 				
@@ -154,10 +163,11 @@ public class CreateNetworkGameMenue extends JPanel{
 					btn_PlayerListenerStartStop.setText("Genug gewartet");
 				}
 				else{
-					//pLC.interrupt();
-					pLC.destroy();
+					pLC.interrupt();
+					//pLC.destroy();
 					
 					btn_PlayerListenerStartStop.setText("Auf Spiler warten");
+					
 				}
 				
 			}
