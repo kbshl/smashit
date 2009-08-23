@@ -1,27 +1,29 @@
 package menue;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import game.Finals;
+import game.LocalGameController;
 
-public  class BaseFrame extends JFrame {
+public class BaseFrame extends JFrame implements Finals {
 
 	private Container cp;
-	private static BaseFrame bF;
+	private static BaseFrame bf;
 
-	public BaseFrame() {
-		this.setSize(800, 600);
+	private BaseFrame() {
+		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		
 		this.setResizable(false);
-		this.setTitle("SmashIt");
+		this.setTitle("Smash It'");
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setVisible(true);
+		
 		cp = getContentPane();
 		cp.setLayout(null);
 		cp.add(new MainMenue());
+		this.setVisible(true);
+		requestFocus();
 	}
 
 	public void setJPanel(JPanel p) {
@@ -32,10 +34,10 @@ public  class BaseFrame extends JFrame {
 	}
 	
 	public static BaseFrame getBaseFrame(){
-		if(bF == null){
-			bF = new BaseFrame();
+		if(bf == null){
+			bf = new BaseFrame();
 		}
-		return bF;
+		return bf;
 	}
 
 	public static void main(String[] args) {

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import game.LocalGameController;
 
 public class CreateLocalGameMenue extends JPanel {
 
@@ -85,7 +86,7 @@ public class CreateLocalGameMenue extends JPanel {
 				BaseFrame.getBaseFrame().setJPanel(new MainMenue());
 			}
 			if (e.getActionCommand().equals("btn_StartGame")) {
-
+				new LocalGameController();
 			}
 
 		}
