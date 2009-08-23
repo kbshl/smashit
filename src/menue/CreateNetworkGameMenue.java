@@ -6,7 +6,8 @@ import game.ServerPositionSender;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -150,10 +151,10 @@ public class CreateNetworkGameMenue extends JPanel{
 		int i = 0;
 		
 		while(playerData[i][0] != null){
-			player.add(new Player(vtr_PlayerNames.get(i)));
-			new ServerPositionReceiver(player.get(i), (Socket)playerData[i][0]);
-			new ServerPositionSender(player.get(i), (Socket)playerData[i][0], map, Integer.parseInt(txt_PlayerLife.getText()));
-			
+			player.add(new Player(vtr_PlayerNames.get(i)));//Bekommt noch map (Spielertasten) + Player
+			new ServerPositionReceiver(player.get(i), (BufferedReader)playerData[i][1]);
+			new ServerPositionSender(player, (PrintWriter)playerData[i][0], map, Integer.parseInt(txt_PlayerLife.getText()));
+			//new LocalGameController(player, map, Integer.parseInt(txt_PlayerLife.getText());
 			
 		}
 	}

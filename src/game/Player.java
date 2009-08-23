@@ -7,5 +7,9 @@ public class Player {
 	public Player(String name){
 		this.name = name;
 	}
+	
+	public Position getPosition(){
+		return new Position(1,2);
+	}
 
 }

@@ -1,10 +1,10 @@
 package game;
 
-import java.net.Socket;
+import java.io.BufferedReader;
 
 public class ServerPositionReceiver extends Thread{
 	
-	public ServerPositionReceiver(Player p, Socket sockIn){
+	public ServerPositionReceiver(Player p, BufferedReader sockIn){
 		start();
 	}
 
