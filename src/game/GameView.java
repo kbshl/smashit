@@ -18,15 +18,15 @@ public class GameView extends JPanel implements Finals{
 	
 	public GameView(LocalGameController g, Map m, Player p){
 		super(true);
-		this.setSize(800, 600);
+		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setLayout(null);
 		game = g;
 		map = m;
 		player = p;
+		addKeyListener(player);
 	}
 	
 	protected void paintComponent( Graphics g ) { 
-		
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
@@ -42,7 +42,7 @@ public class GameView extends JPanel implements Finals{
 		g.setColor(Color.white);
 		g.setFont(gameFont);
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 20, WINDOW_HEIGHT - 50);
-		
+		requestFocus();
 	}
 
 }

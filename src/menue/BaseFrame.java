@@ -5,6 +5,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import game.Finals;
 import game.LocalGameController;
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
+import java.awt.GraphicsDevice;
 
 public class BaseFrame extends JFrame implements Finals {
 
@@ -12,6 +15,15 @@ public class BaseFrame extends JFrame implements Finals {
 	private static BaseFrame bf;
 
 	private BaseFrame() {
+		
+		setUndecorated(true);
+		DisplayMode displayMode = new DisplayMode(800, 600, 32, 75);
+		GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice device = environment.getDefaultScreenDevice();
+		device.setFullScreenWindow(this);
+		device.setDisplayMode(displayMode);
+		
+		
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		
 		this.setResizable(false);

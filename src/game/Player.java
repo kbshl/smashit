@@ -1,11 +1,11 @@
 package game;
 
 import java.awt.event.KeyEvent;
-
 import map.Sprite;
 import map.Map;
+import java.awt.event.*;
 
-public class Player extends Sprite {
+public class Player extends Sprite implements KeyListener {
 	
 	private String name;
 	private Map map;
@@ -94,6 +94,9 @@ public class Player extends Sprite {
 			break;
 		}
 
+	}
+
+	public void keyTyped(KeyEvent e) {
 	}
 
 }

@@ -1,7 +1,7 @@
 package game;
 
 
-import java.awt.event.*;
+
 import map.Sprite;
 import map.Map;
 import menue.BaseFrame;
@@ -9,7 +9,7 @@ import menue.BaseFrame;
 
 
 
-public class LocalGameController implements Finals, KeyListener, Runnable {
+public class LocalGameController implements Finals, Runnable {
 
 	private GameView view;
 	private Map map;
@@ -69,19 +69,6 @@ public class LocalGameController implements Finals, KeyListener, Runnable {
 	
 	public long getFPS(){
 		return fps;
-	}
-	
-	public void keyPressed(KeyEvent e) {
-		System.out.println("left");
-		player.keyPressed(e);
-		
-	}
-
-	public void keyReleased(KeyEvent e) {
-		player.keyReleased(e);
-	}
-
-	public void keyTyped(KeyEvent e) {
 	}
 	
 }
