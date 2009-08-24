@@ -39,7 +39,7 @@ public class GameView extends JPanel implements Finals{
 		player.paint(g);
 
 		// FPS malen
-		g.setColor(Color.white);
+		g.setColor(Color.black);
 		g.setFont(gameFont);
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 20, WINDOW_HEIGHT - 50);
 		requestFocus();
