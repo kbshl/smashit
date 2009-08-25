@@ -5,6 +5,7 @@ package game;
 import map.Sprite;
 import map.Map;
 import menue.BaseFrame;
+import java.util.Vector;
 
 
 
@@ -13,7 +14,8 @@ public class LocalGameController implements Finals, Runnable {
 
 	private GameView view;
 	private Map map;
-	private Player player;
+	//private Player player;
+	private Vector<Player> player = new Vector<Player>();
 
 	
 	private long delta = 0, last = 0, fps = 0;
@@ -27,7 +29,10 @@ public class LocalGameController implements Finals, Runnable {
 	private void init() {
 		last = System.nanoTime();
 		map = new Map();
-		player = new Player(map);
+		player.add(new Player(map, KEYS1));
+		player.add(new Player(map, KEYS2));
+		player.add(new Player(map, KEYS3));
+		player.add(new Player(map, KEYS4));
 		gameruns = true;
 		view = new GameView(this, map, player);
 		BaseFrame.getBaseFrame().setJPanel(view);
@@ -64,7 +69,9 @@ public class LocalGameController implements Finals, Runnable {
 		for (Sprite s : map.getSprites()) {
 			s.act(delta);
 		}
-		player.act(delta);
+		for (Player p : player) {
+			p.act(delta);
+		}
 	}
 	
 	public long getFPS(){

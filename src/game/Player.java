@@ -6,18 +6,49 @@ import map.Map;
 import java.awt.event.*;
 import java.awt.Rectangle;
 
-public class Player extends Sprite implements KeyListener {
+public class Player extends Sprite implements KeyListener, Finals {
 
 	private String name;
 	private Map map;
-	private boolean jump = false, fall = false, left = false, right = false,
-			isMoving = false, collision = false;
+	private boolean jumpLock = false, left = false, right = false,
+			collision = false;
 	private double moveTime = 0.005, pastMoveTime = 0, jumpTime = 0.005,
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -5;
+	private int jumpCount = 0, jumpSkill = 2;
+	private final int leftKey, rightKey, jumpKey;
 
-	public Player(Map m) {
+	public Player(Map m, int keys) {
 		super(50, 0, new String[] { "kirby1.gif" }, false);
 		map = m;
+
+		switch (keys) {
+		case KEYS1:
+			leftKey = KeyEvent.VK_A;
+			rightKey = KeyEvent.VK_D;
+			jumpKey = KeyEvent.VK_W;
+			break;
+		case KEYS2:
+			leftKey = KeyEvent.VK_J;
+			rightKey = KeyEvent.VK_L;
+			jumpKey = KeyEvent.VK_I;
+			break;
+		case KEYS3:
+			leftKey = KeyEvent.VK_LEFT;
+			rightKey = KeyEvent.VK_RIGHT;
+			jumpKey = KeyEvent.VK_UP;
+			break;
+		case KEYS4:
+			leftKey = KeyEvent.VK_NUMPAD1;
+			rightKey = KeyEvent.VK_NUMPAD3;
+			jumpKey = KeyEvent.VK_NUMPAD5;
+			break;
+		default:
+			leftKey = KeyEvent.VK_LEFT;
+			rightKey = KeyEvent.VK_RIGHT;
+			jumpKey = KeyEvent.VK_UP;
+			break;
+		}
+
 	}
 
 	public void act(long delay) {
@@ -40,7 +71,7 @@ public class Player extends Sprite implements KeyListener {
 					if (!collision) {
 						x -= i;
 					} else {
-						// isMoving=false;
+
 					}
 				}
 
@@ -54,7 +85,7 @@ public class Player extends Sprite implements KeyListener {
 					if (!collision) {
 						x += i;
 					} else {
-						// isMoving=false;
+
 					}
 				}
 			}
@@ -82,6 +113,7 @@ public class Player extends Sprite implements KeyListener {
 				for (Sprite s : map.getSprites()) {
 					if (me.intersects(s.getBounds())) {
 						collision = true;
+						jumpCount = 0;
 						newy = s.getY() - width;
 					}
 				}
@@ -96,46 +128,40 @@ public class Player extends Sprite implements KeyListener {
 				y = newy;
 			}
 		}
-		System.out.println(jumpSpeed);
 	}
 
 	public void keyPressed(KeyEvent e) {
 		int i = e.getKeyCode();
-
-		switch (i) {
-		case KeyEvent.VK_UP:
-			jumpSpeed = jumpStart;
-			break;
-		case KeyEvent.VK_LEFT:
+		if (i == jumpKey) {
+			if (!jumpLock) {
+				jumpLock = true;
+				if (jumpCount < jumpSkill) {
+					jumpSpeed = jumpStart;
+					jumpCount++;
+				}
+			}
+		}
+		if (i == leftKey) {
 			left = true;
 			right = false;
-			isMoving = true;
-			break;
-		case KeyEvent.VK_RIGHT:
+		}
+		if (i == rightKey) {
 			right = true;
 			left = false;
-			isMoving = true;
-			break;
-		default:
-			break;
 		}
-
 	}
 
 	public void keyReleased(KeyEvent e) {
 		int i = e.getKeyCode();
-
-		switch (i) {
-		case KeyEvent.VK_LEFT:
-			left = false;
-			break;
-		case KeyEvent.VK_RIGHT:
-			right = false;
-			break;
-		default:
-			break;
+		if (i == jumpKey) {
+			jumpLock = false;
 		}
-
+		if (i == leftKey) {
+			left = false;
+		}
+		if (i == rightKey) {
+			right = false;
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {

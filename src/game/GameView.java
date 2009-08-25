@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import java.awt.*;
 import map.Map;
 import map.Sprite;
+import java.util.Vector;
 
 
 
@@ -13,17 +14,20 @@ public class GameView extends JPanel implements Finals{
 	
 	private LocalGameController game;
 	private Map map;
-	private Player player;
+	private Vector<Player> player;
 	private Font gameFont = new Font("Monospaced", Font.BOLD, 12);
 	
-	public GameView(LocalGameController g, Map m, Player p){
+	public GameView(LocalGameController g, Map m, Vector<Player> pl){
 		super(true);
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setLayout(null);
 		game = g;
 		map = m;
-		player = p;
-		addKeyListener(player);
+		player = pl;
+		
+		for (Player p : player) {
+			addKeyListener(p);
+		}
 	}
 	
 	protected void paintComponent( Graphics g ) { 
@@ -36,7 +40,10 @@ public class GameView extends JPanel implements Finals{
 		for (Sprite s : map.getSprites()) {
 			s.paint(g);
 		}
-		player.paint(g);
+		for (Player p : player) {
+			p.paint(g);
+		}
+		
 
 		// FPS malen
 		g.setColor(Color.black);
