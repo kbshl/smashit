@@ -9,7 +9,7 @@ import manager.PictureManager;
 public class Map {
 	private String name = "Level1";
 	private Vector<Sprite> sprites;
-	private String background = "bg.jpg";
+	private String background = "forest.jpg";
 
 	public Map() {
 		sprites = new Vector<Sprite>();
@@ -24,36 +24,16 @@ public class Map {
 		sprites.add(new Box(637, 300));
 		sprites.add(new Box(674, 300));
 		
-//		sprites.add(new Box(0, 450));
-//		sprites.add(new Box(37, 450));
-//		sprites.add(new Box(74, 450));
-//		sprites.add(new Box(111, 450));
-//		sprites.add(new Box(148, 450));
-//		sprites.add(new Box(185, 450));
-//		sprites.add(new Box(222, 450));
-//		sprites.add(new Box(259, 450));
-//		sprites.add(new Box(296, 450));
-//		sprites.add(new Box(333, 450));
-//		sprites.add(new Box(370, 450));
-//		sprites.add(new Box(407, 450));
-//		sprites.add(new Box(444, 450));
-//		sprites.add(new Box(481, 450));
-//		sprites.add(new Box(518, 450));
-//		sprites.add(new Box(555, 450));
-//		sprites.add(new Box(592, 450));
-//		sprites.add(new Box(629, 450));
-//		sprites.add(new Box(666, 450));
-//		sprites.add(new Box(703, 450));
-//		sprites.add(new Box(740, 450));
-//		sprites.add(new Box(777, 450));
+		sprites.add(new Box(370, 443));
+		sprites.add(new Box(370, 406));
+		sprites.add(new Box(563, 226));
+		sprites.add(new Box(526, 226));
 		
-		sprites.add(new Box(37, 413));
-		sprites.add(new Box(703, 413));
-		sprites.add(new Box(370, 413));
-		sprites.add(new Box(370, 376));
 		
-		//sprites.add(new DarkPillar(0, 0));
-		sprites.add(new GrassFloor(0, 450));
+		sprites.add(new Stump1(450, 369));
+		sprites.add(new Stump2(20, 296));
+		sprites.add(new OldStoneFloor(0, 480));
+		
 
 	}
 

@@ -16,7 +16,7 @@ public class Player extends Sprite implements KeyListener {
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -5;
 
 	public Player(Map m) {
-		super(20, 10, new String[] { "kirby1.gif" }, false);
+		super(50, 0, new String[] { "kirby1.gif" }, false);
 		map = m;
 	}
 
@@ -66,37 +66,37 @@ public class Player extends Sprite implements KeyListener {
 			pastJumpTime = 0;
 			collision = false;
 
+			Rectangle me = getNewBounds(0, i * (int) jumpSpeed);
+			int newy = 0;
+
 			if (jumpSpeed < 0) {
-				if (!collision) {
-					y += i*(int)jumpSpeed;
-					jumpSpeed += gravity;
-					
-					
-				} else {
-					jumpSpeed = 0;
-
-				}
-
-			}
-			
-			if (jumpSpeed >= 0) {
-				Rectangle me = getNewBounds(0, i*(int)jumpSpeed);
 				for (Sprite s : map.getSprites()) {
 					if (me.intersects(s.getBounds())) {
 						collision = true;
+						newy = s.getY() + s.getHeight();
 					}
 				}
-				if (!collision) {
-					y += i*(int)jumpSpeed;
-					jumpSpeed += gravity;
-					
-					
-				} else {
-					jumpSpeed = 0;
+			}
 
+			if (jumpSpeed >= 0) {
+				for (Sprite s : map.getSprites()) {
+					if (me.intersects(s.getBounds())) {
+						collision = true;
+						newy = s.getY() - width;
+					}
 				}
 			}
+
+			if (!collision) {
+				y += i * (int) jumpSpeed;
+				jumpSpeed += gravity;
+
+			} else {
+				jumpSpeed = 0;
+				y = newy;
+			}
 		}
+		System.out.println(jumpSpeed);
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -104,7 +104,7 @@ public class Player extends Sprite implements KeyListener {
 
 		switch (i) {
 		case KeyEvent.VK_UP:
-			jumpSpeed=jumpStart;
+			jumpSpeed = jumpStart;
 			break;
 		case KeyEvent.VK_LEFT:
 			left = true;

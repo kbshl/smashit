@@ -45,6 +45,14 @@ public abstract class Sprite {
 	public void setY(int y) {
 		this.y = y;
 	}
+	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
 
 	public boolean isWalkable() {
 		return walkable;
@@ -55,7 +63,7 @@ public abstract class Sprite {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, height, width);
+		return new Rectangle(x, y, width, height);
 	}
 
 }
