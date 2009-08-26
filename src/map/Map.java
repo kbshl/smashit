@@ -9,7 +9,7 @@ import manager.PictureManager;
 public class Map {
 	private String name = "Level1";
 	private Vector<Sprite> sprites;
-	private String background = "forest.jpg";
+	private String background = "desert.jpg";
 
 	public Map() {
 		sprites = new Vector<Sprite>();

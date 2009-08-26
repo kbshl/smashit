@@ -95,39 +95,44 @@ public class Player extends Sprite implements KeyListener, Finals {
 		if (pastJumpTime >= jumpTime) {
 			int i = (int) (pastJumpTime / jumpTime);
 			pastJumpTime = 0;
-			collision = false;
+			
+			for(int k = 0; k<i; ++k){
+				collision = false;
 
-			Rectangle me = getNewBounds(0, i * (int) jumpSpeed);
-			int newy = 0;
+				Rectangle me = getNewBounds(0, (int) jumpSpeed);
+				int newy = 0;
 
-			if (jumpSpeed < 0) {
-				for (Sprite s : map.getSprites()) {
-					if (me.intersects(s.getBounds())) {
-						collision = true;
-						newy = s.getY() + s.getHeight();
+				if (jumpSpeed < 0) {
+					for (Sprite s : map.getSprites()) {
+						if (me.intersects(s.getBounds())) {
+							collision = true;
+							newy = s.getY() + s.getHeight();
+						}
 					}
 				}
-			}
 
-			if (jumpSpeed >= 0) {
-				for (Sprite s : map.getSprites()) {
-					if (me.intersects(s.getBounds())) {
-						collision = true;
-						jumpCount = 0;
-						newy = s.getY() - width;
+				if (jumpSpeed >= 0) {
+					for (Sprite s : map.getSprites()) {
+						if (me.intersects(s.getBounds())) {
+							collision = true;
+							jumpCount = 0;
+							newy = s.getY() - width;
+						}
 					}
 				}
-			}
 
-			if (!collision) {
-				y += i * (int) jumpSpeed;
-				jumpSpeed += gravity;
+				if (!collision) {
+					y += (int) jumpSpeed;
+					jumpSpeed += gravity;
 
-			} else {
-				jumpSpeed = 0;
-				y = newy;
+				} else {
+					jumpSpeed = 0;
+					y = newy;
+				}
 			}
 		}
+			
+		
 	}
 
 	public void keyPressed(KeyEvent e) {
