@@ -14,30 +14,30 @@ public class Player extends Sprite implements KeyListener, Finals {
 			collision = false;
 	private double moveTime = 0.005, pastMoveTime = 0, jumpTime = 0.005,
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -5;
-	private int jumpCount = 0, jumpSkill = 2;
+	private int jumpCount = 0, jumpSkill = 4;
 	private final int leftKey, rightKey, jumpKey;
 
-	public Player(Map m, int keys) {
+	public Player(Map m, int playerNumber) {
 		super(50, 0, new String[] { "kirby1.gif" }, false);
 		map = m;
 
-		switch (keys) {
-		case KEYS1:
+		switch (playerNumber) {
+		case PLAYER1:
 			leftKey = KeyEvent.VK_A;
 			rightKey = KeyEvent.VK_D;
 			jumpKey = KeyEvent.VK_W;
 			break;
-		case KEYS2:
+		case PLAYER2:
 			leftKey = KeyEvent.VK_J;
 			rightKey = KeyEvent.VK_L;
 			jumpKey = KeyEvent.VK_I;
 			break;
-		case KEYS3:
+		case PLAYER3:
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
 			break;
-		case KEYS4:
+		case PLAYER4:
 			leftKey = KeyEvent.VK_NUMPAD1;
 			rightKey = KeyEvent.VK_NUMPAD3;
 			jumpKey = KeyEvent.VK_NUMPAD5;
@@ -59,33 +59,33 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 			if (pastMoveTime >= moveTime) {
 				int i = (int) (pastMoveTime / moveTime);
-				pastMoveTime = 0;
+				pastMoveTime -= i*moveTime;
 
-				if (left) {
-					Rectangle me = getNewBounds(-i, 0);
-					for (Sprite s : map.getSprites()) {
-						if (me.intersects(s.getBounds())) {
-							collision = true;
+				for (int k = 0; k < i; ++k) {
+					if (left) {
+						Rectangle me = getNewBounds(-1, 0);
+						for (Sprite s : map.getSprites()) {
+							if (me.intersects(s.getBounds())) {
+								collision = true;
+							}
+						}
+						if (!collision) {
+							x -= 1;
+						} else {
 						}
 					}
-					if (!collision) {
-						x -= i;
-					} else {
 
-					}
-				}
-
-				if (right) {
-					Rectangle me = getNewBounds(i, 0);
-					for (Sprite s : map.getSprites()) {
-						if (me.intersects(s.getBounds())) {
-							collision = true;
+					if (right) {
+						Rectangle me = getNewBounds(1, 0);
+						for (Sprite s : map.getSprites()) {
+							if (me.intersects(s.getBounds())) {
+								collision = true;
+							}
 						}
-					}
-					if (!collision) {
-						x += i;
-					} else {
-
+						if (!collision) {
+							x += 1;
+						} else {
+						}
 					}
 				}
 			}
@@ -94,9 +94,9 @@ public class Player extends Sprite implements KeyListener, Finals {
 		pastJumpTime += (delay / 1e9);
 		if (pastJumpTime >= jumpTime) {
 			int i = (int) (pastJumpTime / jumpTime);
-			pastJumpTime = 0;
-			
-			for(int k = 0; k<i; ++k){
+			pastJumpTime -= i*jumpTime;
+
+			for (int k = 0; k < i; ++k) {
 				collision = false;
 
 				Rectangle me = getNewBounds(0, (int) jumpSpeed);
@@ -131,8 +131,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 				}
 			}
 		}
-			
-		
+
 	}
 
 	public void keyPressed(KeyEvent e) {
