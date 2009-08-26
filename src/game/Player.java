@@ -5,21 +5,26 @@ import map.Sprite;
 import map.Map;
 import java.awt.event.*;
 import java.awt.Rectangle;
+import java.util.Vector;
 
 public class Player extends Sprite implements KeyListener, Finals {
 
 	private String name;
+	private final int leftKey, rightKey, jumpKey;
 	private Map map;
+	private Vector<Player> players;
+
 	private boolean jumpLock = false, left = false, right = false,
 			collision = false;
 	private double moveTime = 0.005, pastMoveTime = 0, jumpTime = 0.005,
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -5;
 	private int jumpCount = 0, jumpSkill = 4;
-	private final int leftKey, rightKey, jumpKey;
 
-	public Player(Map m, int playerNumber) {
+	public Player(String n, int playerNumber, Map m, Vector<Player> p) {
 		super(50, 0, new String[] { "kirby1.gif" }, false);
+		name = n;
 		map = m;
+		players = p;
 
 		switch (playerNumber) {
 		case PLAYER1:
@@ -59,7 +64,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 			if (pastMoveTime >= moveTime) {
 				int i = (int) (pastMoveTime / moveTime);
-				pastMoveTime -= i*moveTime;
+				pastMoveTime -= i * moveTime;
 
 				for (int k = 0; k < i; ++k) {
 					if (left) {
@@ -94,7 +99,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 		pastJumpTime += (delay / 1e9);
 		if (pastJumpTime >= jumpTime) {
 			int i = (int) (pastJumpTime / jumpTime);
-			pastJumpTime -= i*jumpTime;
+			pastJumpTime -= i * jumpTime;
 
 			for (int k = 0; k < i; ++k) {
 				collision = false;

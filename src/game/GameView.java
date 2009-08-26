@@ -14,7 +14,7 @@ public class GameView extends JPanel implements Finals{
 	
 	private LocalGameController game;
 	private Map map;
-	private Vector<Player> player;
+	private Vector<Player> players;
 	private Font gameFont = new Font("Monospaced", Font.BOLD, 12);
 	
 	public GameView(LocalGameController g, Map m, Vector<Player> pl){
@@ -23,9 +23,9 @@ public class GameView extends JPanel implements Finals{
 		this.setLayout(null);
 		game = g;
 		map = m;
-		player = pl;
+		players = pl;
 		
-		for (Player p : player) {
+		for (Player p : players) {
 			addKeyListener(p);
 		}
 	}
@@ -40,7 +40,7 @@ public class GameView extends JPanel implements Finals{
 		for (Sprite s : map.getSprites()) {
 			s.paint(g);
 		}
-		for (Player p : player) {
+		for (Player p : players) {
 			p.paint(g);
 		}
 		
