@@ -47,8 +47,15 @@ public class GameView extends JPanel implements Finals {
 		g.setFont(gameFont);
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 740, 20);
 		for (int i = 0; i < players.size(); ++i) {
-			g.drawString(players.get(i).getName() + ": "
-					+ players.get(i).getLifes(), 10 + (i * 200), 580);
+			if (players.get(i).isDead()) {
+				g.drawString(players.get(i).getName() + ": DEAD",
+						10 + (i * 200), 580);
+			} else {
+				g.drawString(players.get(i).getName() + " / L:"
+						+ players.get(i).getLifes() + " / K:"
+						+ players.get(i).getKills(), 10 + (i * 200), 580);
+			}
+
 		}
 		requestFocus();
 	}

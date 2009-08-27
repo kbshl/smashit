@@ -14,10 +14,10 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private Map map;
 	private Vector<Player> players;
 
-	private boolean jumpLock = false, left = false, right = false;
+	private boolean jumpLock = false, left = false, right = false, isDead = false;
 	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4;
-	private int jumpCount = 0, jumpSkill = 2, lifes = 13;
+	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0, lostLifes = 0;
 	private Sprite collisionObject;
 
 	public Player(String n, int playerNumber, Map m, Vector<Player> p) {
@@ -106,7 +106,9 @@ public class Player extends Sprite implements KeyListener, Finals {
 						jumpCount = 0;
 						jumpSpeed = 0;
 						if (collisionObject instanceof Player) {
-							((Player) collisionObject).kill();
+							((Player) collisionObject).getKilled();
+							kills++;
+							
 						}
 					}
 				}
@@ -120,9 +122,9 @@ public class Player extends Sprite implements KeyListener, Finals {
 						y = collisionObject.getY()
 								+ collisionObject.getHeight();
 						jumpSpeed = 0;
-						if (collisionObject instanceof Player) {
-							kill();
-						}
+//						if (collisionObject instanceof Player) {
+//							kill();
+//						}
 					}
 				}
 			}
@@ -183,12 +185,15 @@ public class Player extends Sprite implements KeyListener, Finals {
 		return collision;
 	}
 
-	public void kill() {
+	public void getKilled() {
 		if (lifes > 0) {
 			lifes--;
+			lostLifes++;
 			setNewPosition();
 		} else {
-//			players.remove(this);
+			isDead = true;
+			x = -100;
+			y = 0;
 		}
 	}
 
@@ -204,9 +209,17 @@ public class Player extends Sprite implements KeyListener, Finals {
 	public int getLifes() {
 		return lifes;
 	}
+	
+	public int getKills() {
+		return kills;
+	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public boolean isDead() {
+		return isDead;
 	}
 
 	public void keyTyped(KeyEvent e) {

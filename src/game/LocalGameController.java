@@ -63,7 +63,9 @@ public class LocalGameController implements Finals, Runnable {
 			s.act(delta);
 		}
 		for (Player p : players) {
-			p.act(delta);
+			if(!p.isDead()){
+				p.act(delta);
+			}
 		}
 	}
 
