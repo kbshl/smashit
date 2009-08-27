@@ -13,6 +13,9 @@ public class Map {
 
 	public Map() {
 		sprites = new Vector<Sprite>();
+		sprites.add(new WandLinks());
+		sprites.add(new WandRechts());
+		sprites.add(new Boden());
 		
 		sprites.add(new Box(50, 63));
 		sprites.add(new Box(50, 100));

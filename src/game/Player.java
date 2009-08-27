@@ -14,14 +14,14 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private Map map;
 	private Vector<Player> players;
 
-	private boolean jumpLock = false, left = false, right = false,
-			collision = false;
-	private double moveTime = 0.005, pastMoveTime = 0, jumpTime = 0.005,
-			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -5;
-	private int jumpCount = 0, jumpSkill = 4;
+	private boolean jumpLock = false, left = false, right = false;
+	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
+			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4;
+	private int jumpCount = 0, jumpSkill = 2, lifes = 13;
+	private Sprite collisionObject;
 
 	public Player(String n, int playerNumber, Map m, Vector<Player> p) {
-		super(50, 0, new String[] { "kirby1.gif" }, false);
+		super(0, 0, new String[] { "kirby1.gif" }, false);
 		name = n;
 		map = m;
 		players = p;
@@ -31,28 +31,34 @@ public class Player extends Sprite implements KeyListener, Finals {
 			leftKey = KeyEvent.VK_A;
 			rightKey = KeyEvent.VK_D;
 			jumpKey = KeyEvent.VK_W;
+			images[0] = "kirby1.gif";
 			break;
 		case PLAYER2:
 			leftKey = KeyEvent.VK_J;
 			rightKey = KeyEvent.VK_L;
 			jumpKey = KeyEvent.VK_I;
+			images[0] = "kirby2.gif";
 			break;
 		case PLAYER3:
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
+			images[0] = "kirby3.gif";
 			break;
 		case PLAYER4:
 			leftKey = KeyEvent.VK_NUMPAD1;
 			rightKey = KeyEvent.VK_NUMPAD3;
 			jumpKey = KeyEvent.VK_NUMPAD5;
+			images[0] = "kirby4.gif";
 			break;
 		default:
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
+			images[0] = "kirby1.gif";
 			break;
 		}
+		setNewPosition();
 
 	}
 
@@ -60,7 +66,6 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 		if (left || right) {
 			pastMoveTime += (delay / 1e9);
-			collision = false;
 
 			if (pastMoveTime >= moveTime) {
 				int i = (int) (pastMoveTime / moveTime);
@@ -68,26 +73,15 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 				for (int k = 0; k < i; ++k) {
 					if (left) {
-						Rectangle me = getNewBounds(-1, 0);
-						for (Sprite s : map.getSprites()) {
-							if (me.intersects(s.getBounds())) {
-								collision = true;
-							}
-						}
-						if (!collision) {
+						if (!checkCollision(-1, 0)) {
 							x -= 1;
 						} else {
+
 						}
 					}
 
 					if (right) {
-						Rectangle me = getNewBounds(1, 0);
-						for (Sprite s : map.getSprites()) {
-							if (me.intersects(s.getBounds())) {
-								collision = true;
-							}
-						}
-						if (!collision) {
+						if (!checkCollision(1, 0)) {
 							x += 1;
 						} else {
 						}
@@ -102,41 +96,37 @@ public class Player extends Sprite implements KeyListener, Finals {
 			pastJumpTime -= i * jumpTime;
 
 			for (int k = 0; k < i; ++k) {
-				collision = false;
-
-				Rectangle me = getNewBounds(0, (int) jumpSpeed);
-				int newy = 0;
-
-				if (jumpSpeed < 0) {
-					for (Sprite s : map.getSprites()) {
-						if (me.intersects(s.getBounds())) {
-							collision = true;
-							newy = s.getY() + s.getHeight();
-						}
-					}
-				}
 
 				if (jumpSpeed >= 0) {
-					for (Sprite s : map.getSprites()) {
-						if (me.intersects(s.getBounds())) {
-							collision = true;
-							jumpCount = 0;
-							newy = s.getY() - width;
+					if (!checkCollision(0, (int) jumpSpeed)) {
+						y += (int) jumpSpeed;
+						jumpSpeed += gravity;
+					} else {
+						y = collisionObject.getY() - height;
+						jumpCount = 0;
+						jumpSpeed = 0;
+						if (collisionObject instanceof Player) {
+							((Player) collisionObject).kill();
 						}
 					}
 				}
 
-				if (!collision) {
-					y += (int) jumpSpeed;
-					jumpSpeed += gravity;
+				if (jumpSpeed < 0) {
 
-				} else {
-					jumpSpeed = 0;
-					y = newy;
+					if (!checkCollision(0, (int) jumpSpeed)) {
+						y += (int) jumpSpeed;
+						jumpSpeed += gravity;
+					} else {
+						y = collisionObject.getY()
+								+ collisionObject.getHeight();
+						jumpSpeed = 0;
+						if (collisionObject instanceof Player) {
+							kill();
+						}
+					}
 				}
 			}
 		}
-
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -173,11 +163,53 @@ public class Player extends Sprite implements KeyListener, Finals {
 		}
 	}
 
-	public void keyTyped(KeyEvent e) {
+	private boolean checkCollision(int nx, int ny) {
+		boolean collision = false;
+		Rectangle me = new Rectangle(x + nx, y + ny, width, height);
+		for (Sprite s : map.getSprites()) {
+			if (me.intersects(s.getBounds())) {
+				collision = true;
+				collisionObject = s;
+			}
+		}
+		for (Player p : players) {
+			if (p != this) {
+				if (me.intersects(p.getBounds())) {
+					collision = true;
+					collisionObject = p;
+				}
+			}
+		}
+		return collision;
 	}
 
-	private Rectangle getNewBounds(int nx, int ny) {
-		return new Rectangle(x + nx, y + ny, width, height);
+	public void kill() {
+		if (lifes > 0) {
+			lifes--;
+			setNewPosition();
+		} else {
+//			players.remove(this);
+		}
+	}
+
+	private void setNewPosition() {
+		boolean collision;
+		y = 0;
+		do {
+			x = (int) (800 * Math.random());
+			collision = checkCollision(0, 0);
+		} while (collision);
+	}
+
+	public int getLifes() {
+		return lifes;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void keyTyped(KeyEvent e) {
 	}
 
 }

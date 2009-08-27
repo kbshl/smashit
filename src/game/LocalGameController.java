@@ -23,10 +23,10 @@ public class LocalGameController implements Finals, Runnable {
 	private void init() {
 		last = System.nanoTime();
 		map = new Map();
-		players.add(new Player("Flo", PLAYER1, map, players));
-		players.add(new Player("Zinke", PLAYER2, map, players));
-		players.add(new Player("Dr. No", PLAYER3, map, players));
-		players.add(new Player("Pimp of Persia", PLAYER4, map, players));
+		players.add(new Player("Rosa", PLAYER1, map, players));
+		players.add(new Player("Blau", PLAYER2, map, players));
+		players.add(new Player("Gelb", PLAYER3, map, players));
+		players.add(new Player("Grün", PLAYER4, map, players));
 		gameruns = true;
 		view = new GameView(this, map, players);
 		BaseFrame.getBaseFrame().setJPanel(view);
