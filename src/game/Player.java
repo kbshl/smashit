@@ -3,6 +3,7 @@ package game;
 import java.awt.event.KeyEvent;
 import map.Sprite;
 import map.Map;
+import map.Item;
 import java.awt.event.*;
 import java.awt.Rectangle;
 import java.util.Vector;
@@ -14,10 +15,12 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private Map map;
 	private Vector<Player> players;
 
-	private boolean jumpLock = false, left = false, right = false, isDead = false;
+	private boolean jumpLock = false, left = false, right = false,
+			isDead = false;
 	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4;
-	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0, lostLifes = 0;
+	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
+			lostLifes = 0;
 	private Sprite collisionObject;
 
 	public Player(String n, int playerNumber, Map m, Vector<Player> p) {
@@ -108,7 +111,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 						if (collisionObject instanceof Player) {
 							((Player) collisionObject).getKilled();
 							kills++;
-							
+
 						}
 					}
 				}
@@ -122,9 +125,6 @@ public class Player extends Sprite implements KeyListener, Finals {
 						y = collisionObject.getY()
 								+ collisionObject.getHeight();
 						jumpSpeed = 0;
-//						if (collisionObject instanceof Player) {
-//							kill();
-//						}
 					}
 				}
 			}
@@ -170,8 +170,14 @@ public class Player extends Sprite implements KeyListener, Finals {
 		Rectangle me = new Rectangle(x + nx, y + ny, width, height);
 		for (Sprite s : map.getSprites()) {
 			if (me.intersects(s.getBounds())) {
-				collision = true;
-				collisionObject = s;
+				if (!s.isWalkable()) {
+					collision = true;
+					collisionObject = s;
+				} else {
+					if (s instanceof Item) {
+						getItem((Item) s);
+					}
+				}
 			}
 		}
 		for (Player p : players) {
@@ -197,6 +203,21 @@ public class Player extends Sprite implements KeyListener, Finals {
 		}
 	}
 
+	private void getItem(Item item) {
+		switch (item.getAbility()) {
+		case JUMP_HIGH:
+			jumpSkill = 3;
+			break;
+		case JUMP_LOW:
+			jumpSkill = 1;
+			break;
+		default:
+			break;
+		}
+		item.collected();
+		
+	}
+
 	private void setNewPosition() {
 		boolean collision;
 		y = 0;
@@ -209,7 +230,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 	public int getLifes() {
 		return lifes;
 	}
-	
+
 	public int getKills() {
 		return kills;
 	}
@@ -217,7 +238,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 	public String getName() {
 		return name;
 	}
-	
+
 	public boolean isDead() {
 		return isDead;
 	}

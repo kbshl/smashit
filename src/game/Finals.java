@@ -11,4 +11,7 @@ public interface Finals {
 	public static final int PLAYER2 = 2;
 	public static final int PLAYER3 = 3;
 	public static final int PLAYER4 = 4;
+	
+	public static final int JUMP_HIGH = 1;
+	public static final int JUMP_LOW = 2;
 }
