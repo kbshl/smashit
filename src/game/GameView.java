@@ -11,6 +11,8 @@ import java.util.Vector;
 public class GameView extends JPanel implements Finals {
 
 	private LocalGameController game;
+	private NetworkGameController nGame;
+	private ClientGameController cGame;
 	private Map map;
 	private Vector<Player> players;
 	private Font gameFont = new Font("Monospaced", Font.BOLD, 12);
@@ -27,7 +29,31 @@ public class GameView extends JPanel implements Finals {
 			addKeyListener(p);
 		}
 	}
+	public GameView(NetworkGameController g, Map m, Vector<Player> pl) {
+		super(true);
+		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		this.setLayout(null);
+		nGame = g;
+		map = m;
+		players = pl;
 
+		for (Player p : players) {
+			addKeyListener(p);
+		}
+	}
+	public GameView(ClientGameController g, Map m, Vector<Player> pl) {
+		super(true);
+		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		this.setLayout(null);
+		cGame = g;
+		map = m;
+		players = pl;
+
+		for (Player p : players) {
+			addKeyListener(p);
+		}
+	}
+	
 	protected void paintComponent(Graphics g) {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, getWidth(), getHeight());
