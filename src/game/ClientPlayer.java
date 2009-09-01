@@ -9,12 +9,12 @@ import java.awt.Rectangle;
 import java.util.Vector;
 
 public class ClientPlayer extends Sprite implements KeyListener, Finals {
-
+	private int playerNumber;
 	private String name;
 	private final int leftKey, rightKey, jumpKey;
 	private Map map;
 	private Vector<ClientPlayer> players;
-
+	private ClientPositionSender cPS;
 	private boolean jumpLock = false, left = false, right = false,
 			isDead = false;
 	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
@@ -23,8 +23,10 @@ public class ClientPlayer extends Sprite implements KeyListener, Finals {
 			lostLifes = 0;
 	private Sprite collisionObject;
 
-	public ClientPlayer(String n, int playerNumber, Map m, Vector<ClientPlayer> p) {
+	public ClientPlayer(String n, int playerNumber, Map m, Vector<ClientPlayer> p, ClientPositionSender cPS) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
+		this.cPS = cPS;
+		this.playerNumber = playerNumber;
 		name = n;
 		map = m;
 		players = p;
@@ -61,74 +63,12 @@ public class ClientPlayer extends Sprite implements KeyListener, Finals {
 			images[0] = "kirby1.gif";
 			break;
 		}
-		setNewPosition();
+		
 
 	}
 
 	public void act(long delay) {
 
-		if (left || right) {
-			pastMoveTime += (delay / 1e9);
-
-			if (pastMoveTime >= moveTime) {
-				int i = (int) (pastMoveTime / moveTime);
-				pastMoveTime -= i * moveTime;
-
-				for (int k = 0; k < i; ++k) {
-					if (left) {
-						if (!checkCollision(-1, 0)) {
-							x -= 1;
-						} else {
-
-						}
-					}
-
-					if (right) {
-						if (!checkCollision(1, 0)) {
-							x += 1;
-						} else {
-						}
-					}
-				}
-			}
-		}
-
-		pastJumpTime += (delay / 1e9);
-		if (pastJumpTime >= jumpTime) {
-			int i = (int) (pastJumpTime / jumpTime);
-			pastJumpTime -= i * jumpTime;
-
-			for (int k = 0; k < i; ++k) {
-
-				if (jumpSpeed >= 0) {
-					if (!checkCollision(0, (int) jumpSpeed)) {
-						y += (int) jumpSpeed;
-						jumpSpeed += gravity;
-					} else {
-						y = collisionObject.getY() - height;
-						jumpCount = 0;
-						jumpSpeed = 0;
-						if (collisionObject instanceof Player) {
-							((Player) collisionObject).getKilled();
-							kills++;
-
-						}
-					}
-				}
-
-				if (jumpSpeed < 0) {
-
-					if (!checkCollision(0, (int) jumpSpeed)) {
-						y += (int) jumpSpeed;
-						jumpSpeed += gravity;
-					} else {
-						y = collisionObject.getY()
-								+ collisionObject.getHeight();
-						jumpSpeed = 0;
-					}
-				}
-			}
-		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -155,77 +95,24 @@ public class ClientPlayer extends Sprite implements KeyListener, Finals {
 	public void keyReleased(KeyEvent e) {
 		int i = e.getKeyCode();
 		if (i == jumpKey) {
-			jumpLock = false;
+			//jumpLock = false;
+			cPS.sendPosition("Move_P" + playerNumber + "_Event" + 3);
 		}
 		if (i == leftKey) {
-			left = false;
+			//left = false;
+			cPS.sendPosition("Move_P" + playerNumber + "_Event" + 1);
 		}
 		if (i == rightKey) {
-			right = false;
+			//right = false;
+			cPS.sendPosition("Move_P" + playerNumber + "_Event" + 2);
 		}
 	}
 
-	private boolean checkCollision(int nx, int ny) {
-		boolean collision = false;
-		Rectangle me = new Rectangle(x + nx, y + ny, width, height);
-		for (Sprite s : map.getSprites()) {
-			if (me.intersects(s.getBounds())) {
-				if (!s.isWalkable()) {
-					collision = true;
-					collisionObject = s;
-				} else {
-					if (s instanceof Item) {
-						getItem((Item) s);
-					}
-				}
-			}
-		}
-		for (ClientPlayer p : players) {
-			if (p != this) {
-				if (me.intersects(p.getBounds())) {
-					collision = true;
-					collisionObject = p;
-				}
-			}
-		}
-		return collision;
-	}
+	
 
-	public void getKilled() {
-		if (lifes > 0) {
-			lifes--;
-			lostLifes++;
-			setNewPosition();
-		} else {
-			isDead = true;
-			x = -100;
-			y = 0;
-		}
-	}
+	
 
-	private void getItem(Item item) {
-		switch (item.getAbility()) {
-		case JUMP_HIGH:
-			jumpSkill = 3;
-			break;
-		case JUMP_LOW:
-			jumpSkill = 1;
-			break;
-		default:
-			break;
-		}
-		item.collected();
-		
-	}
-
-	private void setNewPosition() {
-		boolean collision;
-		y = 0;
-		do {
-			x = (int) (800 * Math.random());
-			collision = checkCollision(0, 0);
-		} while (collision);
-	}
+	//Kann auch weg?
 
 	public int getLifes() {
 		return lifes;
@@ -244,6 +131,10 @@ public class ClientPlayer extends Sprite implements KeyListener, Finals {
 	}
 
 	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	
 
 }

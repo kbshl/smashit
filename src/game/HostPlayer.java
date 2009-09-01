@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.awt.Rectangle;
 import java.util.Vector;
 
-public class HostPlayer extends Sprite implements KeyListener, Finals {
+public class HostPlayer extends Sprite implements Finals {
 
 	private String name;
 	private final int leftKey, rightKey, jumpKey;
@@ -130,9 +130,44 @@ public class HostPlayer extends Sprite implements KeyListener, Finals {
 			}
 		}
 	}
-
-	public void keyPressed(KeyEvent e) {
-		int i = e.getKeyCode();
+//	//
+//	public void keyPressed(KeyEvent e) {
+//		int i = e.getKeyCode();
+//		if (i == jumpKey) {
+//			if (!jumpLock) {
+//				jumpLock = true;
+//				if (jumpCount < jumpSkill) {
+//					jumpSpeed = jumpStart;
+//					jumpCount++;
+//				}
+//			}
+//		}
+//		if (i == leftKey) {
+//			left = true;
+//			right = false;
+//		}
+//		if (i == rightKey) {
+//			right = true;
+//			left = false;
+//		}
+//	}
+//
+//	public void keyReleased(KeyEvent e) {
+//		int i = e.getKeyCode();
+//		if (i == jumpKey) {
+//			jumpLock = false;
+//		}
+//		if (i == leftKey) {
+//			left = false;
+//		}
+//		if (i == rightKey) {
+//			right = false;
+//		}
+//	}//
+	
+	
+	public void keyPressed(int i) {
+		//int i = e.getKeyCode();
 		if (i == jumpKey) {
 			if (!jumpLock) {
 				jumpLock = true;
@@ -151,9 +186,9 @@ public class HostPlayer extends Sprite implements KeyListener, Finals {
 			left = false;
 		}
 	}
-
-	public void keyReleased(KeyEvent e) {
-		int i = e.getKeyCode();
+	
+	public void keyReleased(int i) {
+		//int i = e.getKeyCode();
 		if (i == jumpKey) {
 			jumpLock = false;
 		}

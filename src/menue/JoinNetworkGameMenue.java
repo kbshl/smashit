@@ -1,5 +1,8 @@
 package menue;
 
+import game.ClientPositionReceiver;
+import game.ClientPositionSender;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -96,8 +99,11 @@ public class JoinNetworkGameMenue extends JPanel{
 				}catch(IOException excep){
 					System.out.println(excep.getMessage());
 				}
-			
+				
+				new ClientPositionReceiver(); //muss alle Player kennen
+				new ClientPositionSender(); //muss an die Player mitgegeben werden
 				//tcp_connection aufbauen
+				
 			}
 			if (e.getActionCommand().equals("btn_Back")){
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
