@@ -33,7 +33,7 @@ public class ClientGameController implements Finals, Runnable {
 		players.add(new Player("Blau", PLAYER2, map, players));
 		players.add(new Player("Gelb", PLAYER3, map, players));
 		players.add(new Player("Grün", PLAYER4, map, players));
-		view = new GameView(this, map, players);
+		//view = new GameView(this, map, players);
 		BaseFrame.getBaseFrame().setJPanel(view);
 
 		last = System.nanoTime();
