@@ -2,17 +2,17 @@ package network;
 
 import game.Finals;
 import game.Player;
-import game.Position;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Vector;
 
 import map.Item;
 import map.Map;
 import map.Sprite;
 
-public class HostPlayer extends Sprite implements Finals {
+public class FullPlayer extends Sprite implements KeyListener, Finals {
 
 	private String name;
 	private final int leftKey, rightKey, jumpKey;
@@ -27,7 +27,7 @@ public class HostPlayer extends Sprite implements Finals {
 			lostLifes = 0;
 	private Sprite collisionObject;
 
-	public HostPlayer(String n, int playerNumber, Map m, Vector p) {
+	public FullPlayer(String n, int playerNumber, Map m, Vector<Sprite> p) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
 		name = n;
 		map = m;
@@ -134,44 +134,9 @@ public class HostPlayer extends Sprite implements Finals {
 			}
 		}
 	}
-//	//
-//	public void keyPressed(KeyEvent e) {
-//		int i = e.getKeyCode();
-//		if (i == jumpKey) {
-//			if (!jumpLock) {
-//				jumpLock = true;
-//				if (jumpCount < jumpSkill) {
-//					jumpSpeed = jumpStart;
-//					jumpCount++;
-//				}
-//			}
-//		}
-//		if (i == leftKey) {
-//			left = true;
-//			right = false;
-//		}
-//		if (i == rightKey) {
-//			right = true;
-//			left = false;
-//		}
-//	}
-//
-//	public void keyReleased(KeyEvent e) {
-//		int i = e.getKeyCode();
-//		if (i == jumpKey) {
-//			jumpLock = false;
-//		}
-//		if (i == leftKey) {
-//			left = false;
-//		}
-//		if (i == rightKey) {
-//			right = false;
-//		}
-//	}//
-	
-	
-	public void keyPressed(int i) {
-		//int i = e.getKeyCode();
+
+	public void keyPressed(KeyEvent e) {
+		int i = e.getKeyCode();
 		if (i == jumpKey) {
 			if (!jumpLock) {
 				jumpLock = true;
@@ -190,9 +155,9 @@ public class HostPlayer extends Sprite implements Finals {
 			left = false;
 		}
 	}
-	
-	public void keyReleased(int i) {
-		//int i = e.getKeyCode();
+
+	public void keyReleased(KeyEvent e) {
+		int i = e.getKeyCode();
 		if (i == jumpKey) {
 			jumpLock = false;
 		}
@@ -219,7 +184,7 @@ public class HostPlayer extends Sprite implements Finals {
 				}
 			}
 		}
-		//Keine ahnung
+		//Könnte nicht funktionieren
 		for (Sprite p : players) {
 			if (p != this) {
 				if (me.intersects(p.getBounds())) {
@@ -285,5 +250,5 @@ public class HostPlayer extends Sprite implements Finals {
 
 	public void keyTyped(KeyEvent e) {
 	}
-	
+
 }

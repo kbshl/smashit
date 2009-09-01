@@ -1,5 +1,7 @@
 package map;
 
+import game.Position;
+
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import manager.PictureManager;
@@ -64,6 +66,9 @@ public abstract class Sprite {
 
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
+	}
+	public Position getPosition(){
+		return new Position(this.x, this.y);
 	}
 
 }

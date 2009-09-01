@@ -1,9 +1,9 @@
 package menue;
 
-import game.Player;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -14,6 +14,10 @@ import javax.swing.JTextField;
 
 import map.Map;
 import map.Sprite;
+import network.FullPlayer;
+import network.HostPlayer;
+import network.ServerPositionReceiver;
+import network.ServerPositionSender;
 
 
 public class CreateNetworkGameMenue extends JPanel{
@@ -146,13 +150,13 @@ public class CreateNetworkGameMenue extends JPanel{
 		Map map = new Map();
 		//Spieler erstellen + sender Receiver erstellen
 		int i = 0;
-		//player.add(new Player(vtr_PlayerNames.get(i),0, map, player));
+		player.add((new FullPlayer(vtr_PlayerNames.get(i),1, map, player)));
 		
-		
+		++i;
 		while(playerData[i][0] != null){
-		//	player.add(new Player(vtr_PlayerNames.get(i)));//erstellt einen Normalen Player und den rest HostPlayer
-			//new ServerPositionReceiver(player.get(i), (Socket)playerData[i][0]);
-			//new ServerPositionSender(player.get(i), (Socket)playerData[i][0], map, Integer.parseInt(txt_PlayerLife.getText()));
+			player.add(new HostPlayer(vtr_PlayerNames.get(i), i+1, map, player));//erstellt einen Normalen Player und den rest HostPlayer
+			new ServerPositionReceiver((HostPlayer)player.get(i), (BufferedReader)playerData[i][0]);
+			//new ServerPositionSender(player, (PrintWriter)playerData[i][0]));
 			
 			
 		}

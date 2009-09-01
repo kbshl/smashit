@@ -6,7 +6,7 @@ import java.io.BufferedReader;
 
 public class ServerPositionReceiver extends Thread{
 	
-	public ServerPositionReceiver(Player p, BufferedReader sockIn){
+	public ServerPositionReceiver(HostPlayer p, BufferedReader sockIn){
 		start();
 	}
 

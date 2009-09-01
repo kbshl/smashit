@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.util.Vector;
 
 import map.Map;
+import map.Sprite;
 
 public class ServerPositionSender extends Thread{
 	private Vector<Player> p;
@@ -25,16 +26,20 @@ public class ServerPositionSender extends Thread{
 		
 	}
 	public void run(){
-		int oldPosition = 0, newPosition = 0;
+		//int oldPosition = 0, newPosition = 0;
 		
-		sockOut.println(map);
-		sockOut.println(lives);
+		for (Sprite s : p) {
+			//oldPosition.add()
+		}
+		
+		//sockOut.println(map);
+		//sockOut.println(lives);
 		
 		while(true){
 			
 			for(int i = 0; i< p.size(); i++){
 				//newPosition = p.get(i).getPosition();
-				if(newPosition != oldPosition){
+				if(null != oldPosition){
 					sockOut.println("");
 				}
 			}
