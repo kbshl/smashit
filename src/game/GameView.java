@@ -3,6 +3,10 @@ package game;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JPanel;
+
+import network.ClientGameController;
+import network.NetworkGameController;
+
 import java.awt.*;
 import map.Map;
 import map.Sprite;

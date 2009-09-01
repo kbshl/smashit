@@ -1,12 +1,9 @@
 package menue;
 
 import game.Player;
-import game.ServerPositionReceiver;
-import game.ServerPositionSender;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -16,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import map.Map;
+import map.Sprite;
 
 
 public class CreateNetworkGameMenue extends JPanel{
@@ -38,7 +36,7 @@ public class CreateNetworkGameMenue extends JPanel{
 	private JList lst_ConnectedPlayer;
 	
 	private Object[][] playerData;
-	private Vector<Player> player;
+	private Vector<Sprite> player;
 	private Vector<String> vtr_PlayerNames;
 	private PlayerListenerController pLC;
 	private CreateNetworkGameMenue cNGM;
@@ -148,9 +146,11 @@ public class CreateNetworkGameMenue extends JPanel{
 		Map map = new Map();
 		//Spieler erstellen + sender Receiver erstellen
 		int i = 0;
+		//player.add(new Player(vtr_PlayerNames.get(i),0, map, player));
+		
 		
 		while(playerData[i][0] != null){
-			//player.add(new Player(vtr_PlayerNames.get(i)));
+		//	player.add(new Player(vtr_PlayerNames.get(i)));//erstellt einen Normalen Player und den rest HostPlayer
 			//new ServerPositionReceiver(player.get(i), (Socket)playerData[i][0]);
 			//new ServerPositionSender(player.get(i), (Socket)playerData[i][0], map, Integer.parseInt(txt_PlayerLife.getText()));
 			
@@ -175,7 +175,7 @@ public class CreateNetworkGameMenue extends JPanel{
 				}
 				else{
 					pLC.interrupt();
-					//pLC.destroy();
+					
 					
 					btn_PlayerListenerStartStop.setText("Auf Spiler warten");
 					

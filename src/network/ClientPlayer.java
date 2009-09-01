@@ -1,4 +1,6 @@
-package game;
+package network;
+
+import game.Finals;
 
 import java.awt.event.KeyEvent;
 import map.Sprite;
@@ -30,7 +32,7 @@ public class ClientPlayer extends Sprite implements KeyListener, Finals {
 		name = n;
 		map = m;
 		players = p;
-
+		
 		switch (playerNumber) {
 		case PLAYER1:
 			leftKey = KeyEvent.VK_A;

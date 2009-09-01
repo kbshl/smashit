@@ -1,4 +1,6 @@
-package game;
+package network;
+
+import game.Player;
 
 import java.io.BufferedReader;
 

@@ -1,4 +1,7 @@
-package game;
+package network;
+
+import game.Player;
+import game.Position;
 
 import java.io.PrintWriter;
 import java.util.Vector;

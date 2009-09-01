@@ -1,13 +1,17 @@
-package game;
+package network;
 
 import map.Sprite;
 import map.Map;
 import map.Item;
 import menue.BaseFrame;
+import game.Finals;
+import game.GameView;
+import game.Player;
+
 import java.util.Vector;
 import java.awt.Rectangle;
 
-public class ClientGameController implements Finals, Runnable {
+public class NetworkGameController implements Finals, Runnable {
 
 	private GameView view;
 	private Map map;
@@ -19,7 +23,7 @@ public class ClientGameController implements Finals, Runnable {
 	private Thread t;
 	private static boolean gameruns;
 
-	public ClientGameController() {
+	public NetworkGameController() {
 		init();
 	}
 

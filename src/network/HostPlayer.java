@@ -1,4 +1,7 @@
-package game;
+package network;
+
+import game.Finals;
+import game.Player;
 
 import java.awt.event.KeyEvent;
 import map.Sprite;
