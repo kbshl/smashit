@@ -101,7 +101,7 @@ public class JoinNetworkGameMenue extends JPanel{
 				}
 				
 				new ClientPositionReceiver(); //muss alle Player kennen
-				new ClientPositionSender(); //muss an die Player mitgegeben werden
+				//new ClientPositionSender(); //muss an die Player mitgegeben werden
 				//tcp_connection aufbauen
 				
 			}
