@@ -1,4 +1,8 @@
-package game;
+package network;
+
+import game.Finals;
+import game.LocalGameController;
+import game.Player;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -9,31 +13,42 @@ import javax.swing.JPanel;
 
 import map.Map;
 import map.Sprite;
-import network.ClientGameController;
-import network.FullPlayer;
-import network.NetworkGameController;
 
-public class GameView extends JPanel implements Finals {
+public class NetworkGameView extends JPanel implements Finals {
 
 	private LocalGameController game;
 	private NetworkGameController nGame;
 	private ClientGameController cGame;
 	private Map map;
-	private Vector<Player> players;
+	private Vector<FullPlayer> players;
 	private Font gameFont = new Font("Monospaced", Font.BOLD, 12);
 
-	public GameView(LocalGameController g, Map m, Vector<Player> pl) {
+	
+	public NetworkGameView(NetworkGameController g, Map m, Vector<FullPlayer> pl) {
 		super(true);
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setLayout(null);
-		game = g;
+		nGame = g;
 		map = m;
 		players = pl;
 
-		for (Player p : players) {
+		for (FullPlayer p : pl) {
+			//players.add((Player)p)
 			addKeyListener(p);
 		}
 	}
+//	public GameView(ClientGameController g, Map m, Vector<Player> pl) {
+//		super(true);
+//		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+//		this.setLayout(null);
+//		cGame = g;
+//		map = m;
+//		players = pl;
+//
+//		for (Player p : players) {
+//			addKeyListener(p);
+//		}
+//	}
 	
 	protected void paintComponent(Graphics g) {
 		g.setColor(Color.black);
@@ -45,7 +60,7 @@ public class GameView extends JPanel implements Finals {
 		for (Sprite s : map.getSprites()) {
 			s.paint(g);
 		}
-		for (Player p : players) {
+		for (FullPlayer p : players) {
 			p.paint(g);
 		}
 

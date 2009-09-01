@@ -3,6 +3,7 @@ package network;
 import game.Player;
 import game.Position;
 
+import java.io.BufferedReader;
 import java.io.PrintWriter;
 import java.util.Vector;
 
@@ -10,15 +11,17 @@ import map.Map;
 import map.Sprite;
 
 public class ServerPositionSender extends Thread{
-	private Vector<Player> p;
+	private Vector<Sprite> p;
 	private Vector<Position> oldPosition;
 	private PrintWriter sockOut;
+	private Object[][] playerData;
 	private int lives;
 	private Map map;
-	//braucht alle Player!!
-	public ServerPositionSender(Vector<Player> p, PrintWriter sockOut, Map map, int lives){
+	//braucht alle Player!! und alle printWriter
+	public ServerPositionSender(Vector<Sprite> p, Object[][] playerData, Map map, int lives){
 		this.p = p;
-		this.sockOut = sockOut;
+		this.playerData = playerData;
+		//this.sockOut = sockOut;
 		this.map = map;
 		this.lives = lives;
 		oldPosition = new Vector();
@@ -27,9 +30,10 @@ public class ServerPositionSender extends Thread{
 	}
 	public void run(){
 		//int oldPosition = 0, newPosition = 0;
-		
+		int j = 0;
+		Position posAktuell;
 		for (Sprite s : p) {
-			//oldPosition.add()
+			oldPosition.add(s.getPosition());
 		}
 		
 		//sockOut.println(map);
@@ -39,8 +43,20 @@ public class ServerPositionSender extends Thread{
 			
 			for(int i = 0; i< p.size(); i++){
 				//newPosition = p.get(i).getPosition();
-				if(null != oldPosition){
-					sockOut.println("");
+				if(oldPosition.get(i).getX() != p.get(i).getX() || oldPosition.get(i).getY() != p.get(i).getY()){
+					posAktuell = p.get(i).getPosition();
+					//pos an alle senden
+					j = 0;
+					while(playerData[j][1] != null){
+						
+						sockOut = (PrintWriter)playerData[j][1];
+						sockOut.println("Player i Postion");
+						++j;
+					}
+					
+					
+					oldPosition.set(i, posAktuell);
+					//sockOut.println("");
 				}
 			}
 			

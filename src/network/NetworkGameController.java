@@ -13,27 +13,33 @@ import java.awt.Rectangle;
 
 public class NetworkGameController implements Finals, Runnable {
 
-	private GameView view;
+	private NetworkGameView view;
 	private Map map;
 	// private Player player;
-	private Vector<Player> players = new Vector<Player>();
+	private Vector<FullPlayer> players = new Vector<FullPlayer>();
 
 	private long delta = 0, last = 0, fps = 0, startTime;
 	private double itemTime = 10, pastItemTime = 0;
 	private Thread t;
 	private static boolean gameruns;
 
-	public NetworkGameController() {
+	public NetworkGameController(Vector<Sprite> sPlayer, Map map) {
 		init();
+		
+		//this.players = sPlayer;
+		for (Sprite p : sPlayer) {
+			players.add((FullPlayer)p);
+		}
+		this.map = map;
 	}
 
 	private void init() {
-		map = new Map();
-		players.add(new Player("Rosa", PLAYER1, map, players));
-		players.add(new Player("Blau", PLAYER2, map, players));
-		players.add(new Player("Gelb", PLAYER3, map, players));
-		players.add(new Player("Grün", PLAYER4, map, players));
-		view = new GameView(this, map, players);
+//		map = new Map();
+//		players.add(new Player("Rosa", PLAYER1, map, players));
+//		players.add(new Player("Blau", PLAYER2, map, players));
+//		players.add(new Player("Gelb", PLAYER3, map, players));
+//		players.add(new Player("Grün", PLAYER4, map, players));
+		view = new NetworkGameView(this, map, players);
 		BaseFrame.getBaseFrame().setJPanel(view);
 
 		last = System.nanoTime();
@@ -73,7 +79,7 @@ public class NetworkGameController implements Finals, Runnable {
 			s.act(delta);
 		}
 		
-		for (Player p : players) {
+		for (FullPlayer p : players) {
 			if (!p.isDead()) {
 				p.act(delta);
 			}
@@ -100,7 +106,7 @@ public class NetworkGameController implements Finals, Runnable {
 					collision = true;
 				}
 			}
-			for (Player p : players) {
+			for (FullPlayer p : players) {
 				if (me.intersects(p.getBounds())) {
 					collision = true;
 				}

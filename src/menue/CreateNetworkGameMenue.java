@@ -3,7 +3,6 @@ package menue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
-import java.io.PrintWriter;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -16,6 +15,7 @@ import map.Map;
 import map.Sprite;
 import network.FullPlayer;
 import network.HostPlayer;
+import network.NetworkGameController;
 import network.ServerPositionReceiver;
 import network.ServerPositionSender;
 
@@ -156,9 +156,10 @@ public class CreateNetworkGameMenue extends JPanel{
 		while(playerData[i][0] != null){
 			player.add(new HostPlayer(vtr_PlayerNames.get(i), i+1, map, player));//erstellt einen Normalen Player und den rest HostPlayer
 			new ServerPositionReceiver((HostPlayer)player.get(i), (BufferedReader)playerData[i][0]);
-			//new ServerPositionSender(player, (PrintWriter)playerData[i][0]));
+			new ServerPositionSender(player, playerData, map, 4);
+			++i;
 			
-			
+			new NetworkGameController(player, map);
 		}
 	}
 	
