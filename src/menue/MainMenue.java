@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import manager.SoundManager;
 import mapeditor.MapEditorView;
 
 public class MainMenue extends JPanel {
@@ -55,6 +56,7 @@ public class MainMenue extends JPanel {
 		add(btn_NewNetworkGame);
 		add(btn_MapEditor);
 
+		SoundManager.getSoundManager().loopSound("smwtitle.mid");
 	}
 
 	public void openWebsite(String link) {

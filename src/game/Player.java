@@ -1,6 +1,8 @@
 package game;
 
 import java.awt.event.KeyEvent;
+
+import manager.SoundManager;
 import map.Sprite;
 import map.Map;
 import map.Item;
@@ -192,6 +194,8 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	public void getKilled() {
+		SoundManager.getSoundManager().playSound("sprout.wav");
+		
 		if (lifes > 0) {
 			lifes--;
 			lostLifes++;
