@@ -138,7 +138,9 @@ public class Player extends Sprite implements KeyListener, Finals {
 		if (i == jumpKey) {
 			if (!jumpLock) {
 				jumpLock = true;
+				
 				if (jumpCount < jumpSkill) {
+					SoundManager.getSoundManager().playSound("jump8.wav");
 					jumpSpeed = jumpStart;
 					jumpCount++;
 				}
