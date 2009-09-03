@@ -13,7 +13,7 @@ import java.awt.Rectangle;
 
 public class ClientGameController implements Finals, Runnable {
 
-	private GameView view;
+	private GameView view;//
 	private Map map;
 	// private Player player;
 	private Vector<Player> players = new Vector<Player>();
