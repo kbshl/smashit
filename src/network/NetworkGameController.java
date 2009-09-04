@@ -23,14 +23,14 @@ public class NetworkGameController implements Finals, Runnable {
 	private Thread t;
 	private static boolean gameruns;
 
-	public NetworkGameController(Vector<Sprite> sPlayer, Map map) {
-		init();
+	public NetworkGameController(Vector<FullPlayer> players, Map map) {
 		
-		//this.players = sPlayer;
-		for (Sprite p : sPlayer) {
-			players.add((FullPlayer)p);
-		}
+
+		this.players = players;
+		
 		this.map = map;
+		System.out.println("NetworkgameController initialisiert");
+		init();
 	}
 
 	private void init() {

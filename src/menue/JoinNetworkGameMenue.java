@@ -3,17 +3,23 @@ package menue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import map.Map;
+import network.ClientGameController;
 import network.ClientPositionReceiver;
 import network.ClientPositionSender;
+import network.FullPlayer;
 
 
 
@@ -33,6 +39,7 @@ public class JoinNetworkGameMenue extends JPanel{
 	
 	private Socket clientSocket = null;
 	private PrintWriter sockout = null;
+	private BufferedReader sockin = null;
 	
 	public JoinNetworkGameMenue(){
 		this.setLayout(null);
@@ -96,14 +103,20 @@ public class JoinNetworkGameMenue extends JPanel{
 					sockout = new PrintWriter(clientSocket.getOutputStream(), true);
 	
 					sockout.println(txt_PlayerName.getText());
-					
+					sockin = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 				}catch(IOException excep){
 					System.out.println(excep.getMessage());
 				}
+				ClientPositionSender cPS = new ClientPositionSender(sockout);
 				
-				new ClientPositionReceiver(); //muss alle Player kennen
-				//new ClientPositionSender(); //muss an die Player mitgegeben werden
-				//tcp_connection aufbauen
+				Map map = new Map();
+				Vector<FullPlayer> player = new Vector<FullPlayer>();
+				
+				player.add(new FullPlayer("tut", 1, map, player, false, null));
+				player.add(new FullPlayer("tut", 2, map, player, false, cPS));
+				new ClientPositionReceiver(sockin, player);
+				
+				new ClientGameController(player, map);
 				
 			}
 			if (e.getActionCommand().equals("btn_Back")){

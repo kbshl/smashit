@@ -31,24 +31,28 @@ public class NetworkGameView extends JPanel implements Finals {
 		nGame = g;
 		map = m;
 		players = pl;
-
-		for (FullPlayer p : pl) {
+		//nur für den ersten player
+		addKeyListener(players.get(0));
+		/*
+		for (FullPlayer p : players) {
 			//players.add((Player)p)
 			addKeyListener(p);
-		}
+		}*/
 	}
-//	public GameView(ClientGameController g, Map m, Vector<Player> pl) {
-//		super(true);
-//		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-//		this.setLayout(null);
-//		cGame = g;
-//		map = m;
-//		players = pl;
-//
-//		for (Player p : players) {
-//			addKeyListener(p);
-//		}
-//	}
+	public NetworkGameView(ClientGameController g, Map m, Vector<FullPlayer> pl) {
+		super(true);
+		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		this.setLayout(null);
+		cGame = g;
+		map = m;
+		players = pl;
+		//nur einer muss steuern können
+		addKeyListener(players.get(1));
+		/*
+		for (FullPlayer p : players) {
+			addKeyListener(p);
+		}*/
+	}
 	
 	protected void paintComponent(Graphics g) {
 		g.setColor(Color.black);
@@ -67,7 +71,7 @@ public class NetworkGameView extends JPanel implements Finals {
 		// FPS malen
 		g.setColor(Color.black);
 		g.setFont(gameFont);
-		g.drawString("FPS: " + Long.toString(game.getFPS()), 740, 20);
+		//g.drawString("FPS: " + Long.toString(game.getFPS()), 740, 20);
 		for (int i = 0; i < players.size(); ++i) {
 			if (players.get(i).isDead()) {
 				g.drawString(players.get(i).getName() + ": DEAD",

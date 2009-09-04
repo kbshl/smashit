@@ -13,27 +13,30 @@ import java.awt.Rectangle;
 
 public class ClientGameController implements Finals, Runnable {
 
-	private GameView view;//
+	private NetworkGameView view;
 	private Map map;
 	// private Player player;
-	private Vector<Player> players = new Vector<Player>();
+	private Vector<FullPlayer> players = new Vector<FullPlayer>();
 
 	private long delta = 0, last = 0, fps = 0, startTime;
 	private double itemTime = 10, pastItemTime = 0;
 	private Thread t;
 	private static boolean gameruns;
 
-	public ClientGameController() {
+	public ClientGameController(Vector<FullPlayer> players, Map map) {
+		this.players = players;
+		
+		this.map = map;
 		init();
 	}
 
 	private void init() {
-		map = new Map();
-		players.add(new Player("Rosa", PLAYER1, map, players));
-		players.add(new Player("Blau", PLAYER2, map, players));
-		players.add(new Player("Gelb", PLAYER3, map, players));
-		players.add(new Player("Grün", PLAYER4, map, players));
-		//view = new GameView(this, map, players);
+//		map = new Map();
+//		players.add(new Player("Rosa", PLAYER1, map, players));
+//		players.add(new Player("Blau", PLAYER2, map, players));
+//		players.add(new Player("Gelb", PLAYER3, map, players));
+//		players.add(new Player("Grün", PLAYER4, map, players));
+		view = new NetworkGameView(this, map, players);
 		BaseFrame.getBaseFrame().setJPanel(view);
 
 		last = System.nanoTime();
@@ -47,8 +50,8 @@ public class ClientGameController implements Finals, Runnable {
 	public void run() {
 
 		while (gameruns) {
-			computeDelta();
-			updateWorld();
+			//computeDelta();
+			//updateWorld();
 			view.repaint();
 
 			try {
@@ -59,7 +62,7 @@ public class ClientGameController implements Finals, Runnable {
 		}
 
 	}
-
+/*
 	private void computeDelta() {
 		delta = System.nanoTime() - last;
 		pastItemTime += (delta / 1e9);
@@ -73,7 +76,7 @@ public class ClientGameController implements Finals, Runnable {
 			s.act(delta);
 		}
 		
-		for (Player p : players) {
+		for (FullPlayer p : players) {
 			if (!p.isDead()) {
 				p.act(delta);
 			}
@@ -86,7 +89,7 @@ public class ClientGameController implements Finals, Runnable {
 			System.out.println(itemTime);
 		}
 	}
-
+*/
 	private void addItem() {
 		boolean collision;
 		Item item = new Item(0, 0);
@@ -100,7 +103,7 @@ public class ClientGameController implements Finals, Runnable {
 					collision = true;
 				}
 			}
-			for (Player p : players) {
+			for (FullPlayer p : players) {
 				if (me.intersects(p.getBounds())) {
 					collision = true;
 				}

@@ -13,12 +13,14 @@ import map.Map;
 import map.Sprite;
 
 public class FullPlayer extends Sprite implements KeyListener, Finals {
-
+	private int playerNumber;
 	private String name;
 	private final int leftKey, rightKey, jumpKey;
 	private Map map;
-	private Vector<Sprite> players;
-
+	private Vector<FullPlayer> players;
+	private boolean realPlayer;
+	private ClientPositionSender cPS;
+	
 	private boolean jumpLock = false, left = false, right = false,
 			isDead = false;
 	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
@@ -27,12 +29,14 @@ public class FullPlayer extends Sprite implements KeyListener, Finals {
 			lostLifes = 0;
 	private Sprite collisionObject;
 
-	public FullPlayer(String n, int playerNumber, Map m, Vector<Sprite> p) {
+	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
+		this.realPlayer = realPlayer;
+		this.playerNumber = playerNumber;
 		name = n;
 		map = m;
 		players = p;
-
+		this.cPS = cPS;
 		switch (playerNumber) {
 		case PLAYER1:
 			leftKey = KeyEvent.VK_A;
@@ -134,10 +138,76 @@ public class FullPlayer extends Sprite implements KeyListener, Finals {
 			}
 		}
 	}
-
+	
 	public void keyPressed(KeyEvent e) {
+		
 		int i = e.getKeyCode();
-		if (i == jumpKey) {
+		if(realPlayer){
+			if (i == jumpKey) {
+				if (!jumpLock) {
+					jumpLock = true;
+					if (jumpCount < jumpSkill) {
+						jumpSpeed = jumpStart;
+						jumpCount++;
+					}
+				}
+			}
+			if (i == leftKey) {
+				left = true;
+				right = false;
+			}
+			if (i == rightKey) {
+				right = true;
+				left = false;
+			}
+		}
+		else{
+			if (i == jumpKey) {
+				cPS.sendPosition("Move:" + 3 + ":" + 1);
+			}
+			if (i == leftKey) {
+				cPS.sendPosition("Move:" + 1 + ":" + 1);
+			}
+			if (i == rightKey) {
+				cPS.sendPosition("Move:" + 2 + ":" + 1);
+			}
+		}
+		
+		
+	}
+	
+	public void keyReleased(KeyEvent e) {
+		int i = e.getKeyCode();
+		if(realPlayer){
+			if (i == jumpKey) {
+				jumpLock = false;
+			}
+			if (i == leftKey) {
+				left = false;
+			}
+			if (i == rightKey) {
+				right = false;
+			}
+		}
+		else{//Move:3:0
+			if (i == jumpKey) {
+				cPS.sendPosition("Move:" + 3 + ":" + 0);
+			}
+			if (i == leftKey) {
+				cPS.sendPosition("Move:" + 1 + ":" + 0);
+			}
+			if (i == rightKey) {
+				cPS.sendPosition("Move:" + 2 + ":" + 0);
+			}
+		}
+
+	}
+	
+	//wird von ServerPositionReceiver aufgerufen
+	//jump = 3 | left = 1 | right = 2;
+	public void keyPressed(int i) {
+		//int i = e.getKeyCode();
+		if (i == 3) {
 			if (!jumpLock) {
 				jumpLock = true;
 				if (jumpCount < jumpSkill) {
@@ -146,25 +216,25 @@ public class FullPlayer extends Sprite implements KeyListener, Finals {
 				}
 			}
 		}
-		if (i == leftKey) {
+		if (i == 1) {
 			left = true;
 			right = false;
 		}
-		if (i == rightKey) {
+		if (i == 2) {
 			right = true;
 			left = false;
 		}
 	}
-
-	public void keyReleased(KeyEvent e) {
-		int i = e.getKeyCode();
-		if (i == jumpKey) {
+	//jump = 3 | left = 1 | right = 2;
+	public void keyReleased(int i) {
+		//int i = e.getKeyCode();
+		if (i == 3) {
 			jumpLock = false;
 		}
-		if (i == leftKey) {
+		if (i == 1) {
 			left = false;
 		}
-		if (i == rightKey) {
+		if (i == 2) {
 			right = false;
 		}
 	}

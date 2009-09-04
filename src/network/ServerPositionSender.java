@@ -11,14 +11,14 @@ import map.Map;
 import map.Sprite;
 
 public class ServerPositionSender extends Thread{
-	private Vector<Sprite> p;
+	private Vector<FullPlayer> p;
 	private Vector<Position> oldPosition;
 	private PrintWriter sockOut;
 	private Object[][] playerData;
 	private int lives;
 	private Map map;
 	//braucht alle Player!! und alle printWriter
-	public ServerPositionSender(Vector<Sprite> p, Object[][] playerData, Map map, int lives){
+	public ServerPositionSender(Vector<FullPlayer> p, Object[][] playerData, Map map, int lives){
 		this.p = p;
 		this.playerData = playerData;
 		//this.sockOut = sockOut;
@@ -48,9 +48,10 @@ public class ServerPositionSender extends Thread{
 					//pos an alle senden
 					j = 0;
 					while(playerData[j][1] != null){
-						
+						//Move_P0_X_100_Y_200
 						sockOut = (PrintWriter)playerData[j][1];
-						sockOut.println("Player i Postion");
+						sockOut.println("Move:" + i + ":" + p.get(i).getX() + ":" + p.get(i).getY());
+						
 						++j;
 					}
 					

@@ -14,6 +14,7 @@ public class ClientPositionSender {
 	
 	
 	public void sendPosition(String s){
+		
 		sockOut.println(s);
 	}
 

@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 import map.Map;
 import map.Sprite;
 import network.FullPlayer;
-import network.HostPlayer;
+
 import network.NetworkGameController;
 import network.ServerPositionReceiver;
 import network.ServerPositionSender;
@@ -40,8 +40,8 @@ public class CreateNetworkGameMenue extends JPanel{
 	private JList lst_ConnectedPlayer;
 	
 	private Object[][] playerData;
-	private Vector<Sprite> player;
-	private Vector<String> vtr_PlayerNames;
+	private Vector<FullPlayer> player  = new Vector<FullPlayer>();
+	private Vector<String> vtr_PlayerNames = new Vector<String>();
 	private PlayerListenerController pLC;
 	private CreateNetworkGameMenue cNGM;
 	private ButtonListener lis_BtnListener = new ButtonListener();
@@ -150,17 +150,19 @@ public class CreateNetworkGameMenue extends JPanel{
 		Map map = new Map();
 		//Spieler erstellen + sender Receiver erstellen
 		int i = 0;
-		player.add((new FullPlayer(vtr_PlayerNames.get(i),1, map, player)));
+		player.add((new FullPlayer(vtr_PlayerNames.get(i),1, map, player, true, null)));
 		
+		System.out.println("server spieler erstellt");
 		++i;
-		while(playerData[i][0] != null){
-			player.add(new HostPlayer(vtr_PlayerNames.get(i), i+1, map, player));//erstellt einen Normalen Player und den rest HostPlayer
-			new ServerPositionReceiver((HostPlayer)player.get(i), (BufferedReader)playerData[i][0]);
+		while(playerData[i-1][0] != null){
+			player.add(new FullPlayer(vtr_PlayerNames.get(i-1), i+1, map, player, false, null));//erstellt einen Normalen Player und den rest HostPlayer
+			new ServerPositionReceiver((FullPlayer)player.get(i), (BufferedReader)playerData[i-1][0]);
 			new ServerPositionSender(player, playerData, map, 4);
 			++i;
+			System.out.println("andere spieler erstellt");
 			
-			new NetworkGameController(player, map);
 		}
+		new NetworkGameController(player, map);
 	}
 	
 	
