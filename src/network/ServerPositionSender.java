@@ -1,6 +1,6 @@
 package network;
 
-import game.Player;
+
 import game.Position;
 
 import java.io.BufferedReader;

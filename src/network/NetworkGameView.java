@@ -2,7 +2,7 @@ package network;
 
 import game.Finals;
 import game.LocalGameController;
-import game.Player;
+
 
 import java.awt.Color;
 import java.awt.Font;

@@ -1,7 +1,7 @@
 package network;
 
 import java.io.PrintWriter;
-import java.net.Socket;
+
 
 public class ClientPositionSender {
 	

@@ -1,7 +1,7 @@
 package network;
 
 import game.Finals;
-import game.Player;
+
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -116,8 +116,8 @@ public class FullPlayer extends Sprite implements KeyListener, Finals {
 						y = collisionObject.getY() - height;
 						jumpCount = 0;
 						jumpSpeed = 0;
-						if (collisionObject instanceof Player) {
-							((Player) collisionObject).getKilled();
+						if (collisionObject instanceof FullPlayer) {
+							((FullPlayer) collisionObject).getKilled();
 							kills++;
 
 						}

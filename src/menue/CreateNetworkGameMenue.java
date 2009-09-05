@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import map.Map;
-import map.Sprite;
+
 import network.FullPlayer;
 
 import network.NetworkGameController;

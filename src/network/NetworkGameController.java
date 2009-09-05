@@ -5,8 +5,8 @@ import map.Map;
 import map.Item;
 import menue.BaseFrame;
 import game.Finals;
-import game.GameView;
-import game.Player;
+
+
 
 import java.util.Vector;
 import java.awt.Rectangle;
