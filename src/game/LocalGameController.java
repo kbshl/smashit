@@ -4,6 +4,9 @@ import map.Sprite;
 import map.Map;
 import map.Item;
 import menue.BaseFrame;
+import menue.MainMenue;
+import menue.GameStatsMenue;
+
 import java.util.Vector;
 import java.awt.Rectangle;
 
@@ -11,7 +14,6 @@ public class LocalGameController implements Finals, Runnable {
 
 	private GameView view;
 	private Map map;
-	// private Player player;
 	private Vector<Player> players = new Vector<Player>();
 
 	private long delta = 0, last = 0, fps = 0, startTime;
@@ -49,6 +51,7 @@ public class LocalGameController implements Finals, Runnable {
 			} catch (InterruptedException e) {
 			}
 		}
+		endGame();
 	}
 
 	private void computeDelta() {
@@ -59,13 +62,19 @@ public class LocalGameController implements Finals, Runnable {
 	}
 
 	public void updateWorld() {
+		int dead = 0;
 		for (Sprite s : map.getSprites()) {
 			s.act(delta);
 		}
 		for (Player p : players) {
 			if (!p.isDead()) {
 				p.act(delta);
+			} else {
+				++dead;
 			}
+		}
+		if (dead >= 3) {
+			gameruns = false;
 		}
 		if (pastItemTime >= itemTime) {
 			pastItemTime -= itemTime;
@@ -74,19 +83,17 @@ public class LocalGameController implements Finals, Runnable {
 			addItem();
 		}
 	}
-	
+
 	private void removeItems() {
 		int i = 0;
 		while (i < map.getSprites().size()) {
 			if (map.getSprites().get(i) instanceof Item) {
-				if( ((Item) map.getSprites().get(i)).isRemoveable() ){
+				if (((Item) map.getSprites().get(i)).isRemoveable()) {
 					map.getSprites().remove(map.getSprites().get(i));
-				}
-				else{
+				} else {
 					++i;
 				}
-			}
-			else{
+			} else {
 				++i;
 			}
 		}
@@ -97,8 +104,8 @@ public class LocalGameController implements Finals, Runnable {
 		Item item = new Item(0, 0);
 		do {
 			collision = false;
-			item.setX((int) (800 * Math.random()));
-			item.setY((int) (600 * Math.random()));
+			item.setX((int) (WINDOW_WIDTH * Math.random()));
+			item.setY((int) (GAME_HEIGHT * Math.random()));
 			Rectangle me = item.getBounds();
 			for (Sprite s : map.getSprites()) {
 				if (me.intersects(s.getBounds())) {
@@ -112,6 +119,12 @@ public class LocalGameController implements Finals, Runnable {
 			}
 		} while (collision);
 		map.getSprites().add(item);
+	}
+	
+	private void endGame(){
+		long t = System.nanoTime() - startTime;
+		double d = (t / 1e9);
+		BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue(players, d));
 	}
 
 	public long getFPS() {

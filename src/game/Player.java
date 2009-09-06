@@ -20,10 +20,12 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private boolean jumpLock = false, left = false, right = false,
 			isDead = false;
 	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
-			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4;
-	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
+			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4,
+			pastItemTime = 0;
+	private int jumpCount = 0, jumpSkill = 2, lifes = 1, kills = 0,
 			lostLifes = 0;
 	private Sprite collisionObject;
+	private Item item;
 
 	public Player(String n, int playerNumber, Map m, Vector<Player> p) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
@@ -68,6 +70,17 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	public void act(long delay) {
+		
+		if(item != null){
+		 pastItemTime += (delay / 1e9);
+		 
+		 if(pastItemTime >= 20){
+			 pastItemTime = 0;
+			 item = null;
+			 moveTime = 0.007;
+			 jumpSkill = 2;
+		 }
+		}
 
 		if (left || right) {
 			pastMoveTime += (delay / 1e9);
@@ -130,7 +143,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 					}
 				}
 			}
-		}
+		}		
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -138,7 +151,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 		if (i == jumpKey) {
 			if (!jumpLock) {
 				jumpLock = true;
-				
+
 				if (jumpCount < jumpSkill) {
 					SoundManager.getSoundManager().playSound("jump8.wav");
 					jumpSpeed = jumpStart;
@@ -197,7 +210,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 	public void getKilled() {
 		SoundManager.getSoundManager().playSound("sprout.wav");
-		
+
 		if (lifes > 0) {
 			lifes--;
 			lostLifes++;
@@ -210,6 +223,9 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	private void getItem(Item item) {
+		SoundManager.getSoundManager().playSound("1-up.wav");
+		this.item = item;
+		pastItemTime = 0;
 		switch (item.getAbility()) {
 		case JUMP_HIGH:
 			jumpSkill = 3;
@@ -217,11 +233,16 @@ public class Player extends Sprite implements KeyListener, Finals {
 		case JUMP_LOW:
 			jumpSkill = 1;
 			break;
+		case MOVE_FAST:
+			moveTime = 0.003;
+			break;
+		case MOVE_SLOW:
+			moveTime = 0.012;
+			break;
 		default:
 			break;
 		}
 		item.collected();
-		
 	}
 
 	private void setNewPosition() {

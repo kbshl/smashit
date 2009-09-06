@@ -2,6 +2,8 @@ package menue;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import game.Player;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -11,10 +13,14 @@ public class GameStatsMenue extends JPanel{
 	
 	private JTable tbl_GameStats;
 	private JButton btn_Next;
+	private Vector<Player> players;
+	private double time;
 	
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
-	public GameStatsMenue(){
+	public GameStatsMenue(Vector<Player> p, double t){
+		players = p;
+		time = t;
 		
 		this.setLayout(null);
 		this.setSize(800, 600);

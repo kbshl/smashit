@@ -6,7 +6,7 @@ public class Item extends Sprite implements Finals {
 	
 	private int ability;
 	private boolean removeable;
-	private double pastAniTime = 0, aniTime = 0.25;
+	private double pastAniTime = 0, aniTime = 0.15;
 	
 	public Item(int x, int y){
 		super(x, y, new String[] { "item1.gif", "item2.gif","item3.gif","item4.gif" }, true);
@@ -48,6 +48,6 @@ public class Item extends Sprite implements Finals {
 	
 	public void collected(){
 		removeable = true;
-		y = 540;
+		y = 650;
 	}
 }
