@@ -2,11 +2,15 @@ package game;
 
 import java.awt.event.KeyEvent;
 
+import manager.PictureManager;
 import manager.SoundManager;
 import map.Sprite;
 import map.Map;
 import map.Item;
 import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Vector;
 
@@ -22,43 +26,48 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
 			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4,
 			pastItemTime = 0;
-	private int jumpCount = 0, jumpSkill = 2, lifes = 1, kills = 0,
-			lostLifes = 0;
+	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
+			lostLifes = 0, playerNumber;
 	private Sprite collisionObject;
 	private Item item;
 
-	public Player(String n, int playerNumber, Map m, Vector<Player> p) {
+	public Player(String n, int playerNum, Map m, Vector<Player> p) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
 		name = n;
 		map = m;
 		players = p;
 
-		switch (playerNumber) {
+		switch (playerNum) {
 		case PLAYER1:
+			playerNumber = 1;
 			leftKey = KeyEvent.VK_A;
 			rightKey = KeyEvent.VK_D;
 			jumpKey = KeyEvent.VK_W;
 			images[0] = "kirby1.gif";
 			break;
 		case PLAYER2:
+			playerNumber = 2;
 			leftKey = KeyEvent.VK_J;
 			rightKey = KeyEvent.VK_L;
 			jumpKey = KeyEvent.VK_I;
 			images[0] = "kirby2.gif";
 			break;
 		case PLAYER3:
+			playerNumber = 3;
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
 			images[0] = "kirby3.gif";
 			break;
 		case PLAYER4:
+			playerNumber = 4;
 			leftKey = KeyEvent.VK_NUMPAD1;
 			rightKey = KeyEvent.VK_NUMPAD3;
 			jumpKey = KeyEvent.VK_NUMPAD5;
 			images[0] = "kirby4.gif";
 			break;
 		default:
+			playerNumber = 1;
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
@@ -70,16 +79,16 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	public void act(long delay) {
-		
-		if(item != null){
-		 pastItemTime += (delay / 1e9);
-		 
-		 if(pastItemTime >= 20){
-			 pastItemTime = 0;
-			 item = null;
-			 moveTime = 0.007;
-			 jumpSkill = 2;
-		 }
+
+		if (item != null) {
+			pastItemTime += (delay / 1e9);
+
+			if (pastItemTime >= 20) {
+				pastItemTime = 0;
+				item = null;
+				moveTime = 0.007;
+				jumpSkill = 2;
+			}
 		}
 
 		if (left || right) {
@@ -143,7 +152,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 					}
 				}
 			}
-		}		
+		}
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -225,6 +234,8 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private void getItem(Item item) {
 		SoundManager.getSoundManager().playSound("1-up.wav");
 		this.item = item;
+		moveTime = 0.007;
+		jumpSkill = 2;
 		pastItemTime = 0;
 		switch (item.getAbility()) {
 		case JUMP_HIGH:
@@ -253,6 +264,27 @@ public class Player extends Sprite implements KeyListener, Finals {
 			y = (int) (GAME_HEIGHT * Math.random());
 			collision = checkCollision(0, 0);
 		} while (collision);
+	}
+
+	public void paint(Graphics g) {
+		g.drawImage(PictureManager.getImage(images[currentFrame]), x, y, null);
+		if(isDead){
+			g.drawImage(PictureManager.getImage("dead.gif"),(playerNumber - 1) * 200, 550, null);
+		}else{
+			g.drawImage(PictureManager.getImage(images[currentFrame]),(playerNumber - 1) * 200, 550, null);
+		}
+		g.drawString(name, 30 + ((playerNumber - 1) * 200), 567);
+		
+		g.drawImage(PictureManager.getImage("herz.gif"),(playerNumber - 1) * 200, 575, null);
+		g.drawString(lifes + "", 30 + ((playerNumber - 1) * 200), 592);
+		
+		g.drawImage(PictureManager.getImage("kills.gif"), 75 + (playerNumber - 1) * 200, 575, null);
+		g.drawString(kills+"", 105 + ((playerNumber-1) * 200), 592);
+				
+		if(item != null){
+			g.drawImage(PictureManager.getImage(item.getItemImage()), 150 + (playerNumber - 1) * 200, 575, null);
+		}
+
 	}
 
 	public int getLifes() {

@@ -20,7 +20,6 @@ public class GameView extends JPanel implements Finals {
 	private ClientGameController cGame;
 	private Map map;
 	private Vector<Player> players;
-	private Font gameFont = new Font("Monospaced", Font.BOLD, 12);
 
 	public GameView(LocalGameController g, Map m, Vector<Player> pl) {
 		super(true);
@@ -37,6 +36,7 @@ public class GameView extends JPanel implements Finals {
 	
 	protected void paintComponent(Graphics g) {
 		g.setColor(Color.black);
+		g.setFont(GAME_FONT);
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		g.drawImage(map.getBackground(), 0, 0, null);
@@ -49,21 +49,9 @@ public class GameView extends JPanel implements Finals {
 			p.paint(g);
 		}
 
-		// FPS malen
-		g.setColor(Color.black);
-		g.setFont(gameFont);
+		// FPS malen		
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 740, 20);
-		for (int i = 0; i < players.size(); ++i) {
-			if (players.get(i).isDead()) {
-				g.drawString(players.get(i).getName() + ": DEAD",
-						10 + (i * 200), 580);
-			} else {
-				g.drawString(players.get(i).getName() + " / L:"
-						+ players.get(i).getLifes() + " / K:"
-						+ players.get(i).getKills(), 10 + (i * 200), 580);
-			}
 
-		}
 		requestFocus();
 	}
 
