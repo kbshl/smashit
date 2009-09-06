@@ -228,7 +228,8 @@ public class Player extends Sprite implements KeyListener, Finals {
 		boolean collision;
 		y = 0;
 		do {
-			x = (int) (800 * Math.random());
+			x = (int) (WINDOW_WIDTH * Math.random());
+			y = (int) (GAME_HEIGHT * Math.random());
 			collision = checkCollision(0, 0);
 		} while (collision);
 	}

@@ -37,23 +37,18 @@ public class LocalGameController implements Finals, Runnable {
 		gameruns = true;
 		t = new Thread(this);
 		t.start();
-
 	}
 
 	public void run() {
-
 		while (gameruns) {
 			computeDelta();
 			updateWorld();
 			view.repaint();
-
 			try {
 				t.sleep(GAME_PAUSE);
 			} catch (InterruptedException e) {
 			}
-
 		}
-
 	}
 
 	private void computeDelta() {
@@ -64,22 +59,36 @@ public class LocalGameController implements Finals, Runnable {
 	}
 
 	public void updateWorld() {
-		
 		for (Sprite s : map.getSprites()) {
 			s.act(delta);
 		}
-		
 		for (Player p : players) {
 			if (!p.isDead()) {
 				p.act(delta);
 			}
 		}
-		
 		if (pastItemTime >= itemTime) {
 			pastItemTime -= itemTime;
 			itemTime = 5 + (Math.random() * 5);
+			removeItems();
 			addItem();
-			System.out.println(itemTime);
+		}
+	}
+	
+	private void removeItems() {
+		int i = 0;
+		while (i < map.getSprites().size()) {
+			if (map.getSprites().get(i) instanceof Item) {
+				if( ((Item) map.getSprites().get(i)).isRemoveable() ){
+					map.getSprites().remove(map.getSprites().get(i));
+				}
+				else{
+					++i;
+				}
+			}
+			else{
+				++i;
+			}
 		}
 	}
 
