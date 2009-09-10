@@ -109,7 +109,7 @@ public class JoinNetworkGameMenue extends JPanel{
 				}
 				ClientPositionSender cPS = new ClientPositionSender(sockout);
 				
-				Map map = new Map();
+				Map map = new Map("map.xml");
 				Vector<FullPlayer> player = new Vector<FullPlayer>();
 				
 				player.add(new FullPlayer("tut", 1, map, player, false, null));

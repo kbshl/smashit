@@ -3,7 +3,7 @@ package map;
 public class Boden extends Sprite {
 
 	public Boden() {
-		super(0, 600, new String[] { "boden.jpg" }, false);
+		super(0, 550, new String[] { "boden.gif" }, false);
 	}
 
 }

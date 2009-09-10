@@ -1,75 +1,96 @@
 package map;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Vector;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
+
 import manager.PictureManager;
+import game.Finals;
 
-
-
-public class Map {
+public class Map implements Finals {
 	private String name = "Level1";
 	private Vector<Sprite> sprites;
-	private String background = "desert.jpg";
+	private String background = "sky.jpg";
 
-	public Map() {
+	public Map(String mapFile) {
 		sprites = new Vector<Sprite>();
 		sprites.add(new WandLinks());
 		sprites.add(new WandRechts());
 		sprites.add(new Boden());
-		
-		sprites.add(new Box(50, 75));
-		sprites.add(new Box(50, 100));
-		sprites.add(new Box(75, 100));
-		sprites.add(new Box(75, 125));
-		sprites.add(new Box(100, 125));
-		
-		sprites.add(new Box(500, 400));
-		sprites.add(new Box(525, 400));
-		sprites.add(new Box(550, 400));
-		
-		sprites.add(new Box(575, 325));
-		sprites.add(new Box(600, 300));
-		sprites.add(new Box(625, 300));
-		sprites.add(new Box(650, 300));
-		
-		sprites.add(new Box(370, 450));
-		sprites.add(new Box(370, 425));
-		sprites.add(new Box(550, 226));
-		sprites.add(new Box(525, 226));
-		
-		
-		sprites.add(new Box(250, 500));
-		sprites.add(new Box(275, 500));
-		sprites.add(new Box(300, 500));
-		sprites.add(new Box(300, 475));
-		sprites.add(new Box(300, 450));
-		
-		sprites.add(new Box(250, 425));
-		sprites.add(new Box(225, 425));
-		sprites.add(new Box(200, 425));
-		sprites.add(new Box(175, 425));
-		
 
-		sprites.add(new Box(100, 500));
-		sprites.add(new Box(100, 475));
-		sprites.add(new Box(125, 500));
-		sprites.add(new Box(125, 425));
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(new File(MAP_PATH + mapFile));
 
-		sprites.add(new Box(100, 350));
-		sprites.add(new Box(150, 300));
-		sprites.add(new Box(75, 250));
-		sprites.add(new Box(200, 250));
-		
-		sprites.add(new Box(400, 250));
-		sprites.add(new Box(425, 250));
-		sprites.add(new Box(450, 225));
-		sprites.add(new Box(475, 200));
-		sprites.add(new Box(500, 175));
-		
-		
-		
-		sprites.add(new OldStoneFloor(0, 525));
-		
+			Node rootNode = document.getDocumentElement();
+			NamedNodeMap background_attr = rootNode.getAttributes();
+			if (background_attr != null) {
+				String background_str = background_attr.item(0).getNodeValue();
+				if (!background_str.equals("")) {
+					background= background_str;
+				}
+			}
+			
+			NodeList nodes = rootNode.getChildNodes();
+			for (int i = 0; i < nodes.getLength(); i++) {
+				String nodeName = nodes.item(i).getNodeName();
+				NamedNodeMap attributes = nodes.item(i).getAttributes();
+				if (attributes != null) {
+					String xv = attributes.item(0).getNodeValue();
+					String yv = attributes.item(1).getNodeValue();
+
+					if (!xv.equals("") && !yv.equals("")) {
+						int x = Integer.valueOf(xv).intValue();
+						int y = Integer.valueOf(yv).intValue();
+
+						if (nodeName.equals("box")) {
+							sprites.add(new Box(x, y));
+						}
+						if (nodeName.equals("brickstone")) {
+							sprites.add(new BrickStone(x, y));
+						}
+						if (nodeName.equals("mayastone")) {
+							sprites.add(new MayaStone(x, y));
+						}
+						if (nodeName.equals("oldstonefloor")) {
+							sprites.add(new OldStoneFloor(x, y));
+						}
+					}
+
+				}
+			}
+
+			// ---- Error handling ----
+		} catch (SAXParseException spe) {
+			System.out.println("\n** Parsing error, line "
+					+ spe.getLineNumber() + ", uri " + spe.getSystemId());
+			System.out.println("   " + spe.getMessage());
+			Exception e = (spe.getException() != null) ? spe.getException()
+					: spe;
+			e.printStackTrace();
+		} catch (SAXException sxe) {
+			Exception e = (sxe.getException() != null) ? sxe.getException()
+					: sxe;
+			e.printStackTrace();
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 
 	}
 

@@ -26,7 +26,7 @@ public class LocalGameController implements Finals, Runnable {
 	}
 
 	private void init() {
-		map = new Map();
+		map = new Map("map.xml");
 		players.add(new Player("Rosa", PLAYER1, map, players));
 		players.add(new Player("Blau", PLAYER2, map, players));
 		players.add(new Player("Gelb", PLAYER3, map, players));

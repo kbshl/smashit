@@ -7,6 +7,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import manager.PictureManager;
 import map.Map;
 import map.Sprite;
 import network.ClientGameController;
@@ -40,14 +41,16 @@ public class GameView extends JPanel implements Finals {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		g.drawImage(map.getBackground(), 0, 0, null);
-
+		g.drawImage(PictureManager.getImage("hud.jpg"), 0, 550, null);
 		// Level malen
-		for (Sprite s : map.getSprites()) {
-			s.paint(g);
+		for (int i = 0; i < map.getSprites().size(); ++i) {
+			map.getSprites().get(i).paint(g);
 		}
 		for (Player p : players) {
 			p.paint(g);
 		}
+		
+		
 
 		// FPS malen		
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 740, 20);

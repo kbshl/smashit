@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<map background="desert.jpg">
+
+
+<box x="50" y="75" />
+<box x="50" y="100" />
+<box x="75" y="100" />
+<box x="75" y="125" />
+<box x="100" y="125" />
+
+<box x="500" y="400" />
+<box x="525" y="400" />
+<box x="550" y="400" />
+
+<box x="575" y="325" />
+<box x="600" y="300" />
+<box x="625" y="300" />
+<box x="650" y="300" />
+
+<box x="370" y="450" />
+<box x="370" y="425" />
+<box x="550" y="225" />
+<box x="525" y="225" />
+
+
+<box x="250" y="425" />
+<box x="225" y="425" />
+<box x="200" y="425" />
+<box x="175" y="425" />
+
+<box x="100" y="500" />
+<box x="100" y="475" />
+<box x="125" y="500" />
+<box x="125" y="425" />
+
+<box x="100" y="350" />
+<box x="150" y="300" />
+<box x="75" y="250" />
+<box x="200" y="250" />
+
+<brickstone x="250" y="500" />
+<brickstone x="275" y="500" />
+<brickstone x="300" y="500" />
+<brickstone x="300" y="475" />
+<brickstone x="300" y="450" />
+
+<mayastone x="400" y="250" />
+<mayastone x="425" y="250" />
+<mayastone x="450" y="225" />
+<mayastone x="475" y="200" />
+<mayastone x="500" y="175" />
+
+<oldstonefloor x="0" y="525" />
+
+</map>

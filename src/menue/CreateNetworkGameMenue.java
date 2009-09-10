@@ -147,7 +147,7 @@ public class CreateNetworkGameMenue extends JPanel{
 	private void startGame(){
 		
 		//map erstellen
-		Map map = new Map();
+		Map map = new Map("map.xml");
 		//Spieler erstellen + sender Receiver erstellen
 		int i = 0;
 		player.add((new FullPlayer(vtr_PlayerNames.get(i),1, map, player, true, null)));
