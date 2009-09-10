@@ -68,18 +68,17 @@ public class LocalGameController implements Finals, Runnable {
 	}
 
 	public void updateWorld() {
-		int dead = 0;
+		int alive = 0;
 		for (Sprite s : map.getSprites()) {
 			s.act(delta);
 		}
 		for (Player p : players) {
 			if (!p.isDead()) {
 				p.act(delta);
-			} else {
-				++dead;
+				alive++;
 			}
 		}
-		if (dead >= 3) {
+		if (alive <= 1) {
 			gameruns = false;
 		}
 		if (pastItemTime >= itemTime) {
