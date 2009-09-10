@@ -55,8 +55,6 @@ public class MainMenue extends JPanel {
 		add(btn_NewLocalGame);
 		add(btn_NewNetworkGame);
 		add(btn_MapEditor);
-
-		SoundManager.getSoundManager().loopSound("smwovr1.mid");
 	}
 
 	public void openWebsite(String link) {

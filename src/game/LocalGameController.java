@@ -21,16 +21,22 @@ public class LocalGameController implements Finals, Runnable {
 	private Thread t;
 	private static boolean gameruns;
 
-	public LocalGameController() {
-		init();
-	}
+	public LocalGameController(String mapName, String name1, String name2,
+			String name3, String name4) {
+		map = new Map(mapName + ".xml");
+		if (!name1.equals("")) {
+			players.add(new Player(name1, PLAYER1, map, players));
+		}
+		if (!name2.equals("")) {
+			players.add(new Player(name2, PLAYER2, map, players));
+		}
+		if (!name3.equals("")) {
+			players.add(new Player(name3, PLAYER3, map, players));
+		}
+		if (!name4.equals("")) {
+			players.add(new Player(name4, PLAYER4, map, players));
+		}
 
-	private void init() {
-		map = new Map("map.xml");
-		players.add(new Player("Rosa", PLAYER1, map, players));
-		players.add(new Player("Blau", PLAYER2, map, players));
-		players.add(new Player("Gelb", PLAYER3, map, players));
-		players.add(new Player("Grün", PLAYER4, map, players));
 		view = new GameView(this, map, players);
 		BaseFrame.getBaseFrame().setJPanel(view);
 
@@ -120,8 +126,8 @@ public class LocalGameController implements Finals, Runnable {
 		} while (collision);
 		map.getSprites().add(item);
 	}
-	
-	private void endGame(){
+
+	private void endGame() {
 		long t = System.nanoTime() - startTime;
 		double d = (t / 1e9);
 		BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue(players, d));
