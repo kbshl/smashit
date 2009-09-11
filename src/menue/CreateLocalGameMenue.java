@@ -19,12 +19,12 @@ public class CreateLocalGameMenue extends GamePanel implements Finals {
 	private GameButton btn_Back = new GameButton(10,565,"Zurück");
 	private GameButton btn_StartGame = new GameButton(690,565,"Start");
 	private JLabel message = new JLabel();
-	private GameTextField txt_NamePlayer1 = new GameTextField( 10, 10);
-	private GameTextField txt_NamePlayer2 = new GameTextField( 10, 45);
-	private GameTextField txt_NamePlayer3 = new GameTextField( 10, 80);
-	private GameTextField txt_NamePlayer4 = new GameTextField( 10, 115);
-	private GameTextField txt_lifes = new GameTextField( 10, 150);
-	private MapList mapList = new MapList(590, 10);
+	private GameTextField txt_NamePlayer1 = new GameTextField( 160, 30);
+	private GameTextField txt_NamePlayer2 = new GameTextField( 160, 95);
+	private GameTextField txt_NamePlayer3 = new GameTextField( 160, 160);
+	private GameTextField txt_NamePlayer4 = new GameTextField( 160, 225);
+	private GameTextField txt_lifes = new GameTextField( 160, 290);
+	private MapList mapList = new MapList(570, 30);
 
 	private ButtonListener buttonListener = new ButtonListener();
 
