@@ -14,54 +14,31 @@ import java.io.File;
 import game.Finals;
 import java.util.Vector;
 
-public class CreateLocalGameMenue extends JPanel implements Finals {
+public class CreateLocalGameMenue extends GamePanel implements Finals {
 
-	private JButton btn_Back = new JButton("Zurück");
-	private JButton btn_StartGame = new JButton("Start");
+	private GameButton btn_Back = new GameButton(10,565,"Zurück");
+	private GameButton btn_StartGame = new GameButton(690,565,"Start");
 	private JLabel message = new JLabel();
-	private JTextField txt_NamePlayer1 = new JTextField();;
-	private JTextField txt_NamePlayer2 = new JTextField();;
-	private JTextField txt_NamePlayer3 = new JTextField();;
-	private JTextField txt_NamePlayer4 = new JTextField();;
-	private JList mapList;
-	private Vector<String> maps = new Vector<String>();
+	private GameTextField txt_NamePlayer1 = new GameTextField( 10, 10);
+	private GameTextField txt_NamePlayer2 = new GameTextField( 10, 45);
+	private GameTextField txt_NamePlayer3 = new GameTextField( 10, 80);
+	private GameTextField txt_NamePlayer4 = new GameTextField( 10, 115);
+	private GameTextField txt_lifes = new GameTextField( 10, 150);
+	private MapList mapList = new MapList(590, 10);
 
 	private ButtonListener buttonListener = new ButtonListener();
 
 	public CreateLocalGameMenue() {
-		this.setSize(800, 600);
-		this.setLayout(null);
-
-		// TextFelder erstellen und platzieren
-		txt_NamePlayer1.setBounds(150, 40, 100, 30);
-		txt_NamePlayer2.setBounds(150, 80, 100, 30);
-		txt_NamePlayer3.setBounds(150, 120, 100, 30);
-		txt_NamePlayer4.setBounds(150, 160, 100, 30);
+		super("gamepanel_localgame.jpg");
 
 		// Buttons erstellen und platzieren
-		btn_Back.setBounds(10, 500, 90, 30);
-		btn_StartGame.setBounds(650, 500, 90, 30);
 		btn_Back.setActionCommand("btn_Back");
 		btn_StartGame.setActionCommand("btn_StartGame");
 		btn_Back.addActionListener(buttonListener);
 		btn_StartGame.addActionListener(buttonListener);
 
-		// Mapliste erstellen
-		File mapFolder = new File(MAP_PATH);
-		String[] folderList = mapFolder.list();
-		for (int i = 0; i < folderList.length; i++) {
-			if (folderList[i].endsWith(".xml")) {
-				String neu = folderList[i].substring(0,
-						folderList[i].length() - 4);
-				maps.addElement(neu);
-			}
-		}
-		mapList = new JList(maps);
-		mapList.setBounds(600, 10, 190, 400);
-		mapList.setSelectedIndex(0);
-		
 		// Messagefeld
-		message.setBounds(150, 500, 400, 30);
+		message.setBounds(200, 565, 400, 25);
 
 		// Hinzufügen aller Elemente
 		add(btn_Back);
@@ -70,6 +47,7 @@ public class CreateLocalGameMenue extends JPanel implements Finals {
 		add(txt_NamePlayer2);
 		add(txt_NamePlayer3);
 		add(txt_NamePlayer4);
+		add(txt_lifes);
 		add(mapList);
 		add(message);
 	}
@@ -93,7 +71,7 @@ public class CreateLocalGameMenue extends JPanel implements Finals {
 				}
 				
 				if(anzahl > 1){
-					new LocalGameController(maps.get(mapList.getSelectedIndex()),name[0],name[1],name[2],name[3]);
+					new LocalGameController(mapList.getSelectedMap(),name[0],name[1],name[2],name[3]);
 				}
 				else{
 					message.setText("Es müssen mindestens 2 Spielernamen eingetragen werden.");

@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import manager.SoundManager;
 import mapeditor.MapEditorView;
 
-public class MainMenue extends JPanel {
+public class MainMenue extends GamePanel {
 
 	private JButton btn_Help;
 	private JButton btn_NewLocalGame;
@@ -19,8 +19,7 @@ public class MainMenue extends JPanel {
 	private ButtonListener lis_BtnListener = new ButtonListener();
 
 	public MainMenue() {
-		this.setSize(800, 600);
-		this.setLayout(null);
+		super("gamepanel_mainmenue.jpg");
 
 		// Buttons erstellen
 		btn_Help = new JButton("Hilfe");

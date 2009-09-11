@@ -16,14 +16,14 @@ public class LocalGameController implements Finals, Runnable {
 	private Map map;
 	private Vector<Player> players = new Vector<Player>();
 
-	private long delta = 0, last = 0, fps = 0, startTime;
+	private long delta = 0, last = 0, fps = 0;
 	private double itemTime = 10, pastItemTime = 0;
 	private Thread t;
 	private static boolean gameruns;
 
 	public LocalGameController(String mapName, String name1, String name2,
 			String name3, String name4) {
-		map = new Map(mapName + ".xml");
+		map = new Map(mapName);
 		if (!name1.equals("")) {
 			players.add(new Player(name1, PLAYER1, map, players));
 		}
@@ -41,7 +41,6 @@ public class LocalGameController implements Finals, Runnable {
 		BaseFrame.getBaseFrame().setJPanel(view);
 
 		last = System.nanoTime();
-		startTime = last;
 		gameruns = true;
 		t = new Thread(this);
 		t.start();
@@ -127,9 +126,7 @@ public class LocalGameController implements Finals, Runnable {
 	}
 
 	private void endGame() {
-		long t = System.nanoTime() - startTime;
-		double d = (t / 1e9);
-		BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue(players, d));
+		BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue(players));
 	}
 
 	public long getFPS() {

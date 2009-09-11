@@ -14,13 +14,11 @@ public class GameStatsMenue extends JPanel{
 	private JTable tbl_GameStats;
 	private JButton btn_Next;
 	private Vector<Player> players;
-	private double time;
 	
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
-	public GameStatsMenue(Vector<Player> p, double t){
+	public GameStatsMenue(Vector<Player> p){
 		players = p;
-		time = t;
 		
 		this.setLayout(null);
 		this.setSize(800, 600);
