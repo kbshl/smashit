@@ -29,10 +29,11 @@ public class FullPlayer extends Sprite implements KeyListener, Finals {
 			lostLifes = 0;
 	private Sprite collisionObject;
 
-	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS) {
+	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS, int lifes) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
 		this.realPlayer = realPlayer;
 		this.playerNumber = playerNumber;
+		this.lifes = lifes;
 		name = n;
 		map = m;
 		players = p;

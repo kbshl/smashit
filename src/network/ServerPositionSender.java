@@ -25,9 +25,60 @@ public class ServerPositionSender extends Thread{
 		this.map = map;
 		this.lives = lives;
 		oldPosition = new Vector();
-		start();
+		
+		//Sendet init daten an die clienten
+		//evtl noch in einen Extra Thread auslagern
+		//andereseits beginnt das spiel dann erst, wenn alle daten übermittelt sind...
+		
+		
+		
+//		//PlayerLifes
+//		input = sockin.readLine();
+//		playerLifes = Integer.parseInt(input);
+//		input = sockin.readLine();
+//		playerNames = input.split(":");//Peter:Klaus:Tobi:Nukki
+
+//		//input = sockin.readLine();
+//		//map = new Map(input);
+//		input = sockin.readLine();
+//		playerNumber = Integer.parseInt(input);		
+		
+		if(init()){
+			System.out.println("ServerPositionReceiver hat init und wird gestartet");
+			start();
+		}
+		
 		
 	}
+	
+	private boolean init(){
+		int j = 0;
+		while(playerData[j][1] != null){
+			//Move_P0_X_100_Y_200
+			sockOut = (PrintWriter)playerData[j][1];
+			sockOut.println(lives);//leben werden gesendet
+			sockOut.println(getPlayerNames());
+			//sockOut.println(map.getMapData());
+			sockOut.println(j+1);
+			
+			
+			++j;
+		}
+		
+		
+		return true;
+	}
+	
+	private String getPlayerNames(){
+		String s = "";
+		for(int i = 0; i<p.size(); i++){
+			System.out.println(p.get(i).getName() + " wird zum String geadded");
+			s = s + p.get(i).getName() + ":" ;
+		}
+		s = s + p.lastElement().getName();
+		return s;
+	}
+	 
 	public void run(){
 		//int oldPosition = 0, newPosition = 0;
 		int j = 0;

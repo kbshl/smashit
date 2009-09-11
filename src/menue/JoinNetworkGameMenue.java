@@ -41,6 +41,11 @@ public class JoinNetworkGameMenue extends JPanel{
 	private PrintWriter sockout = null;
 	private BufferedReader sockin = null;
 	
+	private int playerLifes;
+	private String[] playerNames;
+	private Map map;
+	private int playerNumber;
+	
 	public JoinNetworkGameMenue(){
 		this.setLayout(null);
 		this.setSize(800, 600);
@@ -107,16 +112,73 @@ public class JoinNetworkGameMenue extends JPanel{
 				}catch(IOException excep){
 					System.out.println(excep.getMessage());
 				}
+				
+				try{
+					String input = "";
+					//Initialize
+					System.out.println("warten auf Init");
+					//PlayerLifes
+					input = sockin.readLine();
+					System.out.println("playerleben bekommen");
+					playerLifes = Integer.parseInt(input);
+					input = sockin.readLine();
+					System.out.println("playernames bekommen" + input);
+					playerNames = input.split(":");//Peter:Klaus:Tobi:Nukki
+					//input = sockin.readLine();
+					//map = new Map(input);
+					input = sockin.readLine();
+					
+					playerNumber = Integer.parseInt(input);
+					System.out.println("playerNumber = " + playerNumber);
+				}
+				catch(Exception ex){
+					
+				}
+				
+				
+				System.out.println("Init Done");
+				
+				
 				ClientPositionSender cPS = new ClientPositionSender(sockout);
 				
 				Map map = new Map("map.xml");
 				Vector<FullPlayer> player = new Vector<FullPlayer>();
 				
-				player.add(new FullPlayer("tut", 1, map, player, false, null));
-				player.add(new FullPlayer("tut", 2, map, player, false, cPS));
+				for(int i = 0; i<playerNames.length; i++){
+					
+					if(i == playerNumber){
+						player.add(new FullPlayer(playerNames[i], i+1, map, player, false, cPS, playerLifes));
+						System.out.println("Player number " + i + " wurde erstellt");
+					}
+					else{
+						player.add(new FullPlayer(playerNames[i], i+1, map, player, false, null, playerLifes));
+						System.out.println("Player number " + i + " wurde erstellt");
+					}
+					
+					
+					//player.add(new FullPlayer("tut", 2, map, player, false, cPS));
+				}
+				
+				
+				//player.add(new FullPlayer("tut", 1, map, player, false, null));
+				//player.add(new FullPlayer("tut", 2, map, player, false, cPS));
 				new ClientPositionReceiver(sockin, player);
 				
-				new ClientGameController(player, map);
+				//Map wird über CPR gesendet und dann auf this.map übertragen
+				//wird als xml übertragen map.getXMLData()
+				
+				
+				//Playerlifes wird auch vom CPR empfangen und beim erstellen der Player mitübergeben
+				
+				//evtl laden fortschritt
+				
+				//Eigener Player Name
+				
+				//Textfeld für Gamestats muss angesprochen werden
+				
+				//Zusätzlich angezeigte Elemente müssen übertragen werden. Wenn CPS die map kenn, kein problem
+				
+				new ClientGameController(player, map, playerNumber);
 				
 			}
 			if (e.getActionCommand().equals("btn_Back")){

@@ -21,9 +21,11 @@ public class ClientGameController implements Finals, Runnable {
 	private double itemTime = 10, pastItemTime = 0;
 	private Thread t;
 	private static boolean gameruns;
+	private int playerNumber;
 
-	public ClientGameController(Vector<FullPlayer> players, Map map) {
+	public ClientGameController(Vector<FullPlayer> players, Map map, int playerNumber) {
 		this.players = players;
+		this.playerNumber = playerNumber;
 		
 		this.map = map;
 		init();
@@ -35,7 +37,7 @@ public class ClientGameController implements Finals, Runnable {
 //		players.add(new Player("Blau", PLAYER2, map, players));
 //		players.add(new Player("Gelb", PLAYER3, map, players));
 //		players.add(new Player("Grün", PLAYER4, map, players));
-		view = new NetworkGameView(this, map, players);
+		view = new NetworkGameView(this, map, players, playerNumber);
 		BaseFrame.getBaseFrame().setJPanel(view);
 
 		last = System.nanoTime();

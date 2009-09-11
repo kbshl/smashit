@@ -39,7 +39,7 @@ public class NetworkGameView extends JPanel implements Finals {
 			addKeyListener(p);
 		}*/
 	}
-	public NetworkGameView(ClientGameController g, Map m, Vector<FullPlayer> pl) {
+	public NetworkGameView(ClientGameController g, Map m, Vector<FullPlayer> pl, int playerNumber) {
 		super(true);
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		this.setLayout(null);
@@ -47,7 +47,7 @@ public class NetworkGameView extends JPanel implements Finals {
 		map = m;
 		players = pl;
 		//nur einer muss steuern können
-		addKeyListener(players.get(1));
+		addKeyListener(players.get(playerNumber));
 		/*
 		for (FullPlayer p : players) {
 			addKeyListener(p);

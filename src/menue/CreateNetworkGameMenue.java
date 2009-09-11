@@ -150,12 +150,12 @@ public class CreateNetworkGameMenue extends JPanel{
 		Map map = new Map("map.xml");
 		//Spieler erstellen + sender Receiver erstellen
 		int i = 0;
-		player.add((new FullPlayer(vtr_PlayerNames.get(i),1, map, player, true, null)));
+		player.add((new FullPlayer("serverSpieler",1, map, player, true, null, 10)));
 		
 		System.out.println("server spieler erstellt");
 		++i;
 		while(playerData[i-1][0] != null){
-			player.add(new FullPlayer(vtr_PlayerNames.get(i-1), i+1, map, player, false, null));//erstellt einen Normalen Player und den rest HostPlayer
+			player.add(new FullPlayer(vtr_PlayerNames.get(i-1), i+1, map, player, false, null, 10));//erstellt einen Normalen Player und den rest HostPlayer
 			new ServerPositionReceiver((FullPlayer)player.get(i), (BufferedReader)playerData[i-1][0]);
 			new ServerPositionSender(player, playerData, map, 4);
 			++i;
@@ -164,6 +164,8 @@ public class CreateNetworkGameMenue extends JPanel{
 		}
 		new NetworkGameController(player, map);
 	}
+	
+	
 	
 	
 	private class ButtonListener implements ActionListener {
@@ -196,6 +198,8 @@ public class CreateNetworkGameMenue extends JPanel{
 		}
 
 	}
+	
+	
 	
 
 }
