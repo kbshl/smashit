@@ -57,9 +57,9 @@ public class JoinNetworkGameMenue extends JPanel{
 		lbl_IP = new JLabel("IP");
 		lbl_PlayerName = new JLabel("Spieler Name");
 		
-		txt_ServerPort = new JTextField();
-		txt_IP = new JTextField();
-		txt_PlayerName = new JTextField();
+		txt_ServerPort = new JTextField("7777");
+		txt_IP = new JTextField("localhost");
+		txt_PlayerName = new JTextField("tuuten");
 		
 		lbl_ServerPort.setBounds(100, 50, 100, 30);
 		txt_ServerPort.setBounds(250, 50, 100, 30);
@@ -162,7 +162,12 @@ public class JoinNetworkGameMenue extends JPanel{
 				
 				//player.add(new FullPlayer("tut", 1, map, player, false, null));
 				//player.add(new FullPlayer("tut", 2, map, player, false, cPS));
-				new ClientPositionReceiver(sockin, player);
+				try {
+					new ClientPositionReceiver(sockin, player, clientSocket.getInputStream());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				//Map wird über CPR gesendet und dann auf this.map übertragen
 				//wird als xml übertragen map.getXMLData()

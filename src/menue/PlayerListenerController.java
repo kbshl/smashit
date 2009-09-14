@@ -23,7 +23,7 @@ public class PlayerListenerController extends Thread{
 	public PlayerListenerController(CreateNetworkGameMenue cNGM){
 		this.cNGM = cNGM;
 		vtr_playerNames = new Vector();
-		sockInOut = new Object[8][2];
+		sockInOut = new Object[8][3];
 		connectCount = 0;
 		
 		this.start();
@@ -51,6 +51,8 @@ public class PlayerListenerController extends Thread{
 			    
 			    sockInOut[connectCount][0] = sockIn;
 			    sockInOut[connectCount][1] = sockOut;
+			    sockInOut[connectCount][2] = clientSocket.getOutputStream();
+			    
 			    cNGM.setPlayerData(sockInOut);
 			    
 			    //namen empfangen

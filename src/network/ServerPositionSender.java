@@ -3,7 +3,8 @@ package network;
 
 import game.Position;
 
-import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.Vector;
 
@@ -94,8 +95,8 @@ public class ServerPositionSender extends Thread{
 			
 			for(int i = 0; i< p.size(); i++){
 				//newPosition = p.get(i).getPosition();
-				if(oldPosition.get(i).getX() != p.get(i).getX() || oldPosition.get(i).getY() != p.get(i).getY()){
-					posAktuell = p.get(i).getPosition();
+				//if(oldPosition.get(i).getX() != p.get(i).getX() || oldPosition.get(i).getY() != p.get(i).getY()){
+					//posAktuell = p.get(i).getPosition();
 					//pos an alle senden
 					j = 0;
 					while(playerData[j][1] != null){
@@ -103,13 +104,25 @@ public class ServerPositionSender extends Thread{
 						sockOut = (PrintWriter)playerData[j][1];
 						sockOut.println("Move:" + i + ":" + p.get(i).getX() + ":" + p.get(i).getY());
 						
+						
+						//blub(0, i, p.get(i).getX(), p.get(i).getY());
+						/*
+						try {
+							
+							((OutputStream)playerData[j][2]).write(blub(0, i, p.get(i).getX(), p.get(i).getY()));
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							System.out.println("pups");
+						}
+						*/
 						++j;
+						
 					}
 					
 					
-					oldPosition.set(i, posAktuell);
+					//oldPosition.set(i, posAktuell);
 					//sockOut.println("");
-				}
+				//}
 			}
 			
 			
@@ -119,6 +132,38 @@ public class ServerPositionSender extends Thread{
 		}
 		
 		
+		
+	}
+	
+	public byte[] blub(int player, int aktion, int x, int y){
+		
+		byte[] array = new byte[5];
+		
+		byte temp = 0;
+		
+		temp = (byte) (temp | aktion);
+		
+		temp = (byte) (temp | (player << 3));
+		
+		array[0] = temp;
+		
+		temp = 0;
+		temp = (byte) ((x >> 8));
+		array[1] = temp;
+		temp = 0;
+		temp = (byte) (x);
+		array[2] = temp;
+		
+		temp = 0;
+		temp = (byte) ((y >> 8));
+		array[3] = temp;
+		temp = 0;
+		temp = (byte) (y);
+		array[4] = temp;
+		System.out.println("Sende bytes :" + array[0] + " " + array[1] + " "+ array[2] + " " + array[3] + " " + array[4]);
+		System.out.println("Sende data  :" + player + "; " + aktion +"; " + x + "; " + y );
+
+		return array;
 		
 	}
 

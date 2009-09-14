@@ -24,17 +24,17 @@ public class ServerPositionReceiver extends Thread{
 			}catch(Exception e){
 				
 			}
-			System.out.println("Beim Server kam an" + input);
+			//System.out.println("Beim Server kam an" + input);
 			inputParts = input.split(":");
 			
 			if(inputParts[0].equals("Move")){
 				
 				if(Integer.parseInt(inputParts[2]) == 0){ //realeased
-					System.out.println(inputParts[2] + "KeyReleased");
+					//System.out.println(inputParts[2] + "KeyReleased");
 					p.keyReleased(Integer.parseInt(inputParts[1]));
 				}
 				else{
-					System.out.println(inputParts[2] + "Pressed");
+					//System.out.println(inputParts[2] + "Pressed");
 					p.keyPressed(Integer.parseInt(inputParts[1]));
 				}
 				

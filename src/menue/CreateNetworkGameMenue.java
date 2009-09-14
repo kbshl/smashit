@@ -65,7 +65,7 @@ public class CreateNetworkGameMenue extends JPanel{
 		lbl_PlayerLife = new JLabel("Leben");
 		
 		txt_ServerName = new JTextField();
-		txt_ServerPort = new JTextField();
+		txt_ServerPort = new JTextField("7777");
 		txt_IP = new JTextField();
 		txt_PlayerName = new JTextField();
 		txt_MaxPlayer = new JTextField();

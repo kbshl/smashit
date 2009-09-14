@@ -2,17 +2,17 @@ package network;
 
 import game.Finals;
 
-
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Observer;
 import java.util.Vector;
 
 import map.Item;
 import map.Map;
 import map.Sprite;
 
-public class FullPlayer extends Sprite implements KeyListener, Finals {
+public class FullPlayer extends Sprite implements KeyListener, Finals{
 	private int playerNumber;
 	private String name;
 	private final int leftKey, rightKey, jumpKey;

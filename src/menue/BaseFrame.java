@@ -18,12 +18,12 @@ public class BaseFrame extends JFrame implements Finals {
 
 	private BaseFrame() {
 		
-		setUndecorated(true);
-		DisplayMode displayMode = new DisplayMode(800, 600, 32, 60);
-		GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice device = environment.getDefaultScreenDevice();
-		device.setFullScreenWindow(this);
-		device.setDisplayMode(displayMode);
+//		setUndecorated(true);
+//		DisplayMode displayMode = new DisplayMode(800, 600, 32, 60);
+//		GraphicsEnvironment environment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+//		GraphicsDevice device = environment.getDefaultScreenDevice();
+//		device.setFullScreenWindow(this);
+//		device.setDisplayMode(displayMode);
 		
 		
 		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
