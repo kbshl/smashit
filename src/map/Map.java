@@ -41,10 +41,10 @@ public class Map implements Finals {
 			if (background_attr != null) {
 				String background_str = background_attr.item(0).getNodeValue();
 				if (!background_str.equals("")) {
-					background= background_str;
+					background = background_str;
 				}
 			}
-			
+
 			NodeList nodes = rootNode.getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
 				String nodeName = nodes.item(i).getNodeName();
@@ -92,6 +92,13 @@ public class Map implements Finals {
 			ioe.printStackTrace();
 		}
 
+	}
+
+	public Map() {
+		sprites = new Vector<Sprite>();
+		sprites.add(new WandLinks());
+		sprites.add(new WandRechts());
+		sprites.add(new Boden());
 	}
 
 	public Vector<Sprite> getSprites() {
