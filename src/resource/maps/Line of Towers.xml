@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 
-<map background="maya.jpg">
+<map background="bg_maya.jpg">
 
 <mayastone x="0" y="500" />
 <mayastone x="0" y="475" />

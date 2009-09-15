@@ -37,8 +37,8 @@ public class CreateLocalGameMenue extends GamePanel implements Finals {
 		btn_Back.addActionListener(buttonListener);
 		btn_StartGame.addActionListener(buttonListener);
 
-		// Messagefeld
 		message.setBounds(200, 565, 400, 25);
+		txt_lifes.setText("10");
 
 		// Hinzufügen aller Elemente
 		add(btn_Back);
@@ -59,6 +59,14 @@ public class CreateLocalGameMenue extends GamePanel implements Finals {
 			}
 			if (e.getActionCommand().equals("btn_StartGame")) {
 				String[] name = new String[4];
+				String l = txt_lifes.getText().trim();
+				int leben = 10;
+				try{
+					leben = Integer.valueOf( l ).intValue();	
+				}catch(Exception E){
+					leben = 10;
+				}
+				
 				name[0] = txt_NamePlayer1.getText().trim();
 				name[1] = txt_NamePlayer2.getText().trim();
 				name[2] = txt_NamePlayer3.getText().trim();
@@ -71,7 +79,7 @@ public class CreateLocalGameMenue extends GamePanel implements Finals {
 				}
 				
 				if(anzahl > 1){
-					new LocalGameController(mapList.getSelectedMap(),name[0],name[1],name[2],name[3]);
+					new LocalGameController(mapList.getSelectedMap(),name[0],name[1],name[2],name[3],leben);
 				}
 				else{
 					message.setText("Es müssen mindestens 2 Spielernamen eingetragen werden.");

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 
-<map background="desert.jpg">
+<map background="bg_desert.jpg">
 
 
 <box x="50" y="75" />

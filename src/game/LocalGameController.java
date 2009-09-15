@@ -22,19 +22,19 @@ public class LocalGameController implements Finals, Runnable {
 	private static boolean gameruns;
 
 	public LocalGameController(String mapName, String name1, String name2,
-			String name3, String name4) {
+			String name3, String name4, int leben) {
 		map = new Map(mapName);
 		if (!name1.equals("")) {
-			players.add(new Player(name1, PLAYER1, map, players));
+			players.add(new Player(name1, PLAYER1, map, players, leben));
 		}
 		if (!name2.equals("")) {
-			players.add(new Player(name2, PLAYER2, map, players));
+			players.add(new Player(name2, PLAYER2, map, players, leben));
 		}
 		if (!name3.equals("")) {
-			players.add(new Player(name3, PLAYER3, map, players));
+			players.add(new Player(name3, PLAYER3, map, players, leben));
 		}
 		if (!name4.equals("")) {
-			players.add(new Player(name4, PLAYER4, map, players));
+			players.add(new Player(name4, PLAYER4, map, players, leben));
 		}
 
 		view = new GameView(this, map, players);

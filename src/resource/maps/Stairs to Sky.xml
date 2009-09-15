@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 
-<map background="sky.jpg">
+<map background="bg_sky.jpg">
 
 
 <brickstone x="500" y="25" />

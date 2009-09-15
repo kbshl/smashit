@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import manager.SoundManager;
 
-public class BaseFrame extends JFrame implements Finals,KeyListener{
+public class BaseFrame extends JFrame implements Finals, KeyListener{
 
 	private Container cp;
 	private static BaseFrame bf;

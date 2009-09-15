@@ -31,11 +31,12 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private Sprite collisionObject;
 	private Item item;
 
-	public Player(String n, int playerNum, Map m, Vector<Player> p) {
+	public Player(String n, int playerNum, Map m, Vector<Player> p, int l) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
 		name = n;
 		map = m;
 		players = p;
+		lifes = l;
 
 		switch (playerNum) {
 		case PLAYER1:
@@ -268,21 +269,17 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 	public void paint(Graphics g) {
 		g.drawImage(PictureManager.getImage(images[currentFrame]), x, y, null);
+		
 		if(isDead){
-			g.drawImage(PictureManager.getImage("dead.gif"),(playerNumber - 1) * 200, 550, null);
+			g.drawImage(PictureManager.getImage("dead.gif"),35 + (playerNumber - 1) * 200, 562, null);
 		}else{
-			g.drawImage(PictureManager.getImage(images[currentFrame]),(playerNumber - 1) * 200, 550, null);
+			g.drawImage(PictureManager.getImage(images[currentFrame]),35 + (playerNumber - 1) * 200, 562, null);
 		}
-		g.drawString(name, 30 + ((playerNumber - 1) * 200), 567);
 		
-		g.drawImage(PictureManager.getImage("herz.gif"),(playerNumber - 1) * 200, 575, null);
-		g.drawString(lifes + "", 30 + ((playerNumber - 1) * 200), 592);
-		
-		g.drawImage(PictureManager.getImage("kills.gif"), 75 + (playerNumber - 1) * 200, 575, null);
-		g.drawString(kills+"", 105 + ((playerNumber-1) * 200), 592);
+		g.drawString(name + ": " + kills + "/" + lifes, 65 + ((playerNumber - 1) * 200), 578);
 				
 		if(item != null){
-			g.drawImage(PictureManager.getImage(item.getItemImage()), 150 + (playerNumber - 1) * 200, 575, null);
+			g.drawImage(PictureManager.getImage(item.getItemImage()), 10 + (playerNumber - 1) * 200, 562, null);
 		}
 
 	}
