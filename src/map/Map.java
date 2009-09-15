@@ -104,7 +104,7 @@ public class Map implements Finals {
 	public Vector<Sprite> getSprites() {
 		return sprites;
 	}
-
+	
 	public Image getBackground() {
 		return PictureManager.getImage(background);
 	}
