@@ -4,10 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
-import manager.SoundManager;
-import mapeditor.MapEditorView;
+import mapeditor.MapEditorController;
 
 public class MainMenue extends GamePanel {
 
@@ -98,11 +96,11 @@ public class MainMenue extends GamePanel {
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
 			}
 			if (e.getActionCommand().equals("btn_Highscore")) {
-				//openWebsite("http://golem.de");
-//				BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue());
+				// openWebsite("http://golem.de");
+				// BaseFrame.getBaseFrame().setJPanel(new GameStatsMenue());
 			}
-			if (e.getActionCommand().equals("btn_Highscore")) {
-				BaseFrame.getBaseFrame().setJPanel(new MapEditorView());
+			if (e.getActionCommand().equals("btn_MapEditor")) {
+				new MapEditorController();
 			}
 
 		}
