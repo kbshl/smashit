@@ -221,11 +221,12 @@ public class Player extends Sprite implements KeyListener, Finals {
 	public void getKilled() {
 		SoundManager.getSoundManager().playSound("dead.wav");
 
-		if (lifes > 0) {
+		if (lifes > 1) {
 			lifes--;
 			lostLifes++;
 			setNewPosition();
 		} else {
+			lifes--;
 			isDead = true;
 			x = -100;
 			y = 0;
@@ -269,19 +270,27 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 	public void paint(Graphics g) {
 		g.drawImage(PictureManager.getImage(images[currentFrame]), x, y, null);
-		
-		if(isDead){
-			g.drawImage(PictureManager.getImage("dead.gif"),35 + (playerNumber - 1) * 200, 562, null);
-		}else{
-			g.drawImage(PictureManager.getImage(images[currentFrame]),35 + (playerNumber - 1) * 200, 562, null);
-		}
-		
-		g.drawString(name + ": " + kills + "/" + lifes, 65 + ((playerNumber - 1) * 200), 578);
-				
-		if(item != null){
-			g.drawImage(PictureManager.getImage(item.getItemImage()), 10 + (playerNumber - 1) * 200, 562, null);
+
+		if (isDead) {
+			g.drawImage(PictureManager.getImage("dead.gif"),
+					35 + (playerNumber - 1) * 200, 562, null);
+		} else {
+			g.drawImage(PictureManager.getImage(images[currentFrame]),
+					35 + (playerNumber - 1) * 200, 562, null);
 		}
 
+		g.drawString(name + ": " + kills + "/" + lifes,
+				65 + ((playerNumber - 1) * 200), 578);
+
+		if (item != null) {
+			g.drawImage(PictureManager.getImage(item.getItemImage()),
+					10 + (playerNumber - 1) * 200, 562, null);
+		}
+
+	}
+
+	public PlayerStats getPlayerStats() {
+		return new PlayerStats(name, kills, lifes);
 	}
 
 	public int getLifes() {

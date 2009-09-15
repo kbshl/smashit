@@ -1,31 +1,22 @@
 package game;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Vector;
 
-import javax.swing.JPanel;
-
 import manager.PictureManager;
 import map.Map;
-import map.Sprite;
-import network.ClientGameController;
-import network.FullPlayer;
-import network.NetworkGameController;
+import menue.GamePanel;
 
-public class GameView extends JPanel implements Finals {
+public class GameView extends GamePanel implements Finals {
 
 	private LocalGameController game;
-	private NetworkGameController nGame;
-	private ClientGameController cGame;
 	private Map map;
 	private Vector<Player> players;
 
 	public GameView(LocalGameController g, Map m, Vector<Player> pl) {
-		super(true);
-		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		this.setLayout(null);
+		super("");
+
 		game = g;
 		map = m;
 		players = pl;
@@ -33,8 +24,9 @@ public class GameView extends JPanel implements Finals {
 		for (Player p : players) {
 			addKeyListener(p);
 		}
+
 	}
-	
+
 	protected void paintComponent(Graphics g) {
 		g.setColor(Color.black);
 		g.setFont(GAME_FONT);
@@ -49,10 +41,8 @@ public class GameView extends JPanel implements Finals {
 		for (Player p : players) {
 			p.paint(g);
 		}
-		
-		
 
-		// FPS malen		
+		// FPS malen
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 740, 20);
 
 		requestFocus();

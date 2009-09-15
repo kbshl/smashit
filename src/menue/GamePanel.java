@@ -1,11 +1,14 @@
 package menue;
 
-import javax.swing.JPanel;
-import java.awt.Dimension;
+import game.Finals;
+
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import game.Finals;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
 import manager.PictureManager;
 
 public class GamePanel extends JPanel implements Finals, KeyListener {
@@ -25,23 +28,18 @@ public class GamePanel extends JPanel implements Finals, KeyListener {
 		if (this.image != null) {
 			g.drawImage(PictureManager.getImage(image), 0, 0, this);
 		}
-	}
-
-	public Dimension getPreferredSize() {
-		if (image != null) {
-			return new Dimension(PictureManager.getImage(image).getWidth(null),
-					PictureManager.getImage(image).getHeight(null));
-		} else {
-			return super.getPreferredSize();
-		}
+		requestFocus();
 	}
 
 	public void keyPressed(KeyEvent e) {
-		System.out.println("sdfsdf");
 		if (e.getKeyCode() == 27) {
-			BaseFrame.getBaseFrame().setVisible(false);
-			BaseFrame.getBaseFrame().dispose();
-			System.exit(0);
+			int i = JOptionPane.showConfirmDialog(BaseFrame.getBaseFrame(), "Wollen Sie das Spiel beenden?");
+			if(i == JOptionPane.YES_OPTION){
+				BaseFrame.getBaseFrame().setVisible(false);
+				BaseFrame.getBaseFrame().dispose();
+				System.exit(0);	
+			}
+
 		}
 	}
 

@@ -16,14 +16,14 @@ import java.util.Vector;
 
 public class CreateLocalGameMenue extends GamePanel implements Finals {
 
-	private GameButton btn_Back = new GameButton(20,565,"Zurück");
-	private GameButton btn_StartGame = new GameButton(680,565,"Start");
+	private GameButton btn_Back = new GameButton(20, 565, "Zurück");
+	private GameButton btn_StartGame = new GameButton(680, 565, "Start");
 	private JLabel message = new JLabel();
-	private GameTextField txt_NamePlayer1 = new GameTextField( 160, 30);
-	private GameTextField txt_NamePlayer2 = new GameTextField( 160, 95);
-	private GameTextField txt_NamePlayer3 = new GameTextField( 160, 160);
-	private GameTextField txt_NamePlayer4 = new GameTextField( 160, 225);
-	private GameTextField txt_lifes = new GameTextField( 160, 290);
+	private GameTextField txt_NamePlayer1 = new GameTextField(160, 30);
+	private GameTextField txt_NamePlayer2 = new GameTextField(160, 95);
+	private GameTextField txt_NamePlayer3 = new GameTextField(160, 160);
+	private GameTextField txt_NamePlayer4 = new GameTextField(160, 225);
+	private GameTextField txt_lifes = new GameTextField(160, 290);
 	private MapList mapList = new MapList(570, 30);
 
 	private ButtonListener buttonListener = new ButtonListener();
@@ -58,33 +58,39 @@ public class CreateLocalGameMenue extends GamePanel implements Finals {
 				BaseFrame.getBaseFrame().setJPanel(new MainMenue());
 			}
 			if (e.getActionCommand().equals("btn_StartGame")) {
+
 				String[] name = new String[4];
-				String l = txt_lifes.getText().trim();
-				int leben = 10;
-				try{
-					leben = Integer.valueOf( l ).intValue();	
-				}catch(Exception E){
-					leben = 10;
-				}
-				
 				name[0] = txt_NamePlayer1.getText().trim();
 				name[1] = txt_NamePlayer2.getText().trim();
 				name[2] = txt_NamePlayer3.getText().trim();
 				name[3] = txt_NamePlayer4.getText().trim();
 				int anzahl = 0;
-				for(int i = 0; i< name.length; ++i){
-					if(!name[i].equals("")){
+				for (int i = 0; i < name.length; ++i) {
+					if (!name[i].equals("")) {
 						anzahl++;
 					}
 				}
-				
-				if(anzahl > 1){
-					new LocalGameController(mapList.getSelectedMap(),name[0],name[1],name[2],name[3],leben);
+
+				String l = txt_lifes.getText().trim();
+				int leben = 10;
+				try {
+					leben = Integer.valueOf(l).intValue();
+				} catch (Exception E) {
+					leben = 10;
 				}
-				else{
-					message.setText("Es müssen mindestens 2 Spielernamen eingetragen werden.");
-				}
 				
+			if(leben < 1 || leben > 500){
+				leben = 10;
+			}
+
+				if (anzahl > 1) {
+					new LocalGameController(mapList.getSelectedMap(), name[0],
+							name[1], name[2], name[3], leben);
+				} else {
+					message
+							.setText("Es müssen mindestens 2 Spielernamen eingetragen werden.");
+				}
+
 			}
 		}
 	}
