@@ -59,8 +59,8 @@ public class MapEditorView extends GamePanel {
 		btn_zurueck.setActionCommand("zurueck");
 
 		//Combobox für Backgrounds
-		backgrounds[0] = "desert";
-		backgrounds[1] = "sky";
+		backgrounds[0] = "sky";
+		backgrounds[1] = "desert";
 		backgrounds[2] = "forest";
 		backgroundList = ComboIconBoxFactory.buildComboBox(backgrounds);
 		((JComponent) backgroundList.getRenderer()).setPreferredSize(new Dimension(25,25));
