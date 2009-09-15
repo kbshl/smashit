@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import map.Box;
 import map.Map;
 import map.Sprite;
 import menue.BaseFrame;
@@ -13,7 +14,8 @@ public class MapEditorController implements ActionListener,MouseListener{
 	
 	private MapEditorView view;
 	private Map map = new Map();
-	private Sprite selectedObj;
+	private String selectedObj;
+	private Class so;
 	
 	
 	
@@ -23,19 +25,11 @@ public class MapEditorController implements ActionListener,MouseListener{
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("box")){
-
-		}
-		if (e.getActionCommand().equals("stone")){
-	
-		}
-		if (e.getActionCommand().equals("loeschen")){
-		
-		}
+			selectedObj = "box";
 	}
 
 	public void mouseClicked(MouseEvent e) {
-	
+
 	}
 
 	public void mouseEntered(MouseEvent e) {
@@ -54,8 +48,9 @@ public class MapEditorController implements ActionListener,MouseListener{
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+
+		map.getSprites().add(new Box(e.getX(), e.getY()));
+		view.repaint();
 	}
 
 }

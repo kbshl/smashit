@@ -1,7 +1,10 @@
 package mapeditor;
 
+import game.Player;
+
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +13,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import manager.PictureManager;
 import map.Map;
 import menue.GameButton;
 import menue.GameIconButton;
@@ -62,11 +66,24 @@ public class MapEditorView extends GamePanel {
 		add(btn_loeschen);
 		add(btn_speichern);
 		add(btn_zurueck);
+		addMouseListener(controller);
 
 	}
 
 	public JPanel getGameArea() {
 		return gameArea;
+	}
+	
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+//		g.drawImage(map.getBackground(), 0, 0, null);
+		g.drawImage(PictureManager.getImage("hud.jpg"), 0, 550, null);
+		// Level malen
+		for (int i = 0; i < map.getSprites().size(); ++i) {
+			map.getSprites().get(i).paint(g);
+		}
+		requestFocus();
+		
 	}
 
 }
