@@ -22,7 +22,7 @@ import game.Finals;
 public class Map implements Finals {
 	private String name = "Level1";
 	private Vector<Sprite> sprites;
-	private String background = "sky.jpg";
+	private String background = "bg_sky.jpg";
 
 	public Map(String mapFile) {
 		sprites = new Vector<Sprite>();
