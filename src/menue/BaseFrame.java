@@ -52,7 +52,7 @@ public class BaseFrame extends JFrame implements Finals,KeyListener{
 		this.setVisible(true);
 		this.addKeyListener(this);
 		requestFocus();
-		SoundManager.getSoundManager().loopSound("smwovr1.mid");
+		SoundManager.getSoundManager().loopSound("music.mid");
 	}
 
 	public void setJPanel(JPanel p) {

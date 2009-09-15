@@ -9,28 +9,17 @@ import mapeditor.MapEditorController;
 
 public class MainMenue extends GamePanel {
 
-	private JButton btn_Help;
-	private JButton btn_NewLocalGame;
-	private JButton btn_NewNetworkGame;
-	private JButton btn_Highscore;
-	private JButton btn_MapEditor;
+	
+	private GameButton btn_NewLocalGame = new GameButton(20,20,"Lokales Spiel");
+	private GameButton btn_NewNetworkGame = new GameButton(20,55,"NetzwerkSpiel");
+	private GameButton btn_MapEditor = new GameButton(20,90,"Mapeditor");
+	private GameButton btn_Highscore = new GameButton(20,125,"Highscore");
+	private GameButton btn_Help = new GameButton(20,160,"Hilfe");
+
 	private ButtonListener lis_BtnListener = new ButtonListener();
 
 	public MainMenue() {
 		super("gamepanel_mainmenue.jpg");
-
-		// Buttons erstellen
-		btn_Help = new JButton("Hilfe");
-		btn_NewLocalGame = new JButton("Neues lokales Spiel");
-		btn_NewNetworkGame = new JButton("Neues NetzwerkSpiel");
-		btn_Highscore = new JButton("Highscore");
-		btn_MapEditor = new JButton("Map Editor");
-
-		btn_Help.setBounds(10, 20, 140, 30);
-		btn_Highscore.setBounds(10, 60, 140, 30);
-		btn_NewLocalGame.setBounds(10, 100, 140, 30);
-		btn_NewNetworkGame.setBounds(10, 140, 140, 30);
-		btn_MapEditor.setBounds(10, 180, 140, 30);
 
 		// Actioncommand
 		btn_Help.setActionCommand("btn_Help");

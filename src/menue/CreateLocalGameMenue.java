@@ -16,8 +16,8 @@ import java.util.Vector;
 
 public class CreateLocalGameMenue extends GamePanel implements Finals {
 
-	private GameButton btn_Back = new GameButton(10,565,"Zurück");
-	private GameButton btn_StartGame = new GameButton(690,565,"Start");
+	private GameButton btn_Back = new GameButton(20,565,"Zurück");
+	private GameButton btn_StartGame = new GameButton(680,565,"Start");
 	private JLabel message = new JLabel();
 	private GameTextField txt_NamePlayer1 = new GameTextField( 160, 30);
 	private GameTextField txt_NamePlayer2 = new GameTextField( 160, 95);

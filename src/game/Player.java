@@ -162,7 +162,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 				jumpLock = true;
 
 				if (jumpCount < jumpSkill) {
-					SoundManager.getSoundManager().playSound("jump8.wav");
+					SoundManager.getSoundManager().playSound("jump.wav");
 					jumpSpeed = jumpStart;
 					jumpCount++;
 				}
@@ -218,7 +218,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	public void getKilled() {
-		SoundManager.getSoundManager().playSound("sprout.wav");
+		SoundManager.getSoundManager().playSound("dead.wav");
 
 		if (lifes > 0) {
 			lifes--;
@@ -232,7 +232,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	private void getItem(Item item) {
-		SoundManager.getSoundManager().playSound("1-up.wav");
+		SoundManager.getSoundManager().playSound("item.wav");
 		this.item = item;
 		moveTime = 0.007;
 		jumpSkill = 2;

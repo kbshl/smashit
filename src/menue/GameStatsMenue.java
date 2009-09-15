@@ -9,47 +9,38 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 
-public class GameStatsMenue extends JPanel{
-	
-	private JTable tbl_GameStats;
-	private JButton btn_Next;
+public class GameStatsMenue extends GamePanel {
+
+	private GameButton btn_Next = new GameButton(680, 565, "Weiter");
+	private GameButton btn_Eintragen = new GameButton(570, 565, "Eintragen");
 	private Vector<Player> players;
-	
+
 	private ButtonListener lis_BtnListener = new ButtonListener();
-	
-	public GameStatsMenue(Vector<Player> p){
+
+	public GameStatsMenue(Vector<Player> p) {
+		super("gamepanel_mainmenue.jpg");
 		players = p;
-		
-		this.setLayout(null);
-		this.setSize(800, 600);
-		//Instanzen erstellen
-		tbl_GameStats = new JTable(5, 5);
-		btn_Next = new JButton("Weiter");
-		
-		tbl_GameStats.setBounds(100, 100, 600, 300);
-		btn_Next.setBounds(100, 400, 100, 30);
-		//ActionCommand
+
 		btn_Next.setActionCommand("btn_Next");
-		
-		
-		//Actionlistener hinzufügen
+		btn_Eintragen.setActionCommand("btn_Eintragen");
 		btn_Next.addActionListener(lis_BtnListener);
-	
-		
-		//Hinzufügen der Objekte zum JPane
+		btn_Eintragen.addActionListener(lis_BtnListener);
 		add(btn_Next);
-		add(tbl_GameStats);
-	
+		add(btn_Eintragen);
+
 	}
-	
+
 	private class ButtonListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 
-			if (e.getActionCommand().equals("btn_Next")){
+			if (e.getActionCommand().equals("btn_Next")) {
 				BaseFrame.getBaseFrame().setJPanel(new MainMenue());
 			}
-			
+			if (e.getActionCommand().equals("btn_Eintragen")) {
+
+			}
+
 		}
 
 	}

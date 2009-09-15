@@ -23,9 +23,9 @@ import network.FullPlayer;
 
 
 
-public class JoinNetworkGameMenue extends JPanel{
-	private JButton btn_Connect;
-	private JButton btn_Back;
+public class JoinNetworkGameMenue extends GamePanel{
+	private GameButton btn_Connect= new GameButton(680, 565,"Verbinden");
+	private GameButton btn_Back= new GameButton(20, 565, "Zurück");
 	
 	private JLabel lbl_ServerPort;
 	private JLabel lbl_IP;
@@ -47,11 +47,9 @@ public class JoinNetworkGameMenue extends JPanel{
 	private int playerNumber;
 	
 	public JoinNetworkGameMenue(){
-		this.setLayout(null);
-		this.setSize(800, 600);
+		super("gamepanel_mainmenue.jpg");
+
 		//Instanzen erstellen
-		btn_Connect = new JButton("Verbinden");
-		btn_Back = new JButton("Zurück");
 		
 		lbl_ServerPort = new JLabel("Port");
 		lbl_IP = new JLabel("IP");
@@ -69,11 +67,7 @@ public class JoinNetworkGameMenue extends JPanel{
 		
 		lbl_PlayerName.setBounds(100, 150, 100, 30);
 		txt_PlayerName.setBounds(250, 150, 100, 30);
-		
-		btn_Connect.setBounds(100, 200, 100, 30);
-		btn_Back.setBounds(250, 200, 100, 30);
-		
-		
+
 		//ActionCommand
 		btn_Connect.setActionCommand("btn_Connect");
 		btn_Back.setActionCommand("btn_Back");

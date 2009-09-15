@@ -9,24 +9,14 @@ import javax.swing.JPanel;
 
 
 
-public class NetworkSubMenue extends JPanel{
-	private JButton btn_HostGame;
-	private JButton btn_JoinGame;
-	private JButton btn_Back;
+public class NetworkSubMenue extends GamePanel{
+	private GameButton btn_HostGame = new GameButton(20, 20,"Spiel Starten");
+	private GameButton btn_JoinGame = new GameButton(20,55,"Spiel beitreten");
+	private GameButton btn_Back = new GameButton(20, 565, "Zurück");
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 public NetworkSubMenue(){
-		this.setLayout(null);
-		this.setSize(800, 600);
-		
-		//Buttons erstellen
-		btn_JoinGame = new JButton("Netzwerkspiel beitreten");
-		btn_HostGame = new JButton("Netzwerkspiel Starten");
-		btn_Back = new JButton("Zurück");
-		
-		btn_JoinGame.setBounds(300, 50, 200, 30);
-		btn_HostGame.setBounds(300, 100, 200, 30);
-		btn_Back.setBounds(300, 150, 200, 30);
+	super("gamepanel_mainmenue.jpg");
 		
 		//ActionCommand
 		btn_JoinGame.setActionCommand("btn_JoinGame");
