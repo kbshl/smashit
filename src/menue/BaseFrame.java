@@ -1,21 +1,23 @@
 package menue;
 
+import game.Finals;
+
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import manager.SoundManager;
-import game.Finals;
-import game.LocalGameController;
-import java.awt.DisplayMode;
-import java.awt.GraphicsEnvironment;
-import java.awt.GraphicsDevice;
 
-public class BaseFrame extends JFrame implements Finals {
+public class BaseFrame extends JFrame implements Finals,KeyListener{
 
 	private Container cp;
 	private static BaseFrame bf;
-
+	
 	private BaseFrame() {
 		
 //		setUndecorated(true);
@@ -33,10 +35,22 @@ public class BaseFrame extends JFrame implements Finals {
 		this.setLayout(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
+		// Größe des Bildschirms ermitteln
+	    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
+	    // Position des JFrames errechnen
+	    int top = (screenSize.height - this.getHeight()) / 2;
+	    int left = (screenSize.width - this.getWidth()) / 2;
+
+	    // Position zuordnen
+	    this.setLocation(left, top); 
+		
 		cp = getContentPane();
 		cp.setLayout(null);
 		cp.add(new MainMenue());
+		this.setUndecorated(true);
 		this.setVisible(true);
+		this.addKeyListener(this);
 		requestFocus();
 		SoundManager.getSoundManager().loopSound("smwovr1.mid");
 	}
@@ -58,5 +72,23 @@ public class BaseFrame extends JFrame implements Finals {
 	public static void main(String[] args) {
 		BaseFrame.getBaseFrame();
 	}
+	
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode()==27){
+			System.exit(0);
+		}
+	}
+
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }
