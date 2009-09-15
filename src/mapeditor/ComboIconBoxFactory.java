@@ -14,8 +14,8 @@ public class ComboIconBoxFactory extends JPanel {
 	public static JComboBox buildComboBox(String[] bezeichnung){
     	
 		String[] dateinamen = new String[bezeichnung.length];
-		for (int i = 0; i < dateinamen.length; i++) {
-			dateinamen[i] += ".jpg";
+		for (int i = 0; i < bezeichnung.length; i++) {
+			dateinamen[i] = bezeichnung[i] + ".jpg";
 		}
 		
     	return buildComboBox(bezeichnung,dateinamen);
