@@ -23,6 +23,7 @@ public class Map implements Finals {
 	private String name = "Level1";
 	private Vector<Sprite> sprites;
 	private String background = "bg_sky.jpg";
+	//private String mapPath;
 
 	public Map(String mapFile) {
 		sprites = new Vector<Sprite>();
@@ -30,11 +31,30 @@ public class Map implements Finals {
 		sprites.add(new WandRechts());
 		sprites.add(new Boden());
 
+		paintMap(mapFile,"");
+
+	}
+
+	public Map() {
+		sprites = new Vector<Sprite>();
+		sprites.add(new WandLinks());
+		sprites.add(new WandRechts());
+		sprites.add(new Boden());
+	}
+
+	public void paintMap(String mapFile) {
+		paintMap(mapFile,"");
+	}
+	
+	public void paintMap(String mapFile, String mapPath) {
+		if (mapPath == ""){
+			mapPath = MAP_PATH;
+		}
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new File(MAP_PATH + mapFile));
+			Document document = builder.parse(new File(mapPath + mapFile));
 
 			Node rootNode = document.getDocumentElement();
 			NamedNodeMap background_attr = rootNode.getAttributes();
@@ -91,24 +111,16 @@ public class Map implements Finals {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
-
-	}
-
-	public Map() {
-		sprites = new Vector<Sprite>();
-		sprites.add(new WandLinks());
-		sprites.add(new WandRechts());
-		sprites.add(new Boden());
 	}
 
 	public Vector<Sprite> getSprites() {
 		return sprites;
 	}
 
-	public void setBackground(String image){
+	public void setBackground(String image) {
 		background = image;
 	}
-	
+
 	public Image getBackground() {
 		return PictureManager.getImage(background);
 	}
