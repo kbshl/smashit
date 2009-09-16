@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 
 import map.Box;
 import map.BrickStone;
@@ -34,9 +38,59 @@ public class MapEditorController implements ActionListener, MouseListener {
 		if (e.getActionCommand().equals("backgroundList")){
 			selectedBg = view.showSelectedBackground();
 			//if (selectedBg.equals("desert")){
-				view.map.setBackground(selectedBg + ".jpg");
+				view.getMap().setBackground(selectedBg + ".jpg");
 				view.repaint();
 			//}
+		}
+		if (e.getActionCommand().equals("oeffnen")){
+			openLoadDialog();
+		}
+		
+		if (e.getActionCommand().equals("speichern")){
+			openSaveDialog();
+		}
+	}
+
+	private void openLoadDialog() {
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Map laden");
+		fc.setFileFilter(new FileFilter() {
+			public boolean accept(File f) {
+				return f.getName().toLowerCase().endsWith(".xml")
+						|| f.isDirectory();
+			}
+
+			public String getDescription() {
+				return "Map-Dateien(*.xml)";
+			}
+		});
+		if (fc.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			//Datei wird geladen
+			File file = fc.getSelectedFile();
+			String dateiPfad = file.getPath();
+			String dateiName = file.getName();
+			dateiPfad = dateiPfad.substring(0, (dateiPfad.length()-dateiName.length()));
+			//Map wird gepaintet
+			view.getMap().paintMap(dateiName,dateiPfad);
+			view.repaint();
+		}
+	}
+
+	private void openSaveDialog() {
+		JFileChooser fc = new JFileChooser();
+		fc.setDialogTitle("Map speichern");
+		fc.setFileFilter(new FileFilter() {
+			public boolean accept(File f) {
+				return f.getName().toLowerCase().endsWith(".xml")
+						|| f.isDirectory();
+			}
+
+			public String getDescription() {
+				return "Map-Dateien(*.xml)";
+			}
+		});
+		if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
 		}
 	}
 

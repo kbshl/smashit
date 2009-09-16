@@ -3,12 +3,14 @@ package mapeditor;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.File;
 
 import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileFilter;
 
 import manager.PictureManager;
 import map.Map;
@@ -33,7 +35,7 @@ public class MapEditorView extends GamePanel {
 	private Icon icon;
 	private JPanel gameArea;
 	private Container cp;
-	public Map map;
+	private Map map;
 	private JComboBox fieldItemList;
 	private JComboBox backgroundList;
 	public String[] backgrounds = new String[3];
@@ -51,33 +53,41 @@ public class MapEditorView extends GamePanel {
 		btn_stone.addActionListener(controller);
 		btn_loeschen.addActionListener(controller);
 		btn_zurueck.addActionListener(controller);
+		btn_speichern.addActionListener(controller);
+		btn_laden.addActionListener(controller);
 
 		// Actioncommands
 		btn_box.setActionCommand("box");
 		btn_stone.setActionCommand("stone");
 		btn_loeschen.setActionCommand("loeschen");
 		btn_zurueck.setActionCommand("zurueck");
+		btn_speichern.setActionCommand("speichern");
+		btn_laden.setActionCommand("oeffnen");
 
-		//Combobox für Backgrounds
+		// Combobox für Backgrounds
 		backgrounds[0] = "sky";
 		backgrounds[1] = "desert";
 		backgrounds[2] = "forest";
 		backgroundList = ComboIconBoxFactory.buildComboBox(backgrounds);
-		((JComponent) backgroundList.getRenderer()).setPreferredSize(new Dimension(25,25));
+		((JComponent) backgroundList.getRenderer())
+				.setPreferredSize(new Dimension(25, 25));
 		backgroundList.setActionCommand("backgroundList");
 		backgroundList.setSelectedIndex(0);
 		backgroundList.setMaximumRowCount(2);
 		backgroundList.setBounds(200, 550, 150, 30);
 		backgroundList.addActionListener(controller);
-		
-		
-		//ComboBox für Items
+
+		// ComboBox für Items
 		fieldItems[0] = "brickstone";
 		fieldItems[1] = "box";
+		fieldItems[2] = "mayastone";
 		fieldFileNames[0] = "brickstone.jpg";
 		fieldFileNames[1] = "box.jpg";
-		fieldItemList = ComboIconBoxFactory.buildComboBox(fieldItems, fieldFileNames);
-		((JComponent) fieldItemList.getRenderer()).setPreferredSize(new Dimension(25,25));
+		fieldFileNames[2] = "mayastone.jpg";
+		fieldItemList = ComboIconBoxFactory.buildComboBox(fieldItems,
+				fieldFileNames);
+		((JComponent) fieldItemList.getRenderer())
+				.setPreferredSize(new Dimension(25, 25));
 		fieldItemList.setActionCommand("fieldItemList");
 		fieldItemList.setSelectedIndex(0);
 		fieldItemList.setMaximumRowCount(2);
@@ -91,24 +101,29 @@ public class MapEditorView extends GamePanel {
 		add(btn_speichern);
 		add(btn_zurueck);
 		addMouseListener(controller);
+
 	}
 
-	public String showSelectedItem(){
-		if (fieldItemList.getSelectedIndex() < 0){
+	public String showSelectedItem() {
+		if (fieldItemList.getSelectedIndex() < 0) {
 			return "";
 		}
 		return fieldItems[fieldItemList.getSelectedIndex()];
 	}
-	
-	public String showSelectedBackground(){
-		if (backgroundList.getSelectedIndex() < 0){
+
+	public String showSelectedBackground() {
+		if (backgroundList.getSelectedIndex() < 0) {
 			return "";
 		}
 		return backgrounds[backgroundList.getSelectedIndex()];
 	}
-	
+
 	public JPanel getGameArea() {
 		return gameArea;
+	}
+	
+	public Map getMap(){
+		return map;
 	}
 
 	protected void paintComponent(Graphics g) {
