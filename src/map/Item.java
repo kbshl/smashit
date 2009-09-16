@@ -36,6 +36,7 @@ public class Item extends Sprite implements Finals {
 
 	public void act(long delay) {
 		pastAniTime += (delay / 1e9);
+		
 		if (pastAniTime >= aniTime) {
 			currentFrame = 1;
 		}
