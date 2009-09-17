@@ -13,6 +13,16 @@ import java.util.Enumeration;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.TransformerFactoryConfigurationError;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import map.Box;
 import map.BrickStone;
@@ -22,12 +32,14 @@ import map.Sprite;
 import menue.BaseFrame;
 import menue.MainMenue;
 
+import org.w3c.dom.Element;
+import org.w3c.dom.Document;
+
 public class MapEditorController implements ActionListener, MouseListener {
 
 	private MapEditorView view;
 	private Map map = new Map();
 	private String selectedObj, selectedBg;
-	private Class so;
 
 	public MapEditorController() {
 		view = new MapEditorView(this, map);
@@ -102,7 +114,7 @@ public class MapEditorController implements ActionListener, MouseListener {
 			// System.out.println(datei.getName());
 			String[][] inhalte = elementeAuslesen();
 			try {
-				writeFile(datei, inhalte);
+				writeXML(datei, inhalte);
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -160,7 +172,7 @@ public class MapEditorController implements ActionListener, MouseListener {
 					&& !itemArt.equals("Boden")) {
 				Integer itemX = item.getX();
 				Integer itemY = item.getY();
-				datenArray[counter][0] = itemArt;
+				datenArray[counter][0] = itemArt.toLowerCase();
 				datenArray[counter][1] = itemX.toString();
 				datenArray[counter][2] = itemY.toString();
 				// System.out.println(datenArray[counter][0]);
@@ -170,32 +182,42 @@ public class MapEditorController implements ActionListener, MouseListener {
 		return datenArray;
 	}
 
-	public void writeFile(File datei, String[][] textPuffer)
-			throws IOException, FileNotFoundException {
-		BufferedWriter stream1;
+	public void writeXML(File datei, String[][] textPuffer) {
 		try {
-			stream1 = new BufferedWriter(new FileWriter(datei));
-			// System.out.println(textPuffer.length);
-			String ausgabe = "<?xml version='1.0' encoding='utf-8'?>" + "\n";
-			ausgabe += "<map background=\"" + view.showSelectedBackground()
-					+ ".jpg\">" + "\n";
-			for (int i = 0; i < textPuffer.length; i++) {
-				ausgabe += "<" + textPuffer[i][0].toLowerCase();
-				ausgabe += " x=\"" + textPuffer[i][1] + "\"";
-				ausgabe += " y=\"" + textPuffer[i][2] + "\"";
-				ausgabe += " /> " + "\n";
-			}
-			ausgabe += "</map>";
-			stream1.write(ausgabe);
-			stream1.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("Datei nicht vorhanden");
-		} catch (IOException e) {
-			System.out.println("Fehler beim schreiben");
-		}
-	}
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document doc = builder.newDocument();
+			DOMSource source = new DOMSource(doc);
 
-	public void writeXML(File datei, String textPuffer) {
+			Element element = doc.createElement("map");
+			element.setAttribute("background", "bg_"
+					+ view.showSelectedBackground().toLowerCase() + ".jpg");
+			doc.appendChild(element);
+
+			for (int i = 0; i < textPuffer.length; i++) {
+				Element elem = doc.createElement(textPuffer[i][0]);
+				element.appendChild(elem);
+				elem.setAttribute("x", textPuffer[i][1]);
+				elem.setAttribute("y", textPuffer[i][2]);
+			}
+
+			StreamResult result = new StreamResult(datei);
+
+			Transformer transformer = TransformerFactory.newInstance()
+					.newTransformer();
+
+			transformer.transform(source, result);
+
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerFactoryConfigurationError e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
 
 	}
 
