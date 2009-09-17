@@ -164,6 +164,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 					if (left) {
 						if (!checkCollision(-1, 0)) {
 							x -= 1;
+							/////
+							if(sPS != null){
+								sPS.sendPosition(x, y, (playerNumber-1));
+							}
 
 							if (pastAniTime >= 0) {
 								currentFrame = 8;
@@ -194,7 +198,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 					if (right) {
 						if (!checkCollision(1, 0)) {
 							x += 1;
-
+							/////
+							if(sPS != null){
+								sPS.sendPosition(x, y, (playerNumber-1));
+							}
 							if (pastAniTime >= 0) {
 								currentFrame = 1;
 							}
@@ -243,6 +250,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 					if (!checkCollision(0, (int) jumpSpeed)) {
 						y += (int) jumpSpeed;
 						jumpSpeed += gravity;
+						/////
+						if(sPS != null){
+							sPS.sendPosition(x, y, (playerNumber-1));
+						}
 					} else {
 						if (jumpSpeed >= 1.2) {
 							if (currentFrame < 7) {
@@ -252,6 +263,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 							}
 						}
 						y = collisionObject.getY() - height;
+						/////
+						if(sPS != null){
+							sPS.sendPosition(x, y, (playerNumber-1));
+						}
 						jumpCount = 0;
 						jumpSpeed = 0;
 						if (collisionObject instanceof Player) {
@@ -272,19 +287,25 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 					if (!checkCollision(0, (int) jumpSpeed)) {
 						y += (int) jumpSpeed;
 						jumpSpeed += gravity;
+						/////
+						if(sPS != null){
+							sPS.sendPosition(x, y, (playerNumber-1));
+						}
 
 					} else {
 						y = collisionObject.getY()
 								+ collisionObject.getHeight();
 						jumpSpeed = 0;
+						/////
+						if(sPS != null){
+							sPS.sendPosition(x, y, (playerNumber-1));
+						}
 
 					}
 				}
 			}
 		}
-		if(sPS != null){
-			sPS.sendPosition(x, y, (playerNumber-1));
-		}
+		
 	}
 	
 	public void keyPressed(KeyEvent e) {
