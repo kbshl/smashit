@@ -402,7 +402,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 				}
 			}
 		}
-		for (Sprite p : players) {
+		for (FullPlayer p : players) {
 			if (p != this) {
 				if (me.intersects(p.getBounds())) {
 					collision = true;
