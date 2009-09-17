@@ -28,12 +28,15 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			lostLifes = 0;
 	private Sprite collisionObject;
+	
+	private ServerPositionSender sPS;
 
-	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS, int lifes) {
+	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS, int lifes, ServerPositionSender sPS) {
 		super(0, 0, new String[] { "kirby1.gif" }, false);
 		this.realPlayer = realPlayer;
 		this.playerNumber = playerNumber;
 		this.lifes = lifes;
+		this.sPS = sPS;
 		name = n;
 		map = m;
 		players = p;
@@ -138,6 +141,10 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 				}
 			}
 		}
+		if(sPS != null){
+			sPS.sendPosition(this.x, this.y, (this.playerNumber-1));
+		}
+		
 	}
 	
 	public void keyPressed(KeyEvent e) {

@@ -135,17 +135,17 @@ public class JoinNetworkGameMenue extends GamePanel{
 				
 				ClientPositionSender cPS = new ClientPositionSender(sockout);
 				
-				Map map = new Map("map.xml");
+				Map map = new Map("TestMap.xml");
 				Vector<FullPlayer> player = new Vector<FullPlayer>();
 				
 				for(int i = 0; i<playerNames.length; i++){
 					
 					if(i == playerNumber){
-						player.add(new FullPlayer(playerNames[i], i+1, map, player, false, cPS, playerLifes));
+						player.add(new FullPlayer(playerNames[i], i+1, map, player, false, cPS, playerLifes, null));
 						System.out.println("Player number " + i + " wurde erstellt");
 					}
 					else{
-						player.add(new FullPlayer(playerNames[i], i+1, map, player, false, null, playerLifes));
+						player.add(new FullPlayer(playerNames[i], i+1, map, player, false, null, playerLifes, null));
 						System.out.println("Player number " + i + " wurde erstellt");
 					}
 					

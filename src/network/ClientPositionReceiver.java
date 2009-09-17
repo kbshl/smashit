@@ -62,7 +62,7 @@ public class ClientPositionReceiver extends Thread{
 			
 			
 			if(inputParts[0].equals("Move")){//Move_P0_Event1
-				
+				//System.out.println(input);
 				player.get(Integer.parseInt(inputParts[1])).setX(Integer.parseInt(inputParts[2]));
 				player.get(Integer.parseInt(inputParts[1])).setY(Integer.parseInt(inputParts[3]));
 				
