@@ -32,7 +32,15 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 	private ServerPositionSender sPS;
 
 	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS, int lifes, ServerPositionSender sPS) {
-		super(0, 0, new String[] { "kirby1.gif" }, false);
+		super(0, 0, new String[] { "kirby_rosa_rechts_1.gif",
+				"kirby_rosa_rechts_2.gif", "kirby_rosa_rechts_3.gif",
+				"kirby_rosa_rechts_4.gif", "kirby_rosa_rechts_5.gif",
+				"kirby_rosa_jump_rechts.gif", "kirby_rosa_fall_rechts.gif",
+
+				"kirby_rosa_links_1.gif", "kirby_rosa_links_2.gif",
+				"kirby_rosa_links_3.gif", "kirby_rosa_links_4.gif",
+				"kirby_rosa_links_5.gif", "kirby_rosa_jump_links.gif",
+				"kirby_rosa_fall_links.gif" }, false);
 		this.realPlayer = realPlayer;
 		this.playerNumber = playerNumber;
 		this.lifes = lifes;
@@ -89,6 +97,8 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 				for (int k = 0; k < i; ++k) {
 					if (left) {
 						if (!checkCollision(-1, 0)) {
+							
+							//Posänderung
 							x -= 1;
 						} else {
 
@@ -97,6 +107,7 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 
 					if (right) {
 						if (!checkCollision(1, 0)) {
+							//Posänderung
 							x += 1;
 						} else {
 						}
@@ -114,10 +125,12 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 
 				if (jumpSpeed >= 0) {
 					if (!checkCollision(0, (int) jumpSpeed)) {
+						//Posänderung
 						y += (int) jumpSpeed;
 						jumpSpeed += gravity;
 					} else {
 						y = collisionObject.getY() - height;
+						//Posänderung
 						jumpCount = 0;
 						jumpSpeed = 0;
 						if (collisionObject instanceof FullPlayer) {
@@ -131,11 +144,13 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 				if (jumpSpeed < 0) {
 
 					if (!checkCollision(0, (int) jumpSpeed)) {
+						//Posänderung
 						y += (int) jumpSpeed;
 						jumpSpeed += gravity;
 					} else {
 						y = collisionObject.getY()
 								+ collisionObject.getHeight();
+						//Posänderung
 						jumpSpeed = 0;
 					}
 				}

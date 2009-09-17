@@ -51,7 +51,7 @@ public class BaseFrame extends JFrame implements Finals {
 		this.setUndecorated(true);
 		this.setVisible(true);
 		requestFocus();
-		SoundManager.getSoundManager().loopSound("music.mid");
+		//SoundManager.getSoundManager().loopSound("music.mid");
 	}
 
 	public void setJPanel(JPanel p) {
