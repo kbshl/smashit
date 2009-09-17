@@ -1,6 +1,7 @@
 package network;
 
 import game.Finals;
+import game.Player;
 
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
@@ -13,7 +14,7 @@ import map.Map;
 import map.Sprite;
 
 public class FullPlayer extends Sprite implements KeyListener, Finals{
-	private int playerNumber;
+	//private int playerNumber;
 	private String name;
 	private final int leftKey, rightKey, jumpKey;
 	private Map map;
@@ -22,12 +23,15 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 	private ClientPositionSender cPS;
 	
 	private boolean jumpLock = false, left = false, right = false,
-			isDead = false;
-	private double moveTime = 0.007, pastMoveTime = 0, jumpTime = 0.005,
-			pastJumpTime = 0, gravity = 0.1, jumpSpeed = 0, jumpStart = -4;
-	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
-			lostLifes = 0;
+	isDead = false;
+private double moveTime = 0.007, pastMoveTime = 0, aniTime = 0.15,
+	pastAniTime = 0, jumpTime = 0.005, pastJumpTime = 0, gravity = 0.1,
+	jumpSpeed = 0, jumpStart = -4, pastItemTime = 0;
+private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
+	lostLifes = 0, playerNumber;
 	private Sprite collisionObject;
+
+	private Item item;
 	
 	private ServerPositionSender sPS;
 
@@ -51,34 +55,79 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 		this.cPS = cPS;
 		switch (playerNumber) {
 		case PLAYER1:
+			playerNumber = 1;
 			leftKey = KeyEvent.VK_A;
 			rightKey = KeyEvent.VK_D;
 			jumpKey = KeyEvent.VK_W;
-			images[0] = "kirby1.gif";
+			images = new String[] { "kirby_rosa_rechts_1.gif",
+					"kirby_rosa_rechts_2.gif", "kirby_rosa_rechts_3.gif",
+					"kirby_rosa_rechts_4.gif", "kirby_rosa_rechts_5.gif",
+					"kirby_rosa_jump_rechts.gif", "kirby_rosa_fall_rechts.gif",
+
+					"kirby_rosa_links_1.gif", "kirby_rosa_links_2.gif",
+					"kirby_rosa_links_3.gif", "kirby_rosa_links_4.gif",
+					"kirby_rosa_links_5.gif", "kirby_rosa_jump_links.gif",
+					"kirby_rosa_fall_links.gif" };
 			break;
 		case PLAYER2:
+			playerNumber = 2;
 			leftKey = KeyEvent.VK_J;
 			rightKey = KeyEvent.VK_L;
 			jumpKey = KeyEvent.VK_I;
-			images[0] = "kirby2.gif";
+			images = new String[] { "kirby_blau_rechts_1.gif",
+					"kirby_blau_rechts_2.gif", "kirby_blau_rechts_3.gif",
+					"kirby_blau_rechts_4.gif", "kirby_blau_rechts_5.gif",
+					"kirby_blau_jump_rechts.gif", "kirby_blau_fall_rechts.gif",
+
+					"kirby_blau_links_1.gif", "kirby_blau_links_2.gif",
+					"kirby_blau_links_3.gif", "kirby_blau_links_4.gif",
+					"kirby_blau_links_5.gif", "kirby_blau_jump_links.gif",
+					"kirby_blau_fall_links.gif" };
 			break;
 		case PLAYER3:
+			playerNumber = 3;
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
-			images[0] = "kirby3.gif";
+			images = new String[] { "kirby_grün_rechts_1.gif",
+					"kirby_grün_rechts_2.gif", "kirby_grün_rechts_3.gif",
+					"kirby_grün_rechts_4.gif", "kirby_grün_rechts_5.gif",
+					"kirby_grün_jump_rechts.gif", "kirby_grün_fall_rechts.gif",
+
+					"kirby_grün_links_1.gif", "kirby_grün_links_2.gif",
+					"kirby_grün_links_3.gif", "kirby_grün_links_4.gif",
+					"kirby_grün_links_5.gif", "kirby_grün_jump_links.gif",
+					"kirby_grün_fall_links.gif" };
 			break;
 		case PLAYER4:
+			playerNumber = 4;
 			leftKey = KeyEvent.VK_NUMPAD1;
 			rightKey = KeyEvent.VK_NUMPAD3;
 			jumpKey = KeyEvent.VK_NUMPAD5;
-			images[0] = "kirby4.gif";
+			images = new String[] { "kirby_rot_rechts_1.gif",
+					"kirby_rot_rechts_2.gif", "kirby_rot_rechts_3.gif",
+					"kirby_rot_rechts_4.gif", "kirby_rot_rechts_5.gif",
+					"kirby_rot_jump_rechts.gif", "kirby_rot_fall_rechts.gif",
+
+					"kirby_rot_links_1.gif", "kirby_rot_links_2.gif",
+					"kirby_rot_links_3.gif", "kirby_rot_links_4.gif",
+					"kirby_rot_links_5.gif", "kirby_rot_jump_links.gif",
+					"kirby_rot_fall_links.gif" };
 			break;
 		default:
+			playerNumber = 1;
 			leftKey = KeyEvent.VK_LEFT;
 			rightKey = KeyEvent.VK_RIGHT;
 			jumpKey = KeyEvent.VK_UP;
-			images[0] = "kirby1.gif";
+			images = new String[] { "kirby_blau_rechts_1.gif",
+					"kirby_blau_rechts_2.gif", "kirby_blau_rechts_3.gif",
+					"kirby_blau_rechts_4.gif", "kirby_blau_rechts_5.gif",
+					"kirby_blau_jump_rechts.gif", "kirby_blau_fall_rechts.gif",
+
+					"kirby_blau_links_1.gif", "kirby_blau_links_2.gif",
+					"kirby_blau_links_3.gif", "kirby_blau_links_4.gif",
+					"kirby_blau_links_5.gif", "kirby_blau_jump_links.gif",
+					"kirby_blau_fall_links.gif" };
 			break;
 		}
 		setNewPosition();
@@ -86,6 +135,19 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 	}
 
 	public void act(long delay) {
+		pastAniTime += (delay / 1e9);
+
+		if (item != null) {
+			pastItemTime += (delay / 1e9);
+
+			if (pastItemTime >= 20) {
+				pastItemTime = 0;
+				item = null;
+				moveTime = 0.007;
+				jumpSkill = 2;
+				aniTime = 0.15;
+			}
+		}
 
 		if (left || right) {
 			pastMoveTime += (delay / 1e9);
@@ -97,19 +159,61 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 				for (int k = 0; k < i; ++k) {
 					if (left) {
 						if (!checkCollision(-1, 0)) {
-							
-							//Posänderung
 							x -= 1;
-						} else {
 
+							if (pastAniTime >= 0) {
+								currentFrame = 8;
+							}
+							if (pastAniTime >= 1 * aniTime) {
+								currentFrame = 9;
+							}
+							if (pastAniTime >= 2 * aniTime) {
+								currentFrame = 10;
+							}
+							if (pastAniTime >= 3 * aniTime) {
+								currentFrame = 11;
+							}
+							if (pastAniTime >= 4 * aniTime) {
+								currentFrame = 10;
+							}
+							if (pastAniTime >= 5 * aniTime) {
+								currentFrame = 9;
+								pastAniTime = 0;
+							}
+
+						} else {
+							currentFrame = 7;
+							pastAniTime = 0;
 						}
 					}
 
 					if (right) {
 						if (!checkCollision(1, 0)) {
-							//Posänderung
 							x += 1;
+
+							if (pastAniTime >= 0) {
+								currentFrame = 1;
+							}
+							if (pastAniTime >= 1 * aniTime) {
+								currentFrame = 2;
+							}
+							if (pastAniTime >= 2 * aniTime) {
+								currentFrame = 3;
+							}
+							if (pastAniTime >= 3 * aniTime) {
+								currentFrame = 4;
+							}
+							if (pastAniTime >= 4 * aniTime) {
+								currentFrame = 3;
+							}
+							if (pastAniTime >= 5 * aniTime) {
+								currentFrame = 2;
+								pastAniTime = 0;
+							}
+
 						} else {
+							currentFrame = 0;
+							pastAniTime = 0;
 						}
 					}
 				}
@@ -122,44 +226,61 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 			pastJumpTime -= i * jumpTime;
 
 			for (int k = 0; k < i; ++k) {
-
 				if (jumpSpeed >= 0) {
+
+					if (jumpSpeed >= 1.2) {
+						if (currentFrame < 7) {
+							currentFrame = 6;
+						} else {
+							currentFrame = 13;
+						}
+					}
+
 					if (!checkCollision(0, (int) jumpSpeed)) {
-						//Posänderung
 						y += (int) jumpSpeed;
 						jumpSpeed += gravity;
 					} else {
+						if (jumpSpeed >= 1.2) {
+							if (currentFrame < 7) {
+								currentFrame = 0;
+							} else {
+								currentFrame = 7;
+							}
+						}
 						y = collisionObject.getY() - height;
-						//Posänderung
 						jumpCount = 0;
 						jumpSpeed = 0;
-						if (collisionObject instanceof FullPlayer) {
-							((FullPlayer) collisionObject).getKilled();
+						if (collisionObject instanceof Player) {
+							((Player) collisionObject).getKilled();
 							kills++;
-
 						}
 					}
 				}
 
 				if (jumpSpeed < 0) {
 
+					if (currentFrame < 7) {
+						currentFrame = 5;
+					} else {
+						currentFrame = 12;
+					}
+
 					if (!checkCollision(0, (int) jumpSpeed)) {
-						//Posänderung
 						y += (int) jumpSpeed;
 						jumpSpeed += gravity;
+
 					} else {
 						y = collisionObject.getY()
 								+ collisionObject.getHeight();
-						//Posänderung
 						jumpSpeed = 0;
+
 					}
 				}
 			}
 		}
 		if(sPS != null){
-			sPS.sendPosition(this.x, this.y, (this.playerNumber-1));
+			sPS.sendPosition(x, y, (playerNumber-1));
 		}
-		
 	}
 	
 	public void keyPressed(KeyEvent e) {
