@@ -31,7 +31,7 @@ public class Map implements Finals {
 		sprites.add(new WandRechts());
 		sprites.add(new Boden());
 
-		paintMap(mapFile,"");
+		loadMap(mapFile,"");
 
 	}
 
@@ -43,10 +43,10 @@ public class Map implements Finals {
 	}
 
 	public void paintMap(String mapFile) {
-		paintMap(mapFile,"");
+		loadMap(mapFile,"");
 	}
 	
-	public void paintMap(String mapFile, String mapPath) {
+	public void loadMap(String mapFile, String mapPath) {
 		if (mapPath == ""){
 			mapPath = MAP_PATH;
 		}
