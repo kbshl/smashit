@@ -1,7 +1,7 @@
 package network;
 
 import game.Finals;
-import game.Player;
+
 import game.PlayerStats;
 
 import java.awt.Graphics;
@@ -269,8 +269,8 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						}
 						jumpCount = 0;
 						jumpSpeed = 0;
-						if (collisionObject instanceof Player) {
-							((Player) collisionObject).getKilled();
+						if (collisionObject instanceof FullPlayer) {
+							((FullPlayer) collisionObject).getKilled();
 							kills++;
 						}
 					}
