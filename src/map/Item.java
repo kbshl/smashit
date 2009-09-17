@@ -17,16 +17,16 @@ public class Item extends Sprite implements Finals {
 
 		switch (ability) {
 		case JUMP_LOW:
-			itemImage = "jumplow.gif";
+			itemImage = "item_jumplow.gif";
 			break;
 		case JUMP_HIGH:
-			itemImage = "jumphigh.gif";
+			itemImage = "item_jumphigh.gif";
 			break;
 		case MOVE_FAST:
-			itemImage = "movefast.gif";
+			itemImage = "item_movefast.gif";
 			break;
 		case MOVE_SLOW:
-			itemImage = "moveslow.gif";
+			itemImage = "item_moveslow.gif";
 			break;
 		default:
 			break;
