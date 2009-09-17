@@ -2,13 +2,17 @@ package network;
 
 import game.Finals;
 import game.Player;
+import game.PlayerStats;
 
+import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observer;
 import java.util.Vector;
 
+import manager.PictureManager;
+import manager.SoundManager;
 import map.Item;
 import map.Map;
 import map.Sprite;
@@ -398,7 +402,6 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 				}
 			}
 		}
-		//Könnte nicht funktionieren
 		for (Sprite p : players) {
 			if (p != this) {
 				if (me.intersects(p.getBounds())) {
@@ -411,11 +414,14 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 	}
 
 	public void getKilled() {
-		if (lifes > 0) {
+		SoundManager.getSoundManager().playSound("dead.wav");
+
+		if (lifes > 1) {
 			lifes--;
 			lostLifes++;
 			setNewPosition();
 		} else {
+			lifes--;
 			isDead = true;
 			x = -100;
 			y = 0;
@@ -423,6 +429,11 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 	}
 
 	private void getItem(Item item) {
+		SoundManager.getSoundManager().playSound("item.wav");
+		this.item = item;
+		moveTime = 0.007;
+		jumpSkill = 2;
+		pastItemTime = 0;
 		switch (item.getAbility()) {
 		case JUMP_HIGH:
 			jumpSkill = 3;
@@ -430,20 +441,53 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		case JUMP_LOW:
 			jumpSkill = 1;
 			break;
+		case MOVE_FAST:
+			moveTime = 0.003;
+			aniTime = 0.1;
+			break;
+		case MOVE_SLOW:
+			moveTime = 0.012;
+			aniTime = 0.2;
+			break;
 		default:
 			break;
 		}
 		item.collected();
-		
 	}
 
 	private void setNewPosition() {
 		boolean collision;
 		y = 0;
 		do {
-			x = (int) (800 * Math.random());
+			x = (int) (WINDOW_WIDTH * Math.random());
+			y = (int) (GAME_HEIGHT * Math.random());
 			collision = checkCollision(0, 0);
 		} while (collision);
+	}
+
+	public void paint(Graphics g) {
+		g.drawImage(PictureManager.getImage(images[currentFrame]), x, y, null);
+
+		if (isDead) {
+			g.drawImage(PictureManager.getImage("dead.gif"),
+					35 + (playerNumber - 1) * 200, 562, null);
+		} else {
+			g.drawImage(PictureManager.getImage(images[currentFrame]),
+					35 + (playerNumber - 1) * 200, 562, null);
+		}
+
+		g.drawString(name + ": " + kills + "/" + lifes,
+				65 + ((playerNumber - 1) * 200), 578);
+
+		if (item != null) {
+			g.drawImage(PictureManager.getImage(item.getItemImage()),
+					10 + (playerNumber - 1) * 200, 562, null);
+		}
+
+	}
+
+	public PlayerStats getPlayerStats() {
+		return new PlayerStats(name, kills, lifes);
 	}
 
 	public int getLifes() {
@@ -464,5 +508,4 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 
 	public void keyTyped(KeyEvent e) {
 	}
-
 }
