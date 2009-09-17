@@ -21,10 +21,6 @@ import menue.GamePanel;
 public class MapEditorView extends GamePanel {
 
 	private MapEditorController controller;
-	private GameIconButton btn_stone = new GameIconButton(0, 550, "Backstein",
-			"brickstone.jpg");
-	private GameIconButton btn_box = new GameIconButton(0, 575, "Box",
-			"box.jpg");
 
 	private GameButton btn_laden = new GameButton(600, 550, "Laden");
 	private GameButton btn_speichern = new GameButton(600, 575, "Speichern");
@@ -53,16 +49,12 @@ public class MapEditorView extends GamePanel {
 		// String[] feld = {"Feld1", "Feld2"};
 
 		// ActionListener
-		btn_box.addActionListener(controller);
-		btn_stone.addActionListener(controller);
 		btn_loeschen.addActionListener(controller);
 		btn_zurueck.addActionListener(controller);
 		btn_speichern.addActionListener(controller);
 		btn_laden.addActionListener(controller);
 
 		// Actioncommands
-		btn_box.setActionCommand("box");
-		btn_stone.setActionCommand("stone");
 		btn_loeschen.setActionCommand("loeschen");
 		btn_zurueck.setActionCommand("zurueck");
 		btn_speichern.setActionCommand("speichern");
@@ -94,9 +86,9 @@ public class MapEditorView extends GamePanel {
 		fieldItems[0] = "brickstone";
 		fieldItems[1] = "box";
 		fieldItems[2] = "mayastone";
-		fieldFileNames[0] = "brickstone.jpg";
-		fieldFileNames[1] = "box.jpg";
-		fieldFileNames[2] = "mayastone.jpg";
+		fieldFileNames[0] = "obj_brickstone.jpg";
+		fieldFileNames[1] = "obj_box.jpg";
+		fieldFileNames[2] = "obj_mayastone.jpg";
 		fieldItemList = ComboIconBoxFactory.buildComboBox(fieldItems,
 				fieldFileNames);
 		((JComponent) fieldItemList.getRenderer())
