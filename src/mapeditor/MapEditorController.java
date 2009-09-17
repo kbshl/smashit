@@ -4,11 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Enumeration;
 
 import javax.swing.JFileChooser;
@@ -16,6 +13,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -32,8 +30,8 @@ import map.Sprite;
 import menue.BaseFrame;
 import menue.MainMenue;
 
-import org.w3c.dom.Element;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 public class MapEditorController implements ActionListener, MouseListener {
 
@@ -91,7 +89,7 @@ public class MapEditorController implements ActionListener, MouseListener {
 			dateiPfad = dateiPfad.substring(0, (dateiPfad.length() - dateiName
 					.length()));
 			// Map wird gepaintet
-			view.getMap().paintMap(dateiName, dateiPfad);
+			view.getMap().loadMap(dateiName, dateiPfad);
 			view.repaint();
 		}
 	}
@@ -182,7 +180,8 @@ public class MapEditorController implements ActionListener, MouseListener {
 		return datenArray;
 	}
 
-	public void writeXML(File datei, String[][] textPuffer) {
+	public void writeXML(File datei, String[][] textPuffer)
+			throws FileNotFoundException, XMLStreamException {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
@@ -201,6 +200,10 @@ public class MapEditorController implements ActionListener, MouseListener {
 				elem.setAttribute("x", textPuffer[i][1]);
 				elem.setAttribute("y", textPuffer[i][2]);
 			}
+
+			// XMLOutputter outputter = new XMLOutputter();
+			// FileOutputStream output = new FileOutputStream("file.xml");
+			// outputter.output(doc, output);
 
 			StreamResult result = new StreamResult(datei);
 
