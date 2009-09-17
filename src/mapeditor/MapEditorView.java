@@ -38,13 +38,17 @@ public class MapEditorView extends GamePanel {
 	private Map map;
 	private JComboBox fieldItemList;
 	private JComboBox backgroundList;
-	public String[] backgrounds = new String[3];
+	public String[] backgrounds = new String[6];
+	public String[] backgroundFileNames = new String[6];
 	public String[] fieldItems = new String[3];
 	public String[] fieldFileNames = new String[3];
+	
 
 	public MapEditorView(MapEditorController c, Map m) {
 		super("mapeditor.jpg");
 		map = m;
+		// Muss gemacht werden, da sonst zu viele Elemente auf der Stage sind, falls man speichert
+		map.getSprites().removeAllElements();
 		controller = c;
 		// String[] feld = {"Feld1", "Feld2"};
 
@@ -68,7 +72,16 @@ public class MapEditorView extends GamePanel {
 		backgrounds[0] = "sky";
 		backgrounds[1] = "desert";
 		backgrounds[2] = "forest";
-		backgroundList = ComboIconBoxFactory.buildComboBox(backgrounds);
+		backgrounds[3] = "maya";
+		backgrounds[4] = "pillars";
+		backgrounds[5] = "dune";
+		backgroundFileNames[0] = "bg_sky.jpg";
+		backgroundFileNames[1] = "bg_desert.jpg";
+		backgroundFileNames[2] = "bg_forest.jpg";
+		backgroundFileNames[3] = "bg_maya.jpg";
+		backgroundFileNames[4] = "bg_pillars.jpg";
+		backgroundFileNames[5] = "bg_dune.jpg";
+		backgroundList = ComboIconBoxFactory.buildComboBox(backgrounds,backgroundFileNames);
 		((JComponent) backgroundList.getRenderer())
 				.setPreferredSize(new Dimension(25, 25));
 		backgroundList.setActionCommand("backgroundList");
