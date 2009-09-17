@@ -2,7 +2,7 @@
 
 <map background="bg_desert.jpg">
 
-
+<cloud x="200" y="200" />
 <box x="50" y="75" />
 <box x="50" y="100" />
 <box x="75" y="100" />

@@ -89,6 +89,9 @@ public class Map implements Finals {
 						if (nodeName.equals("oldstonefloor")) {
 							sprites.add(new OldStoneFloor(x, y));
 						}
+						if (nodeName.equals("cloud")) {
+							sprites.add(new Cloud(x, y));
+						}
 					}
 
 				}
