@@ -4,6 +4,7 @@ import game.Position;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
 import manager.PictureManager;
 
 
@@ -69,6 +70,9 @@ public abstract class Sprite {
 	}
 	public Position getPosition(){
 		return new Position(this.x, this.y);
+	}
+	public boolean containsPoint(int x, int y){
+		return getBounds().contains(x, y);
 	}
 
 }
