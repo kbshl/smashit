@@ -11,9 +11,9 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 	private ImageIcon[] images;
 	private String[] petStrings;
 
-	public ComboBoxRenderer(ImageIcon[] images, String[] petStrings) {
+	public ComboBoxRenderer(ImageIcon[] images) {
 		this.images = images;
-		this.petStrings = petStrings;
+		//this.petStrings = petStrings;
 		setOpaque(true);
 		setHorizontalAlignment(LEFT);
 		setVerticalAlignment(CENTER);
@@ -40,10 +40,10 @@ public class ComboBoxRenderer extends JLabel implements ListCellRenderer {
 
 		// Set the icon and text. If icon was null, say so.
 		ImageIcon icon = images[selectedIndex];
-		String pet = petStrings[selectedIndex];
+		//String pet = petStrings[selectedIndex];
 		setIcon(icon);
 		if (icon != null) {
-			setText(pet);
+			//setText(pet);
 		} else {
 
 		}

@@ -11,30 +11,30 @@ public class ComboIconBoxFactory extends JPanel {
 
 	private static ArrayList<JComboBox> builtBoxes = new ArrayList<JComboBox>();
 
-	public static JComboBox buildComboBox(String[] bezeichnung){
-    	
-		String[] dateinamen = new String[bezeichnung.length];
-		for (int i = 0; i < bezeichnung.length; i++) {
-			dateinamen[i] = bezeichnung[i] + ".jpg";
-		}
-		
-    	return buildComboBox(bezeichnung,dateinamen);
-    }
+//	public static JComboBox buildComboBox(String[] bezeichnung){
+//    	
+//		String[] dateinamen = new String[bezeichnung.length];
+//		for (int i = 0; i < bezeichnung.length; i++) {
+//			dateinamen[i] = bezeichnung[i] + ".jpg";
+//		}
+//		
+//    	return buildComboBox(bezeichnung,dateinamen);
+//    }
 	
-	public static JComboBox buildComboBox(String[] bezeichnung, String[] dateinamen){
+	public static JComboBox buildComboBox(String[] dateinamen){
 		
-		Integer[] intArray = new Integer[bezeichnung.length];
-		ImageIcon[] icons = new ImageIcon[bezeichnung.length];
-		for (int i = 0; i < bezeichnung.length; i++) {
+		Integer[] intArray = new Integer[dateinamen.length];
+		ImageIcon[] icons = new ImageIcon[dateinamen.length];
+		for (int i = 0; i < dateinamen.length; i++) {
 			intArray[i] = new Integer(i);
 			icons[i] = new ImageIcon("src/resource/pics/"
 					+ dateinamen[i]);
 			if (icons[i] != null) {
-				icons[i].setDescription(bezeichnung[i]);
+				//icons[i].setDescription(bezeichnung[i]);
 			}
 		}
 		JComboBox cmb = new JComboBox(intArray);
-		ComboBoxRenderer renderer = new ComboBoxRenderer(icons, bezeichnung);
+		ComboBoxRenderer renderer = new ComboBoxRenderer(icons);
 		renderer.setOpaque(true);
 		cmb.setRenderer(renderer);
 		

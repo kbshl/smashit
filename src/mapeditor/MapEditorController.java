@@ -146,13 +146,13 @@ public class MapEditorController implements ActionListener, MouseListener {
 		int ypos = e.getY() - (e.getY() % 25);
 
 		if (ypos <= (550 - 25) && ypos >= 0) {
-			if (selectedObj.equals("box")) {
+			if (selectedObj.equals("obj_box.jpg")) {
 				map.getSprites().add(new Box(xpos, ypos));
 			}
-			if (selectedObj.equals("brickstone")) {
+			if (selectedObj.equals("obj_brickstone.jpg")) {
 				map.getSprites().add(new BrickStone(xpos, ypos));
 			}
-			if (selectedObj.equals("mayastone")) {
+			if (selectedObj.equals("obj_mayastone.jpg")) {
 				map.getSprites().add(new MayaStone(xpos, ypos));
 			}
 			view.repaint();
