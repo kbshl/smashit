@@ -82,7 +82,7 @@ public class LocalGameController implements Finals, Runnable {
 		}
 		if (pastItemTime >= itemTime) {
 			pastItemTime -= itemTime;
-			itemTime = 5 + (Math.random() * 5);
+			itemTime = 15 + (Math.random() * 15);
 			removeItems();
 			addItem();
 		}
