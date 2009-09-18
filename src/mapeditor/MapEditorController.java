@@ -6,7 +6,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Vector;
+import java.util.Map.Entry;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
@@ -23,16 +31,17 @@ import javax.xml.transform.TransformerFactoryConfigurationError;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import map.Box;
-import map.BrickStone;
 import map.Map;
-import map.MayaStone;
 import map.Sprite;
 import menue.BaseFrame;
 import menue.MainMenue;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.xml.sax.SAXParseException;
 
 public class MapEditorController implements ActionListener, MouseListener {
 
@@ -117,7 +126,6 @@ public class MapEditorController implements ActionListener, MouseListener {
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-
 		}
 	}
 
@@ -141,22 +149,60 @@ public class MapEditorController implements ActionListener, MouseListener {
 	}
 
 	public void mouseReleased(MouseEvent e) {
-		selectedObj = view.showSelectedItem();
-		int xpos = e.getX() - (e.getX() % 25);
-		int ypos = e.getY() - (e.getY() % 25);
+		if (e.getButton() == MouseEvent.BUTTON1) {
+			selectedObj = view.showSelectedItem();
+			int xpos = e.getX() - (e.getX() % 25);
+			int ypos = e.getY() - (e.getY() % 25);
 
-		if (ypos <= (550 - 25) && ypos >= 0) {
-			if (selectedObj.equals("obj_box.jpg")) {
-				map.getSprites().add(new Box(xpos, ypos));
+			if (ypos <= (550 - 25) && ypos >= 0) {
+
+				try {
+					Class i = Class.forName("map." + selectedObj);
+					Constructor[] cons = i.getConstructors();
+					for (Constructor constructor : cons) {
+						Class[] params = constructor.getParameterTypes();
+						if (params.length == 2
+								&& params[0].getName().equals("int")
+								&& params[1].getName().equals("int")) {
+							Sprite o = (Sprite) constructor.newInstance(xpos,
+									ypos);
+							map.getSprites().add(o);
+							break;
+						}
+					}
+				} catch (ClassNotFoundException er) {
+					// TODO Auto-generated catch block
+					er.printStackTrace();
+				} catch (IllegalArgumentException er) {
+					// TODO Auto-generated catch block
+					er.printStackTrace();
+				} catch (InstantiationException er) {
+					// TODO Auto-generated catch block
+					er.printStackTrace();
+				} catch (IllegalAccessException er) {
+					// TODO Auto-generated catch block
+					er.printStackTrace();
+				} catch (InvocationTargetException er) {
+					// TODO Auto-generated catch block
+					er.printStackTrace();
+				}
+				view.repaint();
 			}
-			if (selectedObj.equals("obj_brickstone.jpg")) {
-				map.getSprites().add(new BrickStone(xpos, ypos));
+		} else if (e.getButton() == MouseEvent.BUTTON3) {
+			Vector<Sprite> alleElemente = view.getMap().getSprites();
+			Sprite hasToBeDeleted = null;
+			for (Iterator<Sprite> ae = alleElemente.iterator(); ae.hasNext();) {
+				Sprite aktuellesElement = (Sprite) ae.next();
+				if (aktuellesElement.containsPoint(e.getX(), e.getY())) {
+					hasToBeDeleted = aktuellesElement;
+				}
 			}
-			if (selectedObj.equals("obj_mayastone.jpg")) {
-				map.getSprites().add(new MayaStone(xpos, ypos));
+			if (hasToBeDeleted != null) {
+				view.getMap().getSprites().remove(hasToBeDeleted);
+				view.repaint();
 			}
-			view.repaint();
 		}
+
 	}
 
 	private String[][] elementeAuslesen() {
@@ -171,7 +217,7 @@ public class MapEditorController implements ActionListener, MouseListener {
 					&& !itemArt.equals("Boden")) {
 				Integer itemX = item.getX();
 				Integer itemY = item.getY();
-				datenArray[counter][0] = itemArt.toLowerCase();
+				datenArray[counter][0] = itemArt;
 				datenArray[counter][1] = itemX.toString();
 				datenArray[counter][2] = itemY.toString();
 				// System.out.println(datenArray[counter][0]);
@@ -223,6 +269,63 @@ public class MapEditorController implements ActionListener, MouseListener {
 			e.printStackTrace();
 		}
 
+	}
+
+	public Hashtable<String, String> loadGraphData() {
+		Hashtable<String, String> graphData = new Hashtable();
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory
+					.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+			Document document = builder.parse(new File(
+					"src/resource/pics/graphData.xml"));
+
+			Node rootNode = document.getDocumentElement();
+
+			NodeList elemente = rootNode.getChildNodes();
+
+			for (int i = 0; i < elemente.getLength(); i++) {
+				if (elemente.item(i).getNodeName().equals("element")) {
+					NodeList element = elemente.item(i).getChildNodes();
+					String classname = "";
+					for (int j = 0; j < element.getLength(); j++) {
+						if (element.item(j).getNodeName().equals("classname")) {
+							classname = element.item(j).getTextContent();
+						}
+						if (element.item(j).getNodeName().equals("filename")) {
+							graphData.put(classname, element.item(j)
+									.getTextContent());
+						}
+					}
+				}
+			}
+			Set<Entry<String, String>> it = graphData.entrySet();
+			for (Iterator iterator = it.iterator(); iterator.hasNext();) {
+				Entry<String, String> entry = (Entry<String, String>) iterator
+						.next();
+				System.out.println("Der Klassenname lautet: " + entry.getKey());
+				System.out.println("Der Dateiname lautet: " + entry.getValue());
+			}
+			return graphData;
+
+			// ---- Error handling ----
+		} catch (SAXParseException spe) {
+			System.out.println("\n** Parsing error, line "
+					+ spe.getLineNumber() + ", uri " + spe.getSystemId());
+			System.out.println("   " + spe.getMessage());
+			Exception e = (spe.getException() != null) ? spe.getException()
+					: spe;
+			e.printStackTrace();
+		} catch (SAXException sxe) {
+			Exception e = (sxe.getException() != null) ? sxe.getException()
+					: sxe;
+			e.printStackTrace();
+		} catch (ParserConfigurationException pce) {
+			pce.printStackTrace();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+		return graphData;
 	}
 
 }

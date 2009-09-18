@@ -37,13 +37,30 @@ public class MapEditorView extends GamePanel {
 	public String[] backgrounds = new String[6];
 	public String[] backgroundFileNames = new String[6];
 	public String[] fieldItems = new String[3];
-	public String[] fieldFileNames = {"obj_brickstone.jpg", "obj_box.jpg",
-			"obj_mayastone.jpg", "obj_bush.gif", "obj_cloud.gif",
-			"obj_desert_earth_left.jpg", "obj_desert_earth_middle.jpg",
-			"obj_desert_earth_right.jpg", "obj_desert_left.gif",
-			"obj_desert_middle.jpg", "obj_desert_right.gif",
-			"obj_desert_stone1.gif", "obj_desert_stone2.gif",
-			"obj_fence.gif", "obj_flower1.gif", "obj_flower2.gif", "obj_grass_earth_left.gif" };
+	public String[][] elements = {
+			{"BrickStone", "obj_brickstone.jpg"},
+			{"Box","obj_box.jpg"},
+			{"MayaStone","obj_mayastone.jpg"},
+			{"Bush","obj_bush.gif"},
+			{"Cloud","obj_cloud.gif"},
+			{"DesertEarthLeft","obj_desert_earth_left.jpg"},
+			{"DesertEarthMiddle","obj_desert_earth_middle.jpg"},
+			{"DesertEarthRight","obj_desert_earth_right.jpg"},
+			{"DesertLeft", "obj_desert_left.gif"},
+			{"DesertMiddle", "obj_desert_middle.jpg"},
+			{"DesertRight", "obj_desert_right.gif"},
+			{"DesertStone1", "obj_desert_stone1.gif"},
+			{"DesertStone2", "obj_desert_stone2.gif"},
+			{"Fence", "obj_fence.gif"},
+			{"Flower1", "obj_flower1.gif"},
+			{"Flower2", "obj_flower2.gif"},
+			{"GrassEarthLeft", "obj_grass_earth_left.gif"},
+			{"GrassEarthMiddle", "obj_grass_earth_middle.jpg"},
+			{"GrassEarthRight", "obj_grass_earth_right.gif"},
+			{"GrassLeft", "obj_grass_left.gif"},
+			{"GrassMiddle", "obj_grass_middle.jpg"},
+			{"GrassRight", "obj_grass_right.gif"}
+	};
 
 	public MapEditorView(MapEditorController c, Map m) {
 		super("mapeditor.jpg");
@@ -89,7 +106,7 @@ public class MapEditorView extends GamePanel {
 		backgroundList.addActionListener(controller);
 
 		// ComboBox für Items
-		fieldItemList = ComboIconBoxFactory.buildComboBox(fieldFileNames);
+		fieldItemList = ComboIconBoxFactory.buildComboBox(elements);
 		((JComponent) fieldItemList.getRenderer())
 				.setPreferredSize(new Dimension(30, 30));
 		fieldItemList.setActionCommand("fieldItemList");
@@ -112,7 +129,7 @@ public class MapEditorView extends GamePanel {
 		if (fieldItemList.getSelectedIndex() < 0) {
 			return "";
 		}
-		return fieldFileNames[fieldItemList.getSelectedIndex()];
+		return elements[fieldItemList.getSelectedIndex()][0];
 	}
 
 	public String showSelectedBackground() {
