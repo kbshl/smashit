@@ -1,13 +1,19 @@
 package map;
 
+import game.Finals;
+
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import manager.PictureManager;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
@@ -15,9 +21,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
-import manager.PictureManager;
-import game.Finals;
 
 public class Map implements Finals {
 	private String name = "Level1";
@@ -76,23 +79,55 @@ public class Map implements Finals {
 					if (!xv.equals("") && !yv.equals("")) {
 						int x = Integer.valueOf(xv).intValue();
 						int y = Integer.valueOf(yv).intValue();
-
-						if (nodeName.equals("box")) {
-							sprites.add(new Box(x, y));
-						}
-						if (nodeName.equals("brickstone")) {
-							sprites.add(new BrickStone(x, y));
-						}
-						if (nodeName.equals("mayastone")) {
-							sprites.add(new MayaStone(x, y));
-						}
-						if (nodeName.equals("oldstonefloor")) {
-							sprites.add(new OldStoneFloor(x, y));
-						}
-						if (nodeName.equals("cloud")) {
-							sprites.add(new Cloud(x, y));
+						// Test
+						try {
+							Class obj = Class.forName("map." + nodeName);
+							Constructor[] cons = obj.getConstructors();
+							for (Constructor constructor : cons) {
+								Class[] params = constructor.getParameterTypes();
+								if (params.length == 2
+										&& params[0].getName().equals("int")
+										&& params[1].getName().equals("int")) {
+									Sprite o = (Sprite) constructor.newInstance(x,
+											y);
+									sprites.add(o);
+									break;
+								}
+							}
+						} catch (ClassNotFoundException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
+						} catch (IllegalArgumentException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
+						} catch (InstantiationException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
+						} catch (IllegalAccessException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
+						} catch (InvocationTargetException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
 						}
 					}
+					// Test zu Ende
+					
+//					if (nodeName.equals("box")) {
+//						sprites.add(new Box(x, y));
+//					}
+//					if (nodeName.equals("brickstone")) {
+//						sprites.add(new BrickStone(x, y));
+//					}
+//					if (nodeName.equals("mayastone")) {
+//						sprites.add(new MayaStone(x, y));
+//					}
+//					if (nodeName.equals("oldstonefloor")) {
+//						sprites.add(new OldStoneFloor(x, y));
+//					}
+//					if (nodeName.equals("cloud")) {
+//						sprites.add(new Cloud(x, y));
+//					}
 
 				}
 			}
