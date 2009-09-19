@@ -11,17 +11,23 @@ public class MapList extends JList implements Finals {
 	
 	public MapList(int x, int y){
 		setBounds(x, y, 200, 400);
-		
-		File mapFolder = new File(MAP_PATH);
-		String[] folderList = mapFolder.list();
-		
-		for (int i = 0; i < folderList.length; i++) {
-			if (folderList[i].endsWith(".xml")) {
-				String neu = folderList[i].substring(0,
-						folderList[i].length() - 4);
-				maps.addElement(neu);
+		String[] folderList;
+		try{
+			File mapFolder = new File(getClass().getClassLoader().getResource(MAP_PATH).toURI());
+			folderList = mapFolder.list();
+			for (int i = 0; i < folderList.length; i++) {
+				if (folderList[i].endsWith(".xml")) {
+					String neu = folderList[i].substring(0,
+							folderList[i].length() - 4);
+					maps.addElement(neu);
+				}
 			}
+		}catch(Exception e){
+			
 		}
+		
+		
+	
 		this.setListData(maps);
 		setSelectedIndex(0);
 		

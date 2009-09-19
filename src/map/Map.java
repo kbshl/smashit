@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -57,7 +58,8 @@ public class Map implements Finals {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new File(mapPath + mapFile));
+			
+			Document document = builder.parse(new File(getClass().getClassLoader().getResource(mapPath + mapFile).toURI()));
 
 			Node rootNode = document.getDocumentElement();
 			NamedNodeMap background_attr = rootNode.getAttributes();
@@ -109,7 +111,7 @@ public class Map implements Finals {
 						} catch (InvocationTargetException er) {
 							// TODO Auto-generated catch block
 							er.printStackTrace();
-						}
+						} 
 					}
 					// Test zu Ende
 					
@@ -148,6 +150,8 @@ public class Map implements Finals {
 			pce.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
+		}catch(URISyntaxException e){
+			
 		}
 	}
 
