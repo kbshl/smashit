@@ -59,7 +59,7 @@ public class Map implements Finals {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
-			Document document = builder.parse(new File(getClass().getClassLoader().getResource(mapPath + mapFile).toURI()));
+			Document document = builder.parse(getClass().getClassLoader().getResource(mapPath + mapFile).toString());
 			System.out.println(document.getDocumentURI());
 			
 			Node rootNode = document.getDocumentElement();
@@ -151,9 +151,8 @@ public class Map implements Finals {
 			pce.printStackTrace();
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
-		}catch(URISyntaxException e){
-			
 		}
+
 	}
 
 	public Vector<Sprite> getSprites() {
