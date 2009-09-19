@@ -19,10 +19,10 @@ public class GameButton extends JButton {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		g.drawImage(PictureManager.getImage("button1.jpg"), 0, 0, this);
+		g.drawImage(PictureManager.getPictureManager().getImage("button1.jpg"), 0, 0, this);
 
 		if (getModel().isRollover()) {
-			g.drawImage(PictureManager.getImage("button2.jpg"), 0, 0, this);
+			g.drawImage(PictureManager.getPictureManager().getImage("button2.jpg"), 0, 0, this);
 		}
 
 	}

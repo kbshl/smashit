@@ -390,13 +390,13 @@ public class Player extends Sprite implements KeyListener, Finals {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(PictureManager.getImage(images[currentFrame]), x, y, null);
+		g.drawImage(PictureManager.getPictureManager().getImage(images[currentFrame]), x, y, null);
 
 		if (isDead) {
-			g.drawImage(PictureManager.getImage("dead.gif"),
+			g.drawImage(PictureManager.getPictureManager().getImage("dead.gif"),
 					35 + (playerNumber - 1) * 200, 562, null);
 		} else {
-			g.drawImage(PictureManager.getImage(images[currentFrame]),
+			g.drawImage(PictureManager.getPictureManager().getImage(images[currentFrame]),
 					35 + (playerNumber - 1) * 200, 562, null);
 		}
 
@@ -404,7 +404,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 				65 + ((playerNumber - 1) * 200), 578);
 
 		if (item != null) {
-			g.drawImage(PictureManager.getImage(item.getItemImage()),
+			g.drawImage(PictureManager.getPictureManager().getImage(item.getItemImage()),
 					10 + (playerNumber - 1) * 200, 562, null);
 		}
 

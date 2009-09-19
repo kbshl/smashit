@@ -1,9 +1,11 @@
 package manager;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.*;
 import game.Finals;
+
+import java.awt.Image;
+import java.util.HashMap;
+
+import javax.swing.ImageIcon;
 
 public class PictureManager implements Finals {
 	private static PictureManager pm;
@@ -21,9 +23,9 @@ public class PictureManager implements Finals {
 		return pm;
 	}
 
-	private static Image loadImage(String name) {
+	private Image loadImage(String name) {
 		java.net.URL imgURL;
-		imgURL = PictureManager.class.getResource(PIC_PATH + name);
+		imgURL = getClass().getClassLoader().getResource(PIC_PATH + name);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL).getImage();
 		} else {
@@ -31,7 +33,7 @@ public class PictureManager implements Finals {
 		}
 	}
 
-	public static Image getImage(String name) {
+	public Image getImage(String name) {
 		Image img = (Image) images.get(name);
 		if (img == null) {
 			img = loadImage(name);

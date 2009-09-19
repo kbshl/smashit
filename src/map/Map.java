@@ -160,7 +160,7 @@ public class Map implements Finals {
 	}
 
 	public Image getBackground() {
-		return PictureManager.getImage(background);
+		return PictureManager.getPictureManager().getImage(background);
 	}
 
 	public String getName() {

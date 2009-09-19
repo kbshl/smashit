@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements Finals, KeyListener {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (this.image != null) {
-			g.drawImage(PictureManager.getImage(image), 0, 0, this);
+			g.drawImage(PictureManager.getPictureManager().getImage(image), 0, 0, this);
 		}
 		requestFocus();
 	}

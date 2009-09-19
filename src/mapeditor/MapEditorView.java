@@ -150,7 +150,7 @@ public class MapEditorView extends GamePanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(map.getBackground(), 0, 0, null);
-		g.drawImage(PictureManager.getImage("hud.jpg"), 0, 550, null);
+		g.drawImage(PictureManager.getPictureManager().getImage("hud.jpg"), 0, 550, null);
 		// Level malen
 		for (int i = 0; i < map.getSprites().size(); ++i) {
 			map.getSprites().get(i).paint(g);

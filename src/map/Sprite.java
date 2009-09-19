@@ -20,8 +20,8 @@ public abstract class Sprite {
 		this.x = x;
 		this.y = y;
 		images = s;
-		width = PictureManager.getImage(s[0]).getWidth(null);
-		height = PictureManager.getImage(s[0]).getHeight(null);
+		width = PictureManager.getPictureManager().getImage(s[0]).getWidth(null);
+		height = PictureManager.getPictureManager().getImage(s[0]).getHeight(null);
 		walkable = wa;
 	}
 
@@ -30,7 +30,7 @@ public abstract class Sprite {
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(PictureManager.getImage(images[currentFrame]), x, y, null);
+		g.drawImage(PictureManager.getPictureManager().getImage(images[currentFrame]), x, y, null);
 	}
 
 	public int getX() {
