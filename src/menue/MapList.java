@@ -14,6 +14,9 @@ public class MapList extends JList implements Finals {
 		String[] folderList;
 		try{
 			File mapFolder = new File(getClass().getClassLoader().getResource(MAP_PATH).toURI());
+			
+			System.out.println(mapFolder);
+			
 			folderList = mapFolder.list();
 			for (int i = 0; i < folderList.length; i++) {
 				if (folderList[i].endsWith(".xml")) {

@@ -60,7 +60,8 @@ public class Map implements Finals {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
 			Document document = builder.parse(new File(getClass().getClassLoader().getResource(mapPath + mapFile).toURI()));
-
+			System.out.println(document.getDocumentURI());
+			
 			Node rootNode = document.getDocumentElement();
 			NamedNodeMap background_attr = rootNode.getAttributes();
 			if (background_attr != null) {
