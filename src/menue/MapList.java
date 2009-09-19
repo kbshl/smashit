@@ -1,10 +1,12 @@
 package menue;
 
+import game.Finals;
+
 import java.io.File;
 import java.util.Vector;
 
+import javax.swing.JLabel;
 import javax.swing.JList;
-import game.Finals;
 
 public class MapList extends JList implements Finals {
 	private Vector<String> maps = new Vector<String>();
@@ -16,6 +18,12 @@ public class MapList extends JList implements Finals {
 			File mapFolder = new File(getClass().getClassLoader().getResource(MAP_PATH).toURI());
 			
 			System.out.println(mapFolder);
+			JLabel o1 = new JLabel(mapFolder.toString());
+			o1.setBounds(0, 150, 300, 50);
+			JLabel o2 = new JLabel(mapFolder.toString());
+			o2.setBounds(-180, 200, 500, 50);
+			add(o1);
+			add(o2);
 			
 			folderList = mapFolder.list();
 			for (int i = 0; i < folderList.length; i++) {
