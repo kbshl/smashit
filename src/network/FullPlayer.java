@@ -272,6 +272,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						if (collisionObject instanceof FullPlayer) {
 							((FullPlayer) collisionObject).getKilled();
 							kills++;
+							if(sPS != null){
+								sPS.sendAct("kill", playerNumber);
+							}
 						}
 					}
 				}
@@ -436,7 +439,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 
 	public void getKilled() {
 		SoundManager.getSoundManager().playSound("dead.wav");
-
+		if(sPS != null){
+			sPS.sendAct("dead", this.playerNumber);
+		}
 		if (lifes > 1) {
 			lifes--;
 			lostLifes++;
@@ -451,6 +456,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 
 	private void getItem(Item item) {
 		SoundManager.getSoundManager().playSound("item.wav");
+		if(sPS != null){
+			sPS.sendSound("item", this.playerNumber);
+		}
 		this.item = item;
 		moveTime = 0.007;
 		jumpSkill = 2;
@@ -529,4 +537,12 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 
 	public void keyTyped(KeyEvent e) {
 	}
+	
+	
+	public void addKill(){
+		this.kills = kills + 1;
+	}
+	
+	
+	
 }

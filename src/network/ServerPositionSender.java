@@ -80,6 +80,31 @@ public class ServerPositionSender{
 			
 		}
 	}
+	public void sendSound(String sound, int playernumber){
+		int j = 0;
+		
+		if(sound.equals("item")){ //wird an alle geschickt
+			while(playerData[j][1] != null){
+				//SFX_item
+				sockOut = (PrintWriter)playerData[j][1];
+				sockOut.println("Sound:" + sound);
+				++j;	
+			}
+		}
+	}
+	
+	
+	public void sendAct(String act, int playerNumber){
+		int j = 0;
+		while(playerData[j][1] != null){
+		sockOut = (PrintWriter)playerData[j][1];
+		sockOut.println("Act:" + act +":" + (playerNumber-1) );
+		
+		++j;
+		
+		}	
+		
+	}
 	 /*
 	public void run(){
 		//int oldPosition = 0, newPosition = 0;

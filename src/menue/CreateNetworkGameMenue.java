@@ -204,15 +204,6 @@ public class CreateNetworkGameMenue extends JPanel{
 
 	}
 	
-	private String getPlayerNames(){
-		String s = "";
-		for(int i = 0; i<player.size(); i++){
-			System.out.println(player.get(i).getName() + " wird zum String geadded");
-			s = s + player.get(i).getName() + ":" ;
-		}
-		s = s + player.lastElement().getName();
-		return s;
-	}
 	
 	private String getPlayerNames2(){
 		String s = "LocalPlayer";//name aus spieler feld

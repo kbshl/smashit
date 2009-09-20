@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.util.Vector;
 
+import manager.SoundManager;
+
 public class ClientPositionReceiver extends Thread{
 	
 	private BufferedReader sockIn;
@@ -67,7 +69,27 @@ public class ClientPositionReceiver extends Thread{
 				player.get(Integer.parseInt(inputParts[1])).setY(Integer.parseInt(inputParts[3]));
 				
 			
-			}	
+			}
+			if(inputParts[0].equals("Sound")){//Move_P0_Event1
+				
+				if(inputParts[1].equals("item")){
+					SoundManager.getSoundManager().playSound("item.wav");
+				}
+				
+				
+			
+			}
+			if(inputParts[0].equals("Act")){//Move_P0_Event1
+				//System.out.println(input);
+				if(inputParts[1].equals("dead")){ //wurde getötet
+					player.get(Integer.parseInt(inputParts[2])).getKilled();
+
+				}
+				if(inputParts[1].equals("kill")){//hat getötet
+					player.get(Integer.parseInt(inputParts[2])).addKill();
+
+				}	
+			}
 			
 			
 			
