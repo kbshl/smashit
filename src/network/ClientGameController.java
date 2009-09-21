@@ -4,7 +4,9 @@ import map.Sprite;
 import map.Map;
 import map.Item;
 import menue.BaseFrame;
+import menue.GameStatsMenue;
 import game.Finals;
+import game.Player;
 
 
 import java.util.Vector;
@@ -54,13 +56,14 @@ public class ClientGameController implements Finals, Runnable {
 			//computeDelta();
 			//updateWorld();
 			view.repaint();
-
+			playerAlive();
 			try {
 				t.sleep(GAME_PAUSE);
 			} catch (InterruptedException e) {
 			}
 
 		}
+		endGame();
 
 	}
 /*
@@ -147,6 +150,20 @@ public class ClientGameController implements Finals, Runnable {
 			i++;
 		}
 		
+	}
+	private void endGame() {
+		BaseFrame.getBaseFrame().setJPanel(new NetGameStatsMenue(players));
+	}
+	private void playerAlive(){
+		int alive = 0;
+		for (FullPlayer p : players) {
+			if (!p.isDead()) {
+				alive++;
+			}
+		}
+		if (alive <= 1) {
+			gameruns = false;
+		}
 	}
 
 }

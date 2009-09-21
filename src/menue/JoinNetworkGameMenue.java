@@ -122,19 +122,22 @@ public class JoinNetworkGameMenue extends GamePanel{
 					System.out.println("Player = " + input);
 					
 					input = sockin.readLine();
-					map = new Map(input, true);
-					System.out.println("Map = " + input);
+					System.out.println("Map = " + input + "ende");
+					map = new Map(input);
+					
 					
 					input = sockin.readLine();
 					playerNumber = Integer.parseInt(input);
 					System.out.println("playerNumber = " + playerNumber);
+					
+					System.out.println("Init Done");
 				}
 				catch(Exception ex){
 					
 				}
 				
 				
-				System.out.println("Init Done");
+				
 				
 				
 				ClientPositionSender cPS = new ClientPositionSender(sockout);

@@ -3,11 +3,12 @@ package map;
 import game.Finals;
 
 import java.awt.Image;
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URISyntaxException;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -28,6 +29,7 @@ public class Map implements Finals {
 	private Vector<Sprite> sprites;
 	private String background = "bg_sky.jpg";
 	private String mapData;
+	private String mapFile;
 	//private String mapPath;
 
 	public Map(String mapFile) {
@@ -35,8 +37,10 @@ public class Map implements Finals {
 		sprites.add(new WandLinks());
 		sprites.add(new WandRechts());
 		sprites.add(new Boden());
-
+		this.mapFile = mapFile;
 		loadMap(mapFile,"");
+		//mapData = xmlToString(mapFile, "");
+		//System.out.println(mapData);
 
 	}
 	public Map(String mapData, boolean netz) {
@@ -46,7 +50,7 @@ public class Map implements Finals {
 		sprites.add(new Boden());
 
 		loadMap(mapData);
-
+		
 	}
 
 	public Map() {
@@ -70,13 +74,15 @@ public class Map implements Finals {
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			
 			Document document = builder.parse(getClass().getClassLoader().getResource(mapPath + mapFile).toString());
-			System.out.println(document.getDocumentURI());
+			
 			
 			//Wird benötigt um neu erstellte maps übers netzwerk zu schicken
-			mapData = document.toString();
+			
 			
 			
 			Node rootNode = document.getDocumentElement();
+			
+			//System.out.println("node" + rootNode.);
 			NamedNodeMap background_attr = rootNode.getAttributes();
 			if (background_attr != null) {
 				String background_str = background_attr.item(0).getNodeValue();
@@ -289,7 +295,44 @@ public class Map implements Finals {
 	public String getName() {
 		return name;
 	}
+	public String getMapName(){
+		
+		return mapFile;
+	}
+	
+	
+	
+	
+	
 	public String getMapData(){
 		return mapData;
 	}
+	private String xmlToString(String mapFile, String mapPath){
+		if (mapPath == ""){
+			mapPath = MAP_PATH;
+		}
+		String alles ="";
+		System.out.println(mapPath + mapFile);
+		
+			BufferedReader in = null;
+			try {
+				in = new BufferedReader(new FileReader(mapPath + mapFile));
+			} catch (FileNotFoundException e1) {
+				System.out.println("Fehler 1");
+			}
+		try{
+			
+			String s = "";
+			while((s = in.readLine()) != null){
+			      alles.concat(s.concat("\n"));
+			}
+			
+			}
+		catch(Exception e){
+			System.out.println("Fehler 2");
+		}
+		return alles;
+	}
+	
+	
 }

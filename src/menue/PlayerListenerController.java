@@ -19,14 +19,14 @@ public class PlayerListenerController extends Thread{
 	private Vector<String> vtr_playerNames;
 	
 	private Object[][] sockInOut;
-	private int connectCount;
+	private int connectCount, maxPlayer;
 	
-	public PlayerListenerController(CreateNetworkGameMenue cNGM){
+	public PlayerListenerController(CreateNetworkGameMenue cNGM, int maxPlayer){
 		this.cNGM = cNGM;
 		vtr_playerNames = new Vector();
 		sockInOut = new Object[8][2];
 		connectCount = 0;
-		
+		this.maxPlayer = maxPlayer-1;
 		this.start();
 		
 	}
@@ -42,7 +42,7 @@ public class PlayerListenerController extends Thread{
 		}
 		System.out.println("Server gestartet");
 		try{
-			while(!this.isInterrupted() || connectCount > 7){
+			while(!this.isInterrupted() || connectCount > maxPlayer){
 				clientSocket = socket.accept();
 				
 				System.out.println("Client " + clientSocket.getInetAddress() + " hat sich angemeldet");

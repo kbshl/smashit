@@ -57,12 +57,17 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		map = m;
 		players = p;
 		this.cPS = cPS;
+		
+		leftKey = KeyEvent.VK_LEFT;
+		rightKey = KeyEvent.VK_RIGHT;
+		jumpKey = KeyEvent.VK_UP;
+		
 		switch (playerNumber) {
 		case PLAYER1:
 			playerNumber = 1;
-			leftKey = KeyEvent.VK_A;
-			rightKey = KeyEvent.VK_D;
-			jumpKey = KeyEvent.VK_W;
+//			leftKey = KeyEvent.VK_A;
+//			rightKey = KeyEvent.VK_D;
+//			jumpKey = KeyEvent.VK_W;
 			images = new String[] { "kirby_rosa_rechts_1.gif",
 					"kirby_rosa_rechts_2.gif", "kirby_rosa_rechts_3.gif",
 					"kirby_rosa_rechts_4.gif", "kirby_rosa_rechts_5.gif",
@@ -75,9 +80,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			break;
 		case PLAYER2:
 			playerNumber = 2;
-			leftKey = KeyEvent.VK_J;
-			rightKey = KeyEvent.VK_L;
-			jumpKey = KeyEvent.VK_I;
+//			leftKey = KeyEvent.VK_J;
+//			rightKey = KeyEvent.VK_L;
+//			jumpKey = KeyEvent.VK_I;
 			images = new String[] { "kirby_blau_rechts_1.gif",
 					"kirby_blau_rechts_2.gif", "kirby_blau_rechts_3.gif",
 					"kirby_blau_rechts_4.gif", "kirby_blau_rechts_5.gif",
@@ -90,9 +95,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			break;
 		case PLAYER3:
 			playerNumber = 3;
-			leftKey = KeyEvent.VK_LEFT;
-			rightKey = KeyEvent.VK_RIGHT;
-			jumpKey = KeyEvent.VK_UP;
+//			leftKey = KeyEvent.VK_LEFT;
+//			rightKey = KeyEvent.VK_RIGHT;
+//			jumpKey = KeyEvent.VK_UP;
 			images = new String[] { "kirby_grün_rechts_1.gif",
 					"kirby_grün_rechts_2.gif", "kirby_grün_rechts_3.gif",
 					"kirby_grün_rechts_4.gif", "kirby_grün_rechts_5.gif",
@@ -105,9 +110,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			break;
 		case PLAYER4:
 			playerNumber = 4;
-			leftKey = KeyEvent.VK_NUMPAD1;
-			rightKey = KeyEvent.VK_NUMPAD3;
-			jumpKey = KeyEvent.VK_NUMPAD5;
+//			leftKey = KeyEvent.VK_NUMPAD1;
+//			rightKey = KeyEvent.VK_NUMPAD3;
+//			jumpKey = KeyEvent.VK_NUMPAD5;
 			images = new String[] { "kirby_rot_rechts_1.gif",
 					"kirby_rot_rechts_2.gif", "kirby_rot_rechts_3.gif",
 					"kirby_rot_rechts_4.gif", "kirby_rot_rechts_5.gif",
@@ -120,9 +125,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			break;
 		default:
 			playerNumber = 1;
-			leftKey = KeyEvent.VK_LEFT;
-			rightKey = KeyEvent.VK_RIGHT;
-			jumpKey = KeyEvent.VK_UP;
+//			leftKey = KeyEvent.VK_LEFT;
+//			rightKey = KeyEvent.VK_RIGHT;
+//			jumpKey = KeyEvent.VK_UP;
 			images = new String[] { "kirby_blau_rechts_1.gif",
 					"kirby_blau_rechts_2.gif", "kirby_blau_rechts_3.gif",
 					"kirby_blau_rechts_4.gif", "kirby_blau_rechts_5.gif",
@@ -387,6 +392,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			if (!jumpLock) {
 				jumpLock = true;
 				if (jumpCount < jumpSkill) {
+					SoundManager.getSoundManager().playSound("jump.wav");
+					if(sPS != null){
+						sPS.sendSound("jump", this.playerNumber);
+					}
 					jumpSpeed = jumpStart;
 					jumpCount++;
 				}

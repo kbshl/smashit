@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.Vector;
 
 import manager.SoundManager;
+import menue.BaseFrame;
+import menue.MainMenue;
 
 public class ClientPositionReceiver extends Thread{
 	
@@ -34,14 +36,17 @@ public class ClientPositionReceiver extends Thread{
 		//
 		
 		
-		while(true){
+		while(!this.isInterrupted()){
 			
 			try{
 				input = sockIn.readLine();
 				//iS.read(array);
 				
 			}catch(Exception e){
-				System.out.println(e.getMessage() + "Fehler ist aufgetreten");
+				System.out.println(e.getMessage() );
+				BaseFrame.getBaseFrame().setJPanel(new MainMenue());
+				this.interrupt();
+				
 			}
 			/*
 			aktion = array[0] & 7;

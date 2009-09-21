@@ -1,15 +1,16 @@
 package network;
 
-import map.Sprite;
-import map.Map;
-import map.Item;
-import menue.BaseFrame;
 import game.Finals;
+import game.Player;
 
-
-
-import java.util.Vector;
 import java.awt.Rectangle;
+import java.util.Vector;
+
+import map.Item;
+import map.Map;
+import map.Sprite;
+import menue.BaseFrame;
+import menue.GameStatsMenue;
 
 public class NetworkGameController implements Finals, Runnable {
 
@@ -64,6 +65,7 @@ public class NetworkGameController implements Finals, Runnable {
 			}
 
 		}
+		endGame();
 
 	}
 
@@ -73,7 +75,43 @@ public class NetworkGameController implements Finals, Runnable {
 		last = System.nanoTime();
 		fps = ((long) 1e9) / delta;
 	}
-
+	
+	public void updateWorld() {
+		int alive = 0;
+		for (Sprite s : map.getSprites()) {
+			s.act(delta);
+		}
+		for (FullPlayer p : players) {
+			if (!p.isDead()) {
+				p.act(delta);
+				alive++;
+			}
+		}
+		if (alive <= 1) {
+			gameruns = false;
+		}
+		if (pastItemTime >= itemTime) {
+			pastItemTime -= itemTime;
+			itemTime = 15 + (Math.random() * 15);
+			removeItems();
+			addItem();
+		}
+	}
+	private void removeItems() {
+		int i = 0;
+		while (i < map.getSprites().size()) {
+			if (map.getSprites().get(i) instanceof Item) {
+				if (((Item) map.getSprites().get(i)).isRemoveable()) {
+					map.getSprites().remove(map.getSprites().get(i));
+				} else {
+					++i;
+				}
+			} else {
+				++i;
+			}
+		}
+	}
+	/*
 	public void updateWorld() {
 		
 		for (Sprite s : map.getSprites()) {
@@ -92,7 +130,7 @@ public class NetworkGameController implements Finals, Runnable {
 			addItem();
 			//System.out.println(itemTime);
 		}
-	}
+	}*/
 
 	private void addItem() {
 		boolean collision;
@@ -120,6 +158,10 @@ public class NetworkGameController implements Finals, Runnable {
 
 	public long getFPS() {
 		return fps;
+	}
+	
+	private void endGame() {
+		BaseFrame.getBaseFrame().setJPanel(new NetGameStatsMenue(players));
 	}
 
 }

@@ -43,6 +43,7 @@ public class CreateNetworkGameMenue extends GamePanel{
 	private PlayerListenerController pLC;
 	private CreateNetworkGameMenue cNGM;
 	private ButtonListener lis_BtnListener = new ButtonListener();
+	private int playerLives, maxPlayer;
 	
 	public CreateNetworkGameMenue(){
 		super("gamepanel_mainmenue.jpg");
@@ -53,8 +54,8 @@ public class CreateNetworkGameMenue extends GamePanel{
 		
 		//Instanzen erstellen
 		btn_Start = new GameButton(100, 200,"Start");
-		btn_PlayerListenerStartStop = new GameButton(250, 200,"");
-		btn_PlayerListenerStartStop.setText("Horchen");
+		btn_PlayerListenerStartStop = new GameButton(250, 200,"Horchen");
+		//btn_PlayerListenerStartStop.setText("Horchen");
 		btn_Back = new GameButton(400, 200,"Zurück");
 		
 		btn_Start.setEnabled(false);
@@ -132,19 +133,19 @@ public class CreateNetworkGameMenue extends GamePanel{
 	private void startGame(){
 		Map map = new Map(lst_Maps.getSelectedMap());
 		
-		ServerPositionSender sPS = new ServerPositionSender(getPlayerNames2(), playerData, map, 4);
+		ServerPositionSender sPS = new ServerPositionSender(getPlayerNames(), playerData, map, playerLives);
 		//map erstellen
 		
 		//Spieler erstellen + sender Receiver erstellen
 		int i = 0;
-		player.add((new FullPlayer("serverSpieler",1, map, player, true, null, 10, sPS)));
+		player.add((new FullPlayer(txt_PlayerName.getText(),1, map, player, true, null, playerLives, sPS)));
 		
 		System.out.println("server spieler erstellt");
 		++i;
 		while(playerData[i-1][0] != null){
 //			sPS = new ServerPositionSender(player, playerData, map, 4);
 			
-			player.add(new FullPlayer(vtr_PlayerNames.get(i-1), i+1, map, player, false, null, 10, sPS));//erstellt einen Normalen Player und den rest HostPlayer
+			player.add(new FullPlayer(vtr_PlayerNames.get(i-1), i+1, map, player, false, null, playerLives, sPS));//erstellt einen Normalen Player und den rest HostPlayer
 			new ServerPositionReceiver((FullPlayer)player.get(i), (BufferedReader)playerData[i-1][0]);
 			
 			++i;
@@ -167,17 +168,37 @@ public class CreateNetworkGameMenue extends GamePanel{
 			}
 			if (e.getActionCommand().equals("btn_PlayerListenerStartStop")){
 				
-				if(true){ //!txt_PlayerName.getText().equals("") && !txt_MaxPlayer.getText().equals("") && !txt_PlayerLife.getText().equals("")
+				if(!txt_PlayerName.getText().equals("") && !txt_MaxPlayer.getText().equals("") && !txt_PlayerLife.getText().equals("")){ //
 					
 					txt_PlayerName.setEditable(false);
 					txt_MaxPlayer.setEditable(false);
 					txt_PlayerLife.setEditable(false);
-					//System.out.println("Im Listener "+  btn_PlayerListenerStartStop.getText() + "arsch");
-					if(btn_PlayerListenerStartStop.getText().equals("Horchen")){//Start
-						//System.out.println("Im Horchen");
+					
+					
+					//überprüfung ob werte Stimmen können
+					if(Integer.parseInt(txt_MaxPlayer.getText()) > 0 && Integer.parseInt(txt_MaxPlayer.getText()) <= 8){
+						maxPlayer = Integer.parseInt(txt_MaxPlayer.getText());
+					}
+					else{
+						maxPlayer = 8;
+						txt_MaxPlayer.setText("8");
+					}
+					if(Integer.parseInt(txt_PlayerLife.getText()) > 0 && Integer.parseInt(txt_PlayerLife.getText()) <= 10){
+						playerLives = Integer.parseInt(txt_PlayerLife.getText());
+					}
+					else{
+						playerLives = 8;
+						txt_PlayerLife.setText("8");
+					}
+					
+					
+					
+					
+					if(btn_PlayerListenerStartStop.getLabelText().equals("Horchen")){//Start
+					
 						lst_ConnectedPlayer.setListData(new String[] {});
-						pLC = new PlayerListenerController(cNGM);
-						btn_PlayerListenerStartStop.setText("Genug gewartet");
+						pLC = new PlayerListenerController(cNGM, maxPlayer);
+						btn_PlayerListenerStartStop.setLabelText("Genug gewartet");
 						//btn_PlayerListenerStartStop.setEnabled(false);
 					}
 					else{//Stop
@@ -215,13 +236,12 @@ public class CreateNetworkGameMenue extends GamePanel{
 	}
 	
 	
-	private String getPlayerNames2(){
-		String s = "LocalPlayer";//name aus spieler feld
+	private String getPlayerNames(){
+		String s = txt_PlayerName.getText();//name aus spieler feld
 		for(int i = 0; i<vtr_PlayerNames.size(); i++){
-			//System.out.println(vtr_PlayerNames.get(i).getName() + " wird zum String geadded");
 			s = s + ":" + vtr_PlayerNames.get(i) ;
 		}
-		//s = s + player.lastElement().getName();
+		
 		System.out.println(s);
 		return s;
 	}

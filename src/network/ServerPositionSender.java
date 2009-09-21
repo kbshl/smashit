@@ -46,8 +46,10 @@ public class ServerPositionSender{
 			sockOut = (PrintWriter)playerData[j][1];
 			sockOut.println(lives);//leben werden gesendet
 			sockOut.println(playerNames);
-			sockOut.println(map.getMapData());
+			sockOut.println(map.getMapName());
+			
 			sockOut.println(j+1);
+			
 			
 			
 			++j;
