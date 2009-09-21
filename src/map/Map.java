@@ -39,6 +39,15 @@ public class Map implements Finals {
 		loadMap(mapFile,"");
 
 	}
+	public Map(String mapData, boolean netz) {
+		sprites = new Vector<Sprite>();
+		sprites.add(new WandLinks());
+		sprites.add(new WandRechts());
+		sprites.add(new Boden());
+
+		loadMap(mapData);
+
+	}
 
 	public Map() {
 		sprites = new Vector<Sprite>();

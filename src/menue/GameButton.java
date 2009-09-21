@@ -6,9 +6,11 @@ import javax.swing.JLabel;
 import manager.PictureManager;
 
 public class GameButton extends JButton {
+	
+	private JLabel l;
 
 	public GameButton(int x, int y, String s) {
-		JLabel l = new JLabel(s);
+		l = new JLabel(s);
 		l.setBounds(0, 0, 100, 25);
 		l.setAlignmentX(CENTER_ALIGNMENT);
 		add(l);
@@ -25,6 +27,12 @@ public class GameButton extends JButton {
 			g.drawImage(PictureManager.getPictureManager().getImage("button2.jpg"), 0, 0, this);
 		}
 
+	}
+	public String getLabelText(){
+		return l.getText();
+	}
+	public void setLabelText(String s){
+		l.setText(s);
 	}
 
 }

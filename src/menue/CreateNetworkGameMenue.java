@@ -53,7 +53,8 @@ public class CreateNetworkGameMenue extends GamePanel{
 		
 		//Instanzen erstellen
 		btn_Start = new GameButton(100, 200,"Start");
-		btn_PlayerListenerStartStop = new GameButton(250, 200,"Auf Spieler warten");
+		btn_PlayerListenerStartStop = new GameButton(250, 200,"");
+		btn_PlayerListenerStartStop.setText("Horchen");
 		btn_Back = new GameButton(400, 200,"Zurück");
 		
 		btn_Start.setEnabled(false);
@@ -67,6 +68,10 @@ public class CreateNetworkGameMenue extends GamePanel{
 		txt_PlayerName = new GameTextField(250, 50);
 		txt_MaxPlayer = new GameTextField(250, 100);
 		txt_PlayerLife = new GameTextField(250, 150);
+		
+		txt_PlayerName.setText("ServerSpieler");
+		txt_MaxPlayer.setText("8");
+		txt_PlayerLife.setText("10");
 		
 		lst_ConnectedPlayer = new JList();
 		lst_Maps = new MapList(550, 50);
@@ -162,31 +167,38 @@ public class CreateNetworkGameMenue extends GamePanel{
 			}
 			if (e.getActionCommand().equals("btn_PlayerListenerStartStop")){
 				
-				if(btn_PlayerListenerStartStop.getText().equals("Auf Spieler warten")){//Start
-					lst_ConnectedPlayer.setListData(new String[] {});
-					pLC = new PlayerListenerController(cNGM);
-					btn_PlayerListenerStartStop.setText("Genug gewartet");
-					//btn_PlayerListenerStartStop.setEnabled(false);
-				}
-				else{//Stop
+				if(true){ //!txt_PlayerName.getText().equals("") && !txt_MaxPlayer.getText().equals("") && !txt_PlayerLife.getText().equals("")
 					
-					//System.out.println(vtr_PlayerNames.size());//
-					if(vtr_PlayerNames.size() >= 1){//mindestens ein player angemeldet
-						pLC.interrupt();
-						btn_PlayerListenerStartStop.setEnabled(false);
-						btn_Start.setEnabled(true);
+					txt_PlayerName.setEditable(false);
+					txt_MaxPlayer.setEditable(false);
+					txt_PlayerLife.setEditable(false);
+					//System.out.println("Im Listener "+  btn_PlayerListenerStartStop.getText() + "arsch");
+					if(btn_PlayerListenerStartStop.getText().equals("Horchen")){//Start
+						//System.out.println("Im Horchen");
+						lst_ConnectedPlayer.setListData(new String[] {});
+						pLC = new PlayerListenerController(cNGM);
+						btn_PlayerListenerStartStop.setText("Genug gewartet");
+						//btn_PlayerListenerStartStop.setEnabled(false);
 					}
-					else{//kein spieler angemeldet
-						//pLC.close();
-						/////////////////
+					else{//Stop
 						
-						btn_PlayerListenerStartStop.setEnabled(true);
+						//System.out.println(vtr_PlayerNames.size());//
+						if(vtr_PlayerNames.size() >= 1){//mindestens ein player angemeldet
+							pLC.interrupt();
+							btn_PlayerListenerStartStop.setEnabled(false);
+							btn_Start.setEnabled(true);
+						}
+						else{//kein spieler angemeldet
+							//pLC.close();
+							/////////////////
+							
+							btn_PlayerListenerStartStop.setEnabled(true);
+						}
+						
+						//btn_PlayerListenerStartStop.setText("Auf Spiler warten");
+						
 					}
-					
-					//btn_PlayerListenerStartStop.setText("Auf Spiler warten");
-					
 				}
-				
 			}
 			if (e.getActionCommand().equals("btn_Back")){
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());

@@ -112,16 +112,20 @@ public class JoinNetworkGameMenue extends GamePanel{
 					//Initialize
 					System.out.println("warten auf Init");
 					//PlayerLifes
-					input = sockin.readLine();
-					System.out.println("playerleben bekommen");
-					playerLifes = Integer.parseInt(input);
-					input = sockin.readLine();
-					System.out.println("playernames bekommen" + input);
-					playerNames = input.split(":");//Peter:Klaus:Tobi:Nukki
-					//input = sockin.readLine();
-					//map = new Map(input);
-					input = sockin.readLine();
 					
+					input = sockin.readLine();
+					playerLifes = Integer.parseInt(input);
+					System.out.println("playerLives = " + playerLifes);
+					
+					input = sockin.readLine();
+					playerNames = input.split(":");//Peter:Klaus:Tobi:Nukki
+					System.out.println("Player = " + input);
+					
+					input = sockin.readLine();
+					map = new Map(input, true);
+					System.out.println("Map = " + input);
+					
+					input = sockin.readLine();
 					playerNumber = Integer.parseInt(input);
 					System.out.println("playerNumber = " + playerNumber);
 				}
@@ -135,7 +139,7 @@ public class JoinNetworkGameMenue extends GamePanel{
 				
 				ClientPositionSender cPS = new ClientPositionSender(sockout);
 				
-				Map map = new Map("Standartmap1.xml");
+				//Map map = new Map("Standartmap1.xml");
 				Vector<FullPlayer> player = new Vector<FullPlayer>();
 				
 				for(int i = 0; i<playerNames.length; i++){
