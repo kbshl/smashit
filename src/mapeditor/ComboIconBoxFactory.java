@@ -1,11 +1,13 @@
 package mapeditor;
 
-import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
+
+import manager.PictureManager;
 
 public class ComboIconBoxFactory extends JPanel {
 
@@ -27,8 +29,7 @@ public class ComboIconBoxFactory extends JPanel {
 		ImageIcon[] icons = new ImageIcon[elements.length];
 		for (int i = 0; i < elements.length; i++) {
 			intArray[i] = new Integer(i);
-			icons[i] = new ImageIcon("src/resource/pics/"
-					+ elements[i][1]);
+			icons[i] = new ImageIcon(PictureManager.getPictureManager().getImage(elements[i][1]));
 			if (icons[i] != null) {
 				//icons[i].setDescription(bezeichnung[i]);
 			}
@@ -48,8 +49,7 @@ public class ComboIconBoxFactory extends JPanel {
 		ImageIcon[] icons = new ImageIcon[backgrounds.length];
 		for (int i = 0; i < backgrounds.length; i++) {
 			intArray[i] = new Integer(i);
-			icons[i] = new ImageIcon("src/resource/pics/"
-					+ backgrounds[i]);
+			icons[i] = new ImageIcon(PictureManager.getPictureManager().getImage(backgrounds[i]));
 			if (icons[i] != null) {
 				//icons[i].setDescription(bezeichnung[i]);
 			}
