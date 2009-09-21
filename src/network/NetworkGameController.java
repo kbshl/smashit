@@ -22,10 +22,11 @@ public class NetworkGameController implements Finals, Runnable {
 	private double itemTime = 10, pastItemTime = 0;
 	private Thread t;
 	private static boolean gameruns;
-
-	public NetworkGameController(Vector<FullPlayer> players, Map map) {
+	private ServerPositionSender sPS;
+	
+	public NetworkGameController(Vector<FullPlayer> players, Map map, ServerPositionSender sPS) {
 		
-
+		this.sPS = sPS;
 		this.players = players;
 		
 		this.map = map;
@@ -89,7 +90,7 @@ public class NetworkGameController implements Finals, Runnable {
 			pastItemTime -= itemTime;
 			itemTime = 5 + (Math.random() * 5);
 			addItem();
-			System.out.println(itemTime);
+			//System.out.println(itemTime);
 		}
 	}
 
@@ -113,6 +114,8 @@ public class NetworkGameController implements Finals, Runnable {
 			}
 		} while (collision);
 		map.getSprites().add(item);
+		System.out.println("Geschickt:Item:" + item.getX()+":"+item.getY());
+		sPS.sendItem("Item:" + item.getX()+":"+item.getY());
 	}
 
 	public long getFPS() {

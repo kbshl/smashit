@@ -145,7 +145,7 @@ public class CreateNetworkGameMenue extends JPanel{
 	}
 	//erstellt die spieler/ map /sender receiver / und übergibt an LocalGameController
 	private void startGame(){
-		Map map = new Map("TestMap.xml");
+		Map map = new Map("Standartmap1.xml");
 		
 		ServerPositionSender sPS = new ServerPositionSender(getPlayerNames2(), playerData, map, 4);
 		//map erstellen
@@ -167,7 +167,7 @@ public class CreateNetworkGameMenue extends JPanel{
 			
 		}
 		
-		new NetworkGameController(player, map);
+		new NetworkGameController(player, map, sPS);
 	}
 	
 	

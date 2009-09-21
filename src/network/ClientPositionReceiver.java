@@ -12,11 +12,13 @@ public class ClientPositionReceiver extends Thread{
 	private Vector<FullPlayer> player;
 	private int playerLifes;
 	private InputStream iS;
+	private ClientGameController cGC;
 	
-	public ClientPositionReceiver(BufferedReader sockIn, Vector<FullPlayer> player, InputStream iS){
+	public ClientPositionReceiver(BufferedReader sockIn, Vector<FullPlayer> player, InputStream iS, ClientGameController cGC){
 		this.sockIn = sockIn;
 		this.player = player;
 		this.iS = iS;
+		this.cGC = cGC;
 		this.start();
 		System.out.println("ClientPosReceiver gestartet");
 	}
@@ -75,6 +77,9 @@ public class ClientPositionReceiver extends Thread{
 				if(inputParts[1].equals("item")){
 					SoundManager.getSoundManager().playSound("item.wav");
 				}
+				if(inputParts[1].equals("jump")){
+					SoundManager.getSoundManager().playSound("jump.wav");
+				}
 				
 				
 			
@@ -83,12 +88,23 @@ public class ClientPositionReceiver extends Thread{
 				//System.out.println(input);
 				if(inputParts[1].equals("dead")){ //wurde getötet
 					player.get(Integer.parseInt(inputParts[2])).getKilled();
-
 				}
 				if(inputParts[1].equals("kill")){//hat getötet
 					player.get(Integer.parseInt(inputParts[2])).addKill();
-
-				}	
+				}
+				/*
+				if(inputParts[1].equals("addItem")){//hat getötet
+					cGC.addItem(Integer.parseInt(inputParts[2]), Integer.parseInt(inputParts[3]));
+				}*/	
+			}
+			
+			if(inputParts[0].equals("Item")){
+				System.out.println("am client empfangen:" + input);
+				cGC.addItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));	
+			}
+			if(inputParts[0].equals("Itemr")){
+				System.out.println("am client empfangen:" + input);
+				cGC.removeItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));	
 			}
 			
 			

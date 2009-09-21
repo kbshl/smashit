@@ -91,6 +91,14 @@ public class ServerPositionSender{
 				++j;	
 			}
 		}
+		if(sound.equals("jump")){
+			while(playerData[j][1] != null){
+				//SFX_item
+				sockOut = (PrintWriter)playerData[j][1];
+				sockOut.println("Sound:" + sound);
+				++j;	
+			}
+		}
 	}
 	
 	
@@ -104,6 +112,15 @@ public class ServerPositionSender{
 		
 		}	
 		
+	}
+	public void sendItem (String item){
+		int j = 0;
+		while(playerData[j][1] != null){
+		sockOut = (PrintWriter)playerData[j][1];
+		sockOut.println(item);
+		
+		++j;
+		}
 	}
 	 /*
 	public void run(){

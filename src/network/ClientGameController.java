@@ -112,9 +112,41 @@ public class ClientGameController implements Finals, Runnable {
 		} while (collision);
 		map.getSprites().add(item);
 	}
+	
+	public void addItem(int x, int y){
+		Item item = new Item(x, y);
+		map.getSprites().add(item);
+	}
 
 	public long getFPS() {
 		return fps;
+	}
+	public void removeItem(int x, int y){
+		
+		System.out.println("Remove Item: x_" + x + " y_" + y);
+		
+		Vector<Sprite> temp = map.getSprites();
+		int i = 0;
+		Sprite s;
+		System.out.println("suche nach element");
+		while(i < temp.size()){
+			s = temp.get(i);
+			
+			if(s instanceof Item){
+				System.out.println("Instance of item");
+				System.out.println(s.getX() +" vgl:"+  x +"_"+ s.getY()+" vlg: "+ y);
+				if((s.getX() == x) && (s.getY() == y)){
+					System.out.println("element gefunden");
+					Item item = (Item)s;
+					((Item)map.getSprites().get(i)).collected();
+					map.getSprites().remove(i);
+					i = temp.size();
+					System.out.println("Element entfernt");
+				}
+			}
+			i++;
+		}
+		
 	}
 
 }

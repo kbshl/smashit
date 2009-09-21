@@ -135,7 +135,7 @@ public class JoinNetworkGameMenue extends GamePanel{
 				
 				ClientPositionSender cPS = new ClientPositionSender(sockout);
 				
-				Map map = new Map("TestMap.xml");
+				Map map = new Map("Standartmap1.xml");
 				Vector<FullPlayer> player = new Vector<FullPlayer>();
 				
 				for(int i = 0; i<playerNames.length; i++){
@@ -156,8 +156,11 @@ public class JoinNetworkGameMenue extends GamePanel{
 				
 				//player.add(new FullPlayer("tut", 1, map, player, false, null));
 				//player.add(new FullPlayer("tut", 2, map, player, false, cPS));
+				
+				ClientGameController cGC = new ClientGameController(player, map, playerNumber);
+				
 				try {
-					new ClientPositionReceiver(sockin, player, clientSocket.getInputStream());
+					new ClientPositionReceiver(sockin, player, clientSocket.getInputStream(), cGC);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -177,7 +180,7 @@ public class JoinNetworkGameMenue extends GamePanel{
 				
 				//Zusätzlich angezeigte Elemente müssen übertragen werden. Wenn CPS die map kenn, kein problem
 				
-				new ClientGameController(player, map, playerNumber);
+				//ClientGameController cGC = new ClientGameController(player, map, playerNumber);
 				
 			}
 			if (e.getActionCommand().equals("btn_Back")){

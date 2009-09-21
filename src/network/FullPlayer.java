@@ -319,6 +319,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 				if (!jumpLock) {
 					jumpLock = true;
 					if (jumpCount < jumpSkill) {
+						SoundManager.getSoundManager().playSound("jump.wav");
+						if(sPS != null){
+							sPS.sendSound("jump", this.playerNumber);
+						}
 						jumpSpeed = jumpStart;
 						jumpCount++;
 					}
@@ -480,6 +484,11 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			break;
 		default:
 			break;
+		}
+		
+		if(sPS != null){
+			System.out.println("gesendetvonFullPlayer_Itemr:" + item.getX() + ":" + item.getY());
+			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY());
 		}
 		item.collected();
 	}
