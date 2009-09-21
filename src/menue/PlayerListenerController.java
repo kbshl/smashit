@@ -1,6 +1,7 @@
 package menue;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -23,7 +24,7 @@ public class PlayerListenerController extends Thread{
 	public PlayerListenerController(CreateNetworkGameMenue cNGM){
 		this.cNGM = cNGM;
 		vtr_playerNames = new Vector();
-		sockInOut = new Object[8][3];
+		sockInOut = new Object[8][2];
 		connectCount = 0;
 		
 		this.start();
@@ -33,7 +34,7 @@ public class PlayerListenerController extends Thread{
 	public void run(){
 		
 		try{
-			socket = new ServerSocket(cNGM.getPort());
+			socket = new ServerSocket(7777);
 		}
 		catch(Exception e){
 			System.out.println("Starten von Server fehlgeschlagen weil: " + e);
@@ -51,7 +52,7 @@ public class PlayerListenerController extends Thread{
 			    
 			    sockInOut[connectCount][0] = sockIn;
 			    sockInOut[connectCount][1] = sockOut;
-			    sockInOut[connectCount][2] = clientSocket.getOutputStream();
+			    //sockInOut[connectCount][2] = clientSocket.getOutputStream();
 			    
 			    cNGM.setPlayerData(sockInOut);
 			    
@@ -62,9 +63,22 @@ public class PlayerListenerController extends Thread{
 			}
 		}
 		catch(Exception e){
-			System.out.println("Fehler" +e);
+			System.out.println("Server wurde geschlossen");
 		}
 		
+	}
+	
+	public void close(){
+		try {
+			
+			
+			
+			socket.close();
+			
+			
+		} catch (IOException e) {
+			
+		}
 	}
 
 }

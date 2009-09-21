@@ -20,24 +20,22 @@ import network.ServerPositionReceiver;
 import network.ServerPositionSender;
 
 
-public class CreateNetworkGameMenue extends JPanel{
+public class CreateNetworkGameMenue extends GamePanel{
 	
-	private JButton btn_Start;
-	private JButton btn_PlayerListenerStartStop;
-	private JButton btn_Back;
-	private JLabel lbl_ServerName;
-	private JLabel lbl_ServerPort;
-	private JLabel lbl_IP;
+	private GameButton btn_Start;
+	private GameButton btn_PlayerListenerStartStop;
+	private GameButton btn_Back;
+	
 	private JLabel lbl_PlayerName;
 	private JLabel lbl_MaxPlayer;
 	private JLabel lbl_PlayerLife;
-	private JTextField txt_ServerName;
-	private JTextField txt_ServerPort;
-	private JTextField txt_IP;
-	private JTextField txt_PlayerName;
-	private JTextField txt_MaxPlayer;
-	private JTextField txt_PlayerLife;
+	private JLabel lbl_RegPlayer;
+	
+	private GameTextField txt_PlayerName;
+	private GameTextField txt_MaxPlayer;
+	private GameTextField txt_PlayerLife;
 	private JList lst_ConnectedPlayer;
+	private MapList lst_Maps;
 	
 	private Object[][] playerData;
 	private Vector<FullPlayer> player  = new Vector<FullPlayer>();
@@ -47,55 +45,42 @@ public class CreateNetworkGameMenue extends JPanel{
 	private ButtonListener lis_BtnListener = new ButtonListener();
 	
 	public CreateNetworkGameMenue(){
+		super("gamepanel_mainmenue.jpg");
 		this.setLayout(null);
 		this.setSize(800, 600);
 		
 		cNGM = this;
 		
 		//Instanzen erstellen
-		btn_Start = new JButton("Start");
-		btn_PlayerListenerStartStop = new JButton("Auf Spieler warten");
-		btn_Back = new JButton("Zurück");
+		btn_Start = new GameButton(100, 200,"Start");
+		btn_PlayerListenerStartStop = new GameButton(250, 200,"Auf Spieler warten");
+		btn_Back = new GameButton(400, 200,"Zurück");
 		
-		lbl_ServerName = new JLabel("Servername");
-		lbl_ServerPort = new JLabel("Port");
-		lbl_IP = new JLabel("IP");
+		btn_Start.setEnabled(false);
+		
+		
 		lbl_PlayerName = new JLabel("Spieler Name");
 		lbl_MaxPlayer = new JLabel("Spieler Anzahl");
 		lbl_PlayerLife = new JLabel("Leben");
+		lbl_RegPlayer = new JLabel("Angemeldete Spieler");
 		
-		txt_ServerName = new JTextField();
-		txt_ServerPort = new JTextField("7777");
-		txt_IP = new JTextField();
-		txt_PlayerName = new JTextField();
-		txt_MaxPlayer = new JTextField();
-		txt_PlayerLife = new JTextField();
+		txt_PlayerName = new GameTextField(250, 50);
+		txt_MaxPlayer = new GameTextField(250, 100);
+		txt_PlayerLife = new GameTextField(250, 150);
 		
 		lst_ConnectedPlayer = new JList();
+		lst_Maps = new MapList(550, 50);
 		
-		lbl_ServerName.setBounds(100, 100, 100, 30);
-		txt_ServerName.setBounds(250, 100, 100, 30);
+		lbl_PlayerName.setBounds(100, 50, 100, 30);
+		lbl_MaxPlayer.setBounds(100, 100, 100, 30);
+		lbl_PlayerLife.setBounds(100, 150, 100, 30);
+		lbl_RegPlayer.setBounds(100, 250, 200, 30);
 		
-		lbl_ServerPort.setBounds(100, 150, 100, 30);
-		txt_ServerPort.setBounds(250, 150, 100, 30);
+		//btn_Back.setBounds(100, 400, 100, 30);
+		//btn_PlayerListenerStartStop.setBounds(250, 400, 100, 30);
+		//btn_Start.setBounds(400, 400, 100, 30);
 		
-		lbl_IP.setBounds(100, 200, 100, 30);
-		txt_IP.setBounds(250, 200, 100, 30);
-		
-		lbl_PlayerName.setBounds(100, 250, 100, 30);
-		txt_PlayerName.setBounds(250, 250, 100, 30);
-		
-		lbl_MaxPlayer.setBounds(100, 350, 100, 30);
-		txt_MaxPlayer.setBounds(250, 350, 100, 30);
-		
-		lbl_PlayerLife.setBounds(100, 300, 100, 30);
-		txt_PlayerLife.setBounds(250, 300, 100, 30);
-		
-		btn_Back.setBounds(100, 400, 100, 30);
-		btn_PlayerListenerStartStop.setBounds(250, 400, 100, 30);
-		btn_Start.setBounds(400, 400, 100, 30);
-		
-		lst_ConnectedPlayer.setBounds(550, 50, 200, 400);
+		lst_ConnectedPlayer.setBounds(100, 300, 300, 150);
 		
 		
 		//ActionCommand
@@ -112,25 +97,20 @@ public class CreateNetworkGameMenue extends JPanel{
 		add(btn_Start);
 		add(btn_PlayerListenerStartStop);
 		add(btn_Back);
-		add(lbl_ServerName);
-		add(lbl_ServerPort);
-		add(lbl_IP);
+		
 		add(lbl_PlayerName);
 		add(lbl_MaxPlayer);
 		add(lbl_PlayerLife);
-		add(txt_ServerName);
-		add(txt_ServerPort);
-		add(txt_IP);
+		add(lbl_RegPlayer);
+		
 		add(txt_PlayerName);
 		add(txt_MaxPlayer);
 		add(txt_PlayerLife);
 		add(lst_ConnectedPlayer);
-		
+		add(lst_Maps);
 	}
 	
-	public int getPort(){
-		return Integer.parseInt(txt_ServerPort.getText());
-	}
+	
 	
 	public void setPlayerList(Vector<String> l){
 		lst_ConnectedPlayer.setListData(l);
@@ -145,7 +125,7 @@ public class CreateNetworkGameMenue extends JPanel{
 	}
 	//erstellt die spieler/ map /sender receiver / und übergibt an LocalGameController
 	private void startGame(){
-		Map map = new Map("Standartmap1.xml");
+		Map map = new Map(lst_Maps.getSelectedMap());
 		
 		ServerPositionSender sPS = new ServerPositionSender(getPlayerNames2(), playerData, map, 4);
 		//map erstellen
@@ -182,22 +162,40 @@ public class CreateNetworkGameMenue extends JPanel{
 			}
 			if (e.getActionCommand().equals("btn_PlayerListenerStartStop")){
 				
-				if(btn_PlayerListenerStartStop.getText().equals("Auf Spieler warten")){
+				if(btn_PlayerListenerStartStop.getText().equals("Auf Spieler warten")){//Start
 					lst_ConnectedPlayer.setListData(new String[] {});
 					pLC = new PlayerListenerController(cNGM);
 					btn_PlayerListenerStartStop.setText("Genug gewartet");
+					//btn_PlayerListenerStartStop.setEnabled(false);
 				}
-				else{
-					pLC.interrupt();
+				else{//Stop
 					
+					//System.out.println(vtr_PlayerNames.size());//
+					if(vtr_PlayerNames.size() >= 1){//mindestens ein player angemeldet
+						pLC.interrupt();
+						btn_PlayerListenerStartStop.setEnabled(false);
+						btn_Start.setEnabled(true);
+					}
+					else{//kein spieler angemeldet
+						//pLC.close();
+						/////////////////
+						
+						btn_PlayerListenerStartStop.setEnabled(true);
+					}
 					
-					btn_PlayerListenerStartStop.setText("Auf Spiler warten");
+					//btn_PlayerListenerStartStop.setText("Auf Spiler warten");
 					
 				}
 				
 			}
 			if (e.getActionCommand().equals("btn_Back")){
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
+				
+				if(pLC != null){
+					pLC.interrupt();
+					pLC.close();
+				}
+				
 			}
 			
 		}
