@@ -3,20 +3,16 @@ package network;
 import game.Finals;
 import game.LocalGameController;
 
-
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Vector;
 
-import javax.swing.JPanel;
-
 import manager.PictureManager;
 import map.Map;
-import map.Sprite;
+import menue.GamePanel;
 
-public class NetworkGameView extends JPanel implements Finals {
+public class NetworkGameView extends GamePanel implements Finals {
 
 	private LocalGameController game;
 	private NetworkGameController nGame;
@@ -27,9 +23,7 @@ public class NetworkGameView extends JPanel implements Finals {
 
 	
 	public NetworkGameView(NetworkGameController g, Map m, Vector<FullPlayer> pl) {
-		super(true);
-		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		this.setLayout(null);
+		super("");
 		nGame = g;
 		map = m;
 		players = pl;
@@ -42,9 +36,7 @@ public class NetworkGameView extends JPanel implements Finals {
 		}*/
 	}
 	public NetworkGameView(ClientGameController g, Map m, Vector<FullPlayer> pl, int playerNumber) {
-		super(true);
-		this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-		this.setLayout(null);
+		super("");
 		cGame = g;
 		map = m;
 		players = pl;

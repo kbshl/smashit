@@ -33,11 +33,13 @@ public class GamePanel extends JPanel implements Finals, KeyListener {
 
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == 27) {
-			int i = JOptionPane.showConfirmDialog(BaseFrame.getBaseFrame(), "Wollen Sie das Spiel beenden?");
+			int i = JOptionPane.showConfirmDialog(BaseFrame.getBaseFrame(), "Zurück zum Hauptmenü?");
 			if(i == JOptionPane.YES_OPTION){
-				BaseFrame.getBaseFrame().setVisible(false);
-				BaseFrame.getBaseFrame().dispose();
-				System.exit(0);	
+
+				BaseFrame.getBaseFrame().setJPanel(new MainMenue());
+//				BaseFrame.getBaseFrame().setVisible(false);
+//				BaseFrame.getBaseFrame().dispose();
+//				System.exit(0);	
 			}
 
 		}

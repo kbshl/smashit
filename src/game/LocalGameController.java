@@ -132,5 +132,9 @@ public class LocalGameController implements Finals, Runnable {
 	public long getFPS() {
 		return fps;
 	}
+	
+	public void setEndGame() {
+		gameruns = false;
+	}
 
 }

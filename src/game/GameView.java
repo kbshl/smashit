@@ -2,11 +2,16 @@ package game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
 import java.util.Vector;
+
+import javax.swing.JOptionPane;
 
 import manager.PictureManager;
 import map.Map;
+import menue.BaseFrame;
 import menue.GamePanel;
+import menue.MainMenue;
 
 public class GameView extends GamePanel implements Finals {
 
@@ -33,7 +38,8 @@ public class GameView extends GamePanel implements Finals {
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		g.drawImage(map.getBackground(), 0, 0, null);
-		g.drawImage(PictureManager.getPictureManager().getImage("hud.jpg"), 0, 550, null);
+		g.drawImage(PictureManager.getPictureManager().getImage("hud.jpg"), 0,
+				550, null);
 		// Level malen
 		for (int i = 0; i < map.getSprites().size(); ++i) {
 			map.getSprites().get(i).paint(g);
@@ -46,6 +52,19 @@ public class GameView extends GamePanel implements Finals {
 		g.drawString("FPS: " + Long.toString(game.getFPS()), 720, 20);
 
 		requestFocus();
+	}
+
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == 27) {
+			int i = JOptionPane.showConfirmDialog(BaseFrame.getBaseFrame(),
+					"Spiel beenden?");
+			if (i == JOptionPane.YES_OPTION) {
+
+				game.setEndGame();
+
+			}
+
+		}
 	}
 
 }
