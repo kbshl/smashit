@@ -110,17 +110,18 @@ public class GameStatsMenue extends GamePanel {
 			}catch(SQLException e){
 				System.out.println("Konnte kein Statement erstellen");
 			}
+			
 			/*
-			String updateSQL = "UPDATE highscore SET kill=1,leben=1,punkte=2 WHERE name='maze'";
-			String insertSQL = "INSERT INTO highscore VALUES('',,,)";
+			String updateSQL = "UPDATE highscore SET kills=1,leben=1,punkte=2 WHERE name='lena'";
+			String insertSQL = "INSERT INTO highscore VALUES('lena',1,1,2)";
 			
 			try{
 				int queryErfolgreich = anw.executeUpdate(updateSQL);
 				System.out.println("queryErfolgreich: " + queryErfolgreich);
 				
 				if(queryErfolgreich == 0){
-					result = anw.executeQuery(insertSQL);
-					System.out.println("ReusltSet nach Insert: " + result);
+					queryErfolgreich = anw.executeUpdate(insertSQL);
+					System.out.println("queryErfolgreich nach Insert: " + queryErfolgreich);
 				}
 			}catch(SQLException e){
 				System.out.println("Fehler beim ausführen der SQL-Query");
