@@ -45,7 +45,7 @@ public class Map implements Finals {
 	public void loadMap(String mapName) {
 		String mapPath;
 		if (mapName.equals("Winners and Loosers.xml") || mapName.equals("Up to the Sky.xml")
-				|| mapName.equals("Smashland.xml")) {
+				|| mapName.equals("Smashland.xml") || mapName.equals("The Underground.xml") || mapName.equals("Western Railroads.xml")) {
 			mapPath = MAP_PATH_INTERN;
 		} else {
 			mapPath = MAP_PATH_EXTERN;

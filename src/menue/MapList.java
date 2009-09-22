@@ -18,6 +18,8 @@ public class MapList extends JList implements Finals {
 		maps.add("Winners and Loosers");
 		maps.add("Up to the Sky");
 		maps.add("Smashland");
+		maps.add("Western Railroads");
+		maps.add("The Underground");
 		
 		if(!net){
 			try{
