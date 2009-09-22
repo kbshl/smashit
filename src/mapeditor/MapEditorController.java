@@ -241,7 +241,6 @@ public class MapEditorController implements ActionListener, MouseListener {
 			Element element = doc.createElement("map");
 			element.setAttribute("background", "bg_"
 					+ view.showSelectedBackground().toLowerCase() + ".jpg");
-			System.out.println(view.showSelectedBackground().toLowerCase() + ".jpg");
 			doc.appendChild(element);
 
 			for (int i = 0; i < textPuffer.length; i++) {
