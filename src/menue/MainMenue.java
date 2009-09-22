@@ -15,6 +15,7 @@ public class MainMenue extends GamePanel {
 	private GameButton btn_MapEditor = new GameButton(20,90,"Mapeditor");
 	private GameButton btn_Highscore = new GameButton(20,125,"Highscore");
 	private GameButton btn_Help = new GameButton(20,160,"Hilfe");
+	private GameButton btn_Exit = new GameButton(20,195,"Beenden");
 
 	private ButtonListener lis_BtnListener = new ButtonListener();
 
@@ -27,6 +28,7 @@ public class MainMenue extends GamePanel {
 		btn_NewNetworkGame.setActionCommand("btn_NewNetworkGame");
 		btn_Highscore.setActionCommand("btn_Highscore");
 		btn_MapEditor.setActionCommand("btn_MapEditor");
+		btn_Exit.setActionCommand("btn_Exit");
 
 		// Actionlistener hinzufügen
 		btn_Help.addActionListener(lis_BtnListener);
@@ -34,6 +36,8 @@ public class MainMenue extends GamePanel {
 		btn_NewNetworkGame.addActionListener(lis_BtnListener);
 		btn_Highscore.addActionListener(lis_BtnListener);
 		btn_MapEditor.addActionListener(lis_BtnListener);
+		btn_Exit.addActionListener(lis_BtnListener);
+
 
 		// Hinzufügen der Buttons
 		add(btn_Help);
@@ -41,6 +45,8 @@ public class MainMenue extends GamePanel {
 		add(btn_NewLocalGame);
 		add(btn_NewNetworkGame);
 		add(btn_MapEditor);
+		add(btn_Exit);
+
 	}
 
 	public void openWebsite(String link) {
@@ -91,6 +97,12 @@ public class MainMenue extends GamePanel {
 			if (e.getActionCommand().equals("btn_MapEditor")) {
 				new MapEditorController();
 			}
+			if (e.getActionCommand().equals("btn_Exit")) {
+				BaseFrame.getBaseFrame().setVisible(false);
+				BaseFrame.getBaseFrame().dispose();
+				System.exit(0);	
+			}
+			
 
 		}
 

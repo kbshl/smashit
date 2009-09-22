@@ -26,8 +26,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 	private double moveTime = 0.007, pastMoveTime = 0, aniTime = 0.15,
 			pastAniTime = 0, jumpTime = 0.005, pastJumpTime = 0, gravity = 0.1,
 			jumpSpeed = 0, jumpStart = -4, pastItemTime = 0;
-	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
-			lostLifes = 0, playerNumber;
+	private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0, playerNumber;
 	private Sprite collisionObject;
 	private Item item;
 
@@ -134,11 +133,7 @@ public class Player extends Sprite implements KeyListener, Finals {
 			pastItemTime += (delay / 1e9);
 
 			if (pastItemTime >= 20) {
-				pastItemTime = 0;
-				item = null;
-				moveTime = 0.007;
-				jumpSkill = 2;
-				aniTime = 0.15;
+				looseItem();
 			}
 		}
 
@@ -339,10 +334,10 @@ public class Player extends Sprite implements KeyListener, Finals {
 
 	public void getKilled() {
 		SoundManager.getSoundManager().playSound("dead.wav");
+		looseItem();
 
 		if (lifes > 1) {
 			lifes--;
-			lostLifes++;
 			setNewPosition();
 		} else {
 			lifes--;
@@ -408,6 +403,14 @@ public class Player extends Sprite implements KeyListener, Finals {
 					10 + (playerNumber - 1) * 200, 562, null);
 		}
 
+	}
+	
+	private void looseItem(){
+		pastItemTime = 0;
+		item = null;
+		moveTime = 0.007;
+		jumpSkill = 2;
+		aniTime = 0.15;
 	}
 
 	public PlayerStats getPlayerStats() {
