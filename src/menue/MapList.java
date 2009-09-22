@@ -11,23 +11,27 @@ import javax.swing.JList;
 public class MapList extends JList implements Finals {
 	private Vector<String> maps = new Vector<String>();
 	
-	public MapList(int x, int y){
+	public MapList(int x, int y, boolean net){
 		setBounds(x, y, 200, 400);
 		String[] folderList;
-//		try{
-//			File mapFolder = new File(getClass().getClassLoader().getResource(MAP_PATH).toURI());
-//			
-//			folderList = mapFolder.list();
-//			for (int i = 0; i < folderList.length; i++) {
-//				if (folderList[i].endsWith(".xml")) {
-//					String neu = folderList[i].substring(0,
-//							folderList[i].length() - 4);
-//					maps.addElement(neu);
-//				}
-//			}
-//		}catch(Exception e){
-//			
-//		}
+		
+		if(!net){
+			try{
+				File mapFolder = new File(MAP_PATH_EXTERN);
+				
+				folderList = mapFolder.list();
+				for (int i = 0; i < folderList.length; i++) {
+					if (folderList[i].endsWith(".xml")) {
+						String neu = folderList[i].substring(0,
+								folderList[i].length() - 4);
+						maps.addElement(neu);
+					}
+				}
+			}catch(Exception e){
+				
+			}
+		}
+
 		
 		
 		maps.add("Standartmap1");

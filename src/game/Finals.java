@@ -9,7 +9,8 @@ public interface Finals {
 	public static final int GAME_PAUSE = 8;
 	public static final String PIC_PATH = "resource/pics/";
 	public static final String SOUND_PATH = "resource/sounds/";
-	public static final String MAP_PATH = "resource/maps/";
+	public static final String MAP_PATH_INTERN = "resource/maps/";
+	public static final String MAP_PATH_EXTERN = "maps/";
 	
 	public static final Font GAME_FONT = new Font("Monospaced", Font.BOLD, 12);
 	

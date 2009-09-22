@@ -75,7 +75,7 @@ public class CreateNetworkGameMenue extends GamePanel{
 		txt_PlayerLife.setText("10");
 		
 		lst_ConnectedPlayer = new JList();
-		lst_Maps = new MapList(550, 50);
+		lst_Maps = new MapList(550, 50, true);
 		
 		lbl_PlayerName.setBounds(100, 50, 100, 30);
 		lbl_MaxPlayer.setBounds(100, 100, 100, 30);

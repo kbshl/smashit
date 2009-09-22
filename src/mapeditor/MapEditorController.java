@@ -99,8 +99,9 @@ public class MapEditorController implements ActionListener, MouseListener {
 			dateiPfad = dateiPfad.substring(0, (dateiPfad.length() - dateiName
 					.length()));
 			// Map wird gepaintet
-			//System.out.println(dateiPfad);
+
 			view.getMap().loadMap(dateiName);
+
 			view.repaint();
 		}
 	}

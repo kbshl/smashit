@@ -24,7 +24,7 @@ public class CreateLocalGameMenue extends GamePanel implements Finals {
 	private GameTextField txt_NamePlayer3 = new GameTextField(160, 160);
 	private GameTextField txt_NamePlayer4 = new GameTextField(160, 225);
 	private GameTextField txt_lifes = new GameTextField(160, 290);
-	private MapList mapList = new MapList(570, 30);
+	private MapList mapList = new MapList(570, 30, false);
 
 	private ButtonListener buttonListener = new ButtonListener();
 

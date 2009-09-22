@@ -30,7 +30,6 @@ public class Map implements Finals {
 	private String background = "bg_sky.jpg";
 	private String mapData;
 	private String mapFile;
-	//private String mapPath;
 
 	public Map(String mapFile) {
 		sprites = new Vector<Sprite>();
@@ -38,11 +37,11 @@ public class Map implements Finals {
 		sprites.add(new WandRechts());
 		sprites.add(new Boden());
 		this.mapFile = mapFile;
+
 		loadMap(mapFile);
-		//mapData = xmlToString(mapFile, "");
-		//System.out.println(mapData);
 
 	}
+
 	public Map(String mapData, boolean netz) {
 		sprites = new Vector<Sprite>();
 		sprites.add(new WandLinks());
@@ -50,7 +49,7 @@ public class Map implements Finals {
 		sprites.add(new Boden());
 
 		loadMap(mapData);
-		
+
 	}
 
 	public Map() {
@@ -60,26 +59,28 @@ public class Map implements Finals {
 		sprites.add(new Boden());
 	}
 
-	public void paintMap(String mapFile) {
-		loadMap(mapFile);
-	}
-	
 	public void loadMap(String mapFile) {
+		String mapPath;
+		if (mapFile == "Standartmap1.xml" || mapFile == "Standartmap2.xml"
+				|| mapFile == "Standartmap3.xml") {
+			mapPath = MAP_PATH_INTERN;
+		} else {
+			mapPath = MAP_PATH_EXTERN;
+		}
+
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			
-			Document document = builder.parse(getClass().getClassLoader().getResource(MAP_PATH + mapFile).toString());
-			
-			
-			//Wird benötigt um neu erstellte maps übers netzwerk zu schicken
-			
-			
-			
+
+			Document document = builder.parse(getClass().getClassLoader()
+					.getResource(mapPath + mapFile).toString());
+
+			// Wird benötigt um neu erstellte maps übers netzwerk zu schicken
+
 			Node rootNode = document.getDocumentElement();
-			
-			//System.out.println("node" + rootNode.);
+
+			// System.out.println("node" + rootNode.);
 			NamedNodeMap background_attr = rootNode.getAttributes();
 			if (background_attr != null) {
 				String background_str = background_attr.item(0).getNodeValue();
@@ -104,12 +105,13 @@ public class Map implements Finals {
 							Class obj = Class.forName("map." + nodeName);
 							Constructor[] cons = obj.getConstructors();
 							for (Constructor constructor : cons) {
-								Class[] params = constructor.getParameterTypes();
+								Class[] params = constructor
+										.getParameterTypes();
 								if (params.length == 2
 										&& params[0].getName().equals("int")
 										&& params[1].getName().equals("int")) {
-									Sprite o = (Sprite) constructor.newInstance(x,
-											y);
+									Sprite o = (Sprite) constructor
+											.newInstance(x, y);
 									sprites.add(o);
 									break;
 								}
@@ -129,25 +131,25 @@ public class Map implements Finals {
 						} catch (InvocationTargetException er) {
 							// TODO Auto-generated catch block
 							er.printStackTrace();
-						} 
+						}
 					}
 					// Test zu Ende
-					
-//					if (nodeName.equals("box")) {
-//						sprites.add(new Box(x, y));
-//					}
-//					if (nodeName.equals("brickstone")) {
-//						sprites.add(new BrickStone(x, y));
-//					}
-//					if (nodeName.equals("mayastone")) {
-//						sprites.add(new MayaStone(x, y));
-//					}
-//					if (nodeName.equals("oldstonefloor")) {
-//						sprites.add(new OldStoneFloor(x, y));
-//					}
-//					if (nodeName.equals("cloud")) {
-//						sprites.add(new Cloud(x, y));
-//					}
+
+					// if (nodeName.equals("box")) {
+					// sprites.add(new Box(x, y));
+					// }
+					// if (nodeName.equals("brickstone")) {
+					// sprites.add(new BrickStone(x, y));
+					// }
+					// if (nodeName.equals("mayastone")) {
+					// sprites.add(new MayaStone(x, y));
+					// }
+					// if (nodeName.equals("oldstonefloor")) {
+					// sprites.add(new OldStoneFloor(x, y));
+					// }
+					// if (nodeName.equals("cloud")) {
+					// sprites.add(new Cloud(x, y));
+					// }
 
 				}
 			}
@@ -171,7 +173,6 @@ public class Map implements Finals {
 		}
 
 	}
-	
 
 	public Vector<Sprite> getSprites() {
 		return sprites;
@@ -188,44 +189,10 @@ public class Map implements Finals {
 	public String getName() {
 		return name;
 	}
-	public String getMapName(){
-		
+
+	public String getMapName() {
+
 		return mapFile;
 	}
-	
-	
-	
-	
-	
-	public String getMapData(){
-		return mapData;
-	}
-	private String xmlToString(String mapFile, String mapPath){
-		if (mapPath == ""){
-			mapPath = MAP_PATH;
-		}
-		String alles ="";
-		System.out.println(mapPath + mapFile);
-		
-			BufferedReader in = null;
-			try {
-				in = new BufferedReader(new FileReader(mapPath + mapFile));
-			} catch (FileNotFoundException e1) {
-				System.out.println("Fehler 1");
-			}
-		try{
-			
-			String s = "";
-			while((s = in.readLine()) != null){
-			      alles.concat(s.concat("\n"));
-			}
-			
-			}
-		catch(Exception e){
-			System.out.println("Fehler 2");
-		}
-		return alles;
-	}
-	
-	
+
 }
