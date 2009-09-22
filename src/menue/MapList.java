@@ -15,6 +15,10 @@ public class MapList extends JList implements Finals {
 		setBounds(x, y, 200, 400);
 		String[] folderList;
 		
+		maps.add("Winners and Loosers");
+		maps.add("Up to the Sky");
+		maps.add("Smashland");
+		
 		if(!net){
 			try{
 				File mapFolder = new File(MAP_PATH_EXTERN);
@@ -32,11 +36,6 @@ public class MapList extends JList implements Finals {
 			}
 		}
 
-		
-		
-		maps.add("Standartmap1");
-		maps.add("Standartmap2");
-		maps.add("Standartmap3");
 		this.setListData(maps);
 		setSelectedIndex(0);
 		
