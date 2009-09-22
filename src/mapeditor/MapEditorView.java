@@ -1,13 +1,10 @@
 package mapeditor;
 
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 import manager.PictureManager;
 import map.Map;
@@ -24,9 +21,7 @@ public class MapEditorView extends GamePanel {
 	private GameButton btn_loeschen = new GameButton(700, 550, "Löschen");
 	private GameButton btn_zurueck = new GameButton(700, 575, "Zurück");
 
-	private Icon icon;
-	private JPanel gameArea;
-	private Container cp;
+
 	private Map map;
 	private JComboBox fieldItemList;
 	private JComboBox backgroundList;
@@ -139,24 +134,19 @@ public class MapEditorView extends GamePanel {
 		return backgrounds[backgroundList.getSelectedIndex()];
 	}
 
-	public JPanel getGameArea() {
-		return gameArea;
-	}
+
 
 	public Map getMap() {
 		return map;
 	}
 
 	protected void paintComponent(Graphics g) {
-		super.paintComponent(g);
 		g.drawImage(map.getBackground(), 0, 0, null);
 		g.drawImage(PictureManager.getPictureManager().getImage("hud.jpg"), 0, 550, null);
 		// Level malen
 		for (int i = 0; i < map.getSprites().size(); ++i) {
 			map.getSprites().get(i).paint(g);
 		}
-		// Muss auskommentiert bleiben, da sonst die List nicht funktioniert!
-		// requestFocus();
 
 	}
 
