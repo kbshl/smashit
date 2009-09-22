@@ -3,9 +3,6 @@ package map;
 import game.Finals;
 
 import java.awt.Image;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -25,10 +22,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 
 public class Map implements Finals {
-	private String name = "Level1";
 	private Vector<Sprite> sprites;
 	private String background = "bg_sky.jpg";
-	private String mapData;
 	private String mapFile;
 
 	public Map(String mapFile) {
@@ -37,19 +32,7 @@ public class Map implements Finals {
 		sprites.add(new WandRechts());
 		sprites.add(new Boden());
 		this.mapFile = mapFile;
-
 		loadMap(mapFile);
-
-	}
-
-	public Map(String mapData, boolean netz) {
-		sprites = new Vector<Sprite>();
-		sprites.add(new WandLinks());
-		sprites.add(new WandRechts());
-		sprites.add(new Boden());
-
-		loadMap(mapData);
-
 	}
 
 	public Map() {
@@ -59,10 +42,10 @@ public class Map implements Finals {
 		sprites.add(new Boden());
 	}
 
-	public void loadMap(String mapFile) {
+	public void loadMap(String mapName) {
 		String mapPath;
-		if (mapFile == "Standartmap1.xml" || mapFile == "Standartmap2.xml"
-				|| mapFile == "Standartmap3.xml") {
+		if (mapName.equals("Standartmap1.xml") || mapName.equals("Standartmap2.xml")
+				|| mapName.equals("Standartmap3.xml")) {
 			mapPath = MAP_PATH_INTERN;
 		} else {
 			mapPath = MAP_PATH_EXTERN;
@@ -73,8 +56,13 @@ public class Map implements Finals {
 					.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
 
-			Document document = builder.parse(getClass().getClassLoader()
-					.getResource(mapPath + mapFile).toString());
+			Document document;
+			if(mapPath == MAP_PATH_EXTERN){
+				document = builder.parse(mapPath + mapName);
+			}else{
+				document = builder.parse(getClass().getClassLoader().getResource(mapPath + mapName).toString());
+			}
+			
 
 			// Wird benötigt um neu erstellte maps übers netzwerk zu schicken
 
@@ -133,24 +121,6 @@ public class Map implements Finals {
 							er.printStackTrace();
 						}
 					}
-					// Test zu Ende
-
-					// if (nodeName.equals("box")) {
-					// sprites.add(new Box(x, y));
-					// }
-					// if (nodeName.equals("brickstone")) {
-					// sprites.add(new BrickStone(x, y));
-					// }
-					// if (nodeName.equals("mayastone")) {
-					// sprites.add(new MayaStone(x, y));
-					// }
-					// if (nodeName.equals("oldstonefloor")) {
-					// sprites.add(new OldStoneFloor(x, y));
-					// }
-					// if (nodeName.equals("cloud")) {
-					// sprites.add(new Cloud(x, y));
-					// }
-
 				}
 			}
 
@@ -184,10 +154,6 @@ public class Map implements Finals {
 
 	public Image getBackground() {
 		return PictureManager.getPictureManager().getImage(background);
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public String getMapName() {
