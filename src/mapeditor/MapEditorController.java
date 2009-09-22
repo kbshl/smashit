@@ -99,7 +99,8 @@ public class MapEditorController implements ActionListener, MouseListener {
 			dateiPfad = dateiPfad.substring(0, (dateiPfad.length() - dateiName
 					.length()));
 			// Map wird gepaintet
-			view.getMap().loadMap(dateiName, dateiPfad);
+			//System.out.println(dateiPfad);
+			view.getMap().loadMap(dateiName);
 			view.repaint();
 		}
 	}
@@ -269,63 +270,6 @@ public class MapEditorController implements ActionListener, MouseListener {
 			e.printStackTrace();
 		}
 
-	}
-
-	public Hashtable<String, String> loadGraphData() {
-		Hashtable<String, String> graphData = new Hashtable();
-		try {
-			DocumentBuilderFactory factory = DocumentBuilderFactory
-					.newInstance();
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document document = builder.parse(new File(
-					"src/resource/pics/graphData.xml"));
-
-			Node rootNode = document.getDocumentElement();
-
-			NodeList elemente = rootNode.getChildNodes();
-
-			for (int i = 0; i < elemente.getLength(); i++) {
-				if (elemente.item(i).getNodeName().equals("element")) {
-					NodeList element = elemente.item(i).getChildNodes();
-					String classname = "";
-					for (int j = 0; j < element.getLength(); j++) {
-						if (element.item(j).getNodeName().equals("classname")) {
-							classname = element.item(j).getTextContent();
-						}
-						if (element.item(j).getNodeName().equals("filename")) {
-							graphData.put(classname, element.item(j)
-									.getTextContent());
-						}
-					}
-				}
-			}
-			Set<Entry<String, String>> it = graphData.entrySet();
-			for (Iterator iterator = it.iterator(); iterator.hasNext();) {
-				Entry<String, String> entry = (Entry<String, String>) iterator
-						.next();
-				System.out.println("Der Klassenname lautet: " + entry.getKey());
-				System.out.println("Der Dateiname lautet: " + entry.getValue());
-			}
-			return graphData;
-
-			// ---- Error handling ----
-		} catch (SAXParseException spe) {
-			System.out.println("\n** Parsing error, line "
-					+ spe.getLineNumber() + ", uri " + spe.getSystemId());
-			System.out.println("   " + spe.getMessage());
-			Exception e = (spe.getException() != null) ? spe.getException()
-					: spe;
-			e.printStackTrace();
-		} catch (SAXException sxe) {
-			Exception e = (sxe.getException() != null) ? sxe.getException()
-					: sxe;
-			e.printStackTrace();
-		} catch (ParserConfigurationException pce) {
-			pce.printStackTrace();
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-		return graphData;
 	}
 
 }

@@ -3,19 +3,15 @@ package mapeditor;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.io.File;
 
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileFilter;
 
 import manager.PictureManager;
 import map.Map;
 import menue.GameButton;
-import menue.GameIconButton;
 import menue.GamePanel;
 
 public class MapEditorView extends GamePanel {
