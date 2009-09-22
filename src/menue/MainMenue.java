@@ -74,7 +74,6 @@ public class MainMenue extends GamePanel {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
-
 	}
 
 	private class ButtonListener implements ActionListener {

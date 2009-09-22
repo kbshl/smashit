@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.Vector;
+import java.sql.*;
 
 import javax.swing.JLabel;
 
@@ -79,11 +80,81 @@ public class GameStatsMenue extends GamePanel {
 			}
 			
 			if (e.getActionCommand().equals("btn_Eintragen")) {
-
+				writeHighscoreToDB();
 			}
 
 		}
+		
+		private void writeHighscoreToDB(){
+			String driver = "com.mysql.jdbc.Driver";
+			String url = "jdbc:mysql://localhost:3306/smashit";
+			
+			String user = "kostja";
+			String password = "vologda";
+				
+			Connection con = null;
+			Statement anw = null;
+			ResultSet result = null;
+			
+			try{
+				Class.forName(driver);
+				con = DriverManager.getConnection(url, user, password);
+			}catch(ClassNotFoundException cnfe){
+				System.out.println("Konnte Treiber nicht laden");
+			}catch(SQLException e){
+				System.out.println("Konnte keine Verbindung zur DB herstellen");
+			}
+			
+			try{
+				anw = con.createStatement();
+			}catch(SQLException e){
+				System.out.println("Konnte kein Statement erstellen");
+			}
+			/*
+			String updateSQL = "UPDATE highscore SET kill=1,leben=1,punkte=2 WHERE name='maze'";
+			String insertSQL = "INSERT INTO highscore VALUES('',,,)";
+			
+			try{
+				int queryErfolgreich = anw.executeUpdate(updateSQL);
+				System.out.println("queryErfolgreich: " + queryErfolgreich);
+				
+				if(queryErfolgreich == 0){
+					result = anw.executeQuery(insertSQL);
+					System.out.println("ReusltSet nach Insert: " + result);
+				}
+			}catch(SQLException e){
+				System.out.println("Fehler beim ausführen der SQL-Query");
+			}
+			
+			openWebsite("www.keirinoma.de");
+			*/
+		}// Ende Methode writeHighscoreToDB
+		
+		private void openWebsite(String link) {
+			if (!java.awt.Desktop.isDesktopSupported()) {
+				System.err.println("Desktop is not supported (fatal)");
+				System.exit(1);
+			}
 
+			if (link.length() == 0) {
+				System.out.println("Usage: OpenURI [URI [URI ... ]]");
+				System.exit(0);
+			}
+
+			java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+
+			if (!desktop.isSupported(java.awt.Desktop.Action.BROWSE)) {
+				System.err
+						.println("Desktop doesn't support the browse action (fatal)");
+				System.exit(1);
+			}
+
+			try {
+				java.net.URI uri = new java.net.URI(link);
+				desktop.browse(uri);
+			} catch (Exception e) {
+				System.err.println(e.getMessage());
+			}
+		}// Ende Methode openWebsite
 	}
-
 }
