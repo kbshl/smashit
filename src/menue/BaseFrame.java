@@ -19,7 +19,9 @@ public class BaseFrame extends JFrame implements Finals {
 	private static BaseFrame bf;
 
 	private BaseFrame() {
-
+		// Um die Sounds initial zu laden
+		SoundManager.getSoundManager();
+		
 		// setUndecorated(true);
 		// DisplayMode displayMode = new DisplayMode(800, 600, 32, 60);
 		// GraphicsEnvironment environment =
