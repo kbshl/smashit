@@ -150,11 +150,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			pastItemTime += (delay / 1e9);
 
 			if (pastItemTime >= 20) {
-				pastItemTime = 0;
-				item = null;
-				moveTime = 0.007;
-				jumpSkill = 2;
-				aniTime = 0.15;
+				looseItem();
 			}
 		}
 
@@ -455,6 +451,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		if(sPS != null){
 			sPS.sendAct("dead", this.playerNumber);
 		}
+		looseItem();
 		if (lifes > 1) {
 			lifes--;
 			lostLifes++;
@@ -559,6 +556,14 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 	
 	public void addKill(){
 		this.kills = kills + 1;
+	}
+	
+	private void looseItem(){
+		pastItemTime = 0;
+		item = null;
+		moveTime = 0.007;
+		jumpSkill = 2;
+		aniTime = 0.15;
 	}
 	
 	
