@@ -28,6 +28,8 @@ public class MapList extends JList implements Finals {
 					}
 				}
 			}catch(Exception e){
+				System.out.println("Fehler: " + e);
+				//maps.addElement("Fehler: " + e);
 				
 			}
 		}
