@@ -38,7 +38,6 @@ public class MapEditorView extends GamePanel {
 			{"Box","obj_box.jpg"},
 			{"MayaStone","obj_mayastone.jpg"},
 			{"Bush","obj_bush.gif"},
-			{"Cloud","obj_cloud.gif"},
 			{"DesertEarthLeft","obj_desert_earth_left.jpg"},
 			{"DesertEarthMiddle","obj_desert_earth_middle.jpg"},
 			{"DesertEarthRight","obj_desert_earth_right.jpg"},
@@ -55,7 +54,12 @@ public class MapEditorView extends GamePanel {
 			{"GrassEarthRight", "obj_grass_earth_right.gif"},
 			{"GrassLeft", "obj_grass_left.gif"},
 			{"GrassMiddle", "obj_grass_middle.jpg"},
-			{"GrassRight", "obj_grass_right.gif"}
+			{"GrassRight", "obj_grass_right.gif"},
+			{"Mushrooms", "obj_mushrooms.gif"},
+			{"PillarEnd", "obj_pillar_end.gif"},
+			{"Pillar", "obj_pillar.gif"},
+			{"Stone1", "obj_stone1.gif"},
+			{"Stone2", "obj_stone2.gif"},
 	};
 
 	public MapEditorView(MapEditorController c, Map m) {
