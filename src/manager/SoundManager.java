@@ -2,6 +2,8 @@ package manager;
 
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Vector;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import game.Finals;
@@ -12,14 +14,31 @@ public class SoundManager {
 
 	private SoundManager() {
 		sounds = new HashMap();
+		
+		Vector<String> initSounds = new Vector<String>();
+		initSounds.addElement(Finals.BACKGROUND_SOUND);
+		initSounds.addElement(Finals.DEAD_SOUND);
+		initSounds.addElement(Finals.ITEM_SOUND);
+		initSounds.addElement(Finals.JUMP_SOUND);
+		initiateSounds(initSounds);
 	}
 
 	public static SoundManager getSoundManager() {
-		if (sm == null)
+		if (sm == null){
 			sm = new SoundManager();
+		}
 		return sm;
 	}
-
+	
+	private void initiateSounds(Vector<String> initSounds){
+		Iterator<String> iter = initSounds.iterator();
+		
+		while(iter.hasNext()){
+			String tempSound = iter.next();
+			getResource(tempSound);
+		}
+	}
+	
 	private Object loadResource(String name) {
 		URL url = null;
 		url = getClass().getClassLoader().getResource(name);

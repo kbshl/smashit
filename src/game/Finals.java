@@ -7,10 +7,16 @@ public interface Finals {
 	public static final int WINDOW_HEIGHT = 600;
 	public static final int GAME_HEIGHT = 550;
 	public static final int GAME_PAUSE = 8;
+	
 	public static final String PIC_PATH = "resource/pics/";
 	public static final String SOUND_PATH = "resource/sounds/";
 	public static final String MAP_PATH_INTERN = "resource/maps/";
 	public static final String MAP_PATH_EXTERN = "maps/";
+	
+	public static final String JUMP_SOUND = "jump.wav";
+	public static final String DEAD_SOUND = "dead.wav";
+	public static final String ITEM_SOUND = "item.wav";
+	public static final String BACKGROUND_SOUND = "music.mid";
 	
 	public static final Font GAME_FONT = new Font("Monospaced", Font.BOLD, 12);
 	
