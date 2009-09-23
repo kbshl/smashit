@@ -27,7 +27,7 @@ public class MapEditorView extends GamePanel {
 	private JLabel lbl_elements = new JLabel();
 
 	private Map map;
-	private JComboBox fieldItemList;
+	private JComboBox fieldElementList;
 	private JComboBox backgroundList;
 	public String[] backgrounds = { "sky", "desert", "forest", "maya",
 			"pillars", "dune" };
@@ -64,6 +64,12 @@ public class MapEditorView extends GamePanel {
 		// falls man speichert
 		map.getSprites().removeAllElements();
 		controller = c;
+		
+		//Labels
+		lbl_background.setText("Hintergrund:");
+		lbl_background.setBounds(150, 562, 80, 25);
+		lbl_elements.setText("Element:");
+		lbl_elements.setBounds(15, 562, 60, 25);
 
 		// ActionListener
 		btn_loeschen.addActionListener(controller);
@@ -77,6 +83,17 @@ public class MapEditorView extends GamePanel {
 		btn_speichern.setActionCommand("speichern");
 		btn_laden.setActionCommand("oeffnen");
 
+		// ComboBox für Elements
+		fieldElementList = ComboIconBoxFactory.buildComboBox(elements);
+		((JComponent) fieldElementList.getRenderer())
+				.setPreferredSize(new Dimension(30, 30));
+		fieldElementList.setActionCommand("fieldItemList");
+		fieldElementList.setSelectedIndex(0);
+		fieldElementList.setMaximumRowCount(10);
+		fieldElementList.setBounds(70, 562, 60, 25);
+		fieldElementList.addActionListener(controller);
+		fieldElementList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
 		// Combobox für Backgrounds
 		backgroundList = ComboIconBoxFactory.buildComboBox(backgroundFileNames);
 		((JComponent) backgroundList.getRenderer())
@@ -88,18 +105,9 @@ public class MapEditorView extends GamePanel {
 		backgroundList.addActionListener(controller);
 		backgroundList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
-		// ComboBox für Items
-		fieldItemList = ComboIconBoxFactory.buildComboBox(elements);
-		((JComponent) fieldItemList.getRenderer())
-				.setPreferredSize(new Dimension(30, 30));
-		fieldItemList.setActionCommand("fieldItemList");
-		fieldItemList.setSelectedIndex(0);
-		fieldItemList.setMaximumRowCount(10);
-		fieldItemList.setBounds(0, 562, 60, 25);
-		fieldItemList.addActionListener(controller);
-		fieldItemList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-
-		add(fieldItemList);
+		add(lbl_elements);
+		add(lbl_background);
+		add(fieldElementList);
 		add(backgroundList);
 		add(btn_laden);
 		add(btn_loeschen);
@@ -110,10 +118,10 @@ public class MapEditorView extends GamePanel {
 	}
 
 	public String showSelectedItem() {
-		if (fieldItemList.getSelectedIndex() < 0) {
+		if (fieldElementList.getSelectedIndex() < 0) {
 			return "";
 		}
-		return elements[fieldItemList.getSelectedIndex()][0];
+		return elements[fieldElementList.getSelectedIndex()][0];
 	}
 
 	public String showSelectedBackground() {
