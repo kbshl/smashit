@@ -1,5 +1,6 @@
 package menue;
 
+import game.Finals;
 import game.Player;
 import game.PlayerStats;
 
@@ -16,7 +17,7 @@ public class GameStatsMenue extends GamePanel {
 	private GameButton btn_Next = new GameButton(680, 565, "Weiter");
 	private GameButton btn_Eintragen = new GameButton(570, 565, "Eintragen");
 	private Vector<PlayerStats> players = new Vector<PlayerStats>();
-
+	
 	private ButtonListener lis_BtnListener = new ButtonListener();
 
 	public GameStatsMenue(Vector<Player> p) {
@@ -53,22 +54,17 @@ public class GameStatsMenue extends GamePanel {
 		leben.setBounds(460, 160, 150, 30);
 		punkte.setBounds(520, 160, 150, 30);
 
-		
-
-		
 		btn_Next.setActionCommand("btn_Next");
 		btn_Eintragen.setActionCommand("btn_Eintragen");
 		btn_Next.addActionListener(lis_BtnListener);
 		btn_Eintragen.addActionListener(lis_BtnListener);
 		
-			
 		add(name);
 		add(kills);
 		add(leben);
 		add(punkte);
 		add(btn_Next);
 		add(btn_Eintragen);
-
 	}
 
 	private class ButtonListener implements ActionListener {
@@ -87,18 +83,15 @@ public class GameStatsMenue extends GamePanel {
 		
 		private void writeHighscoreToDB(){
 			String driver = "com.mysql.jdbc.Driver";
-			String url = "jdbc:mysql://localhost:3306/smashit";
+			String url = "jdbc:mysql://" + Finals.DB_SERVER + ":3306/" + Finals.DB_NAME;
 			
-			String user = "kostja";
-			String password = "vologda";
-				
 			Connection con = null;
 			Statement anw = null;
 			ResultSet result = null;
 			
 			try{
 				Class.forName(driver);
-				con = DriverManager.getConnection(url, user, password);
+				con = DriverManager.getConnection(url, Finals.DB_USER, Finals.DB_PASSWORD);
 			}catch(ClassNotFoundException cnfe){
 				System.out.println("Konnte Treiber nicht laden");
 			}catch(SQLException e){
@@ -110,25 +103,18 @@ public class GameStatsMenue extends GamePanel {
 			}catch(SQLException e){
 				System.out.println("Konnte kein Statement erstellen");
 			}
-			
-			/*
-			String updateSQL = "UPDATE highscore SET kills=1,leben=1,punkte=2 WHERE name='lena'";
-			String insertSQL = "INSERT INTO highscore VALUES('lena',1,1,2)";
+						
+			String insertSQL = "INSERT INTO highscore VALUES('" + players.get(0).getName() + "'," + players.get(0).getKills() + "," + 
+								players.get(0).getLifes() + "," + players.get(0).getPoints() + ")";
 			
 			try{
-				int queryErfolgreich = anw.executeUpdate(updateSQL);
-				System.out.println("queryErfolgreich: " + queryErfolgreich);
-				
-				if(queryErfolgreich == 0){
-					queryErfolgreich = anw.executeUpdate(insertSQL);
+				int queryErfolgreich = anw.executeUpdate(insertSQL);
 					System.out.println("queryErfolgreich nach Insert: " + queryErfolgreich);
-				}
 			}catch(SQLException e){
 				System.out.println("Fehler beim ausführen der SQL-Query");
 			}
 			
-			openWebsite("www.keirinoma.de");
-			*/
+			openWebsite(Finals.HIGHSCORE_URL);
 		}// Ende Methode writeHighscoreToDB
 		
 		private void openWebsite(String link) {
