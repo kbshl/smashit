@@ -89,7 +89,7 @@ public class MapEditorView extends GamePanel {
 				.setPreferredSize(new Dimension(30, 30));
 		fieldElementList.setActionCommand("fieldItemList");
 		fieldElementList.setSelectedIndex(0);
-		fieldElementList.setMaximumRowCount(10);
+		fieldElementList.setMaximumRowCount(13);
 		fieldElementList.setBounds(70, 562, 60, 25);
 		fieldElementList.addActionListener(controller);
 		fieldElementList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -100,7 +100,7 @@ public class MapEditorView extends GamePanel {
 				.setPreferredSize(new Dimension(25, 25));
 		backgroundList.setActionCommand("backgroundList");
 		backgroundList.setSelectedIndex(0);
-		backgroundList.setMaximumRowCount(6);
+		backgroundList.setMaximumRowCount(10);
 		backgroundList.setBounds(225, 562, 100, 25);
 		backgroundList.addActionListener(controller);
 		backgroundList.setBorder(BorderFactory.createLineBorder(Color.BLACK));
