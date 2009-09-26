@@ -13,11 +13,11 @@ public interface Finals {
 	public static final String MAP_PATH_INTERN = "resource/maps/";
 	public static final String MAP_PATH_EXTERN = "maps/";
 	
-	public static final String DB_SERVER = "localhost";
-	public static final String DB_NAME = "smashit";
-	public static final String DB_USER = "kostja";
-	public static final String DB_PASSWORD = "vologda";
-	public static final String HIGHSCORE_URL = "http://localhost/Smash%20It/db/beispiel.php";
+	public static final String DB_SERVER = "";
+	public static final String DB_NAME = "";
+	public static final String DB_USER = "";
+	public static final String DB_PASSWORD = "";
+	public static final String HIGHSCORE_URL = "http://keirinoma.de/smashit/web/index.html";
 	
 	public static final String JUMP_SOUND = "jump.wav";
 	public static final String DEAD_SOUND = "dead.wav";
