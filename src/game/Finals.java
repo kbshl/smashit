@@ -18,6 +18,7 @@ public interface Finals {
 	public static final String DB_USER = "kostja";
 	public static final String DB_PASSWORD = "vologda";
 	public static final String HIGHSCORE_URL = "http://localhost/SWT-Projektseite/web/highscore.php";
+	public static final String HELP_URL = "http://localhost/SWT-Projektseite/web/hilfe.html";
 	
 	public static final String JUMP_SOUND = "jump.wav";
 	public static final String DEAD_SOUND = "dead.wav";

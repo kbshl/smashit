@@ -1,5 +1,7 @@
 package menue;
 
+import game.Finals;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -81,7 +83,7 @@ public class MainMenue extends GamePanel {
 		public void actionPerformed(ActionEvent e) {
 
 			if (e.getActionCommand().equals("btn_Help")) {
-				openWebsite("http://www.heise.de");
+				openWebsite(Finals.HELP_URL);
 			}
 			if (e.getActionCommand().equals("btn_NewLocalGame")) {
 				BaseFrame.getBaseFrame().setJPanel(new CreateLocalGameMenue());
@@ -90,7 +92,7 @@ public class MainMenue extends GamePanel {
 				BaseFrame.getBaseFrame().setJPanel(new NetworkSubMenue());
 			}
 			if (e.getActionCommand().equals("btn_Highscore")) {
-				openWebsite("http://www.golem.de");
+				openWebsite(Finals.HIGHSCORE_URL);
 			}
 			if (e.getActionCommand().equals("btn_MapEditor")) {
 				new MapEditorController();
