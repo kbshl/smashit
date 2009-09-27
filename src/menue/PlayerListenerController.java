@@ -77,7 +77,7 @@ public class PlayerListenerController extends Thread{
 			
 			
 		} catch (IOException e) {
-			
+			System.out.println("Socket konnte nicht geschlossen werden");
 		}
 	}
 

@@ -208,6 +208,7 @@ public class CreateNetworkGameMenue extends GamePanel{
 							pLC.interrupt();
 							btn_PlayerListenerStartStop.setEnabled(false);
 							btn_Start.setEnabled(true);
+							pLC.close();
 						}
 						else{//kein spieler angemeldet
 							//pLC.close();
