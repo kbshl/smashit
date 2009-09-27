@@ -6,18 +6,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Set;
 import java.util.Vector;
-import java.util.Map.Entry;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -38,10 +35,6 @@ import menue.MainMenue;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
 
 public class MapEditorController implements ActionListener, MouseListener {
 
@@ -50,6 +43,14 @@ public class MapEditorController implements ActionListener, MouseListener {
 	private String selectedObj, selectedBg;
 
 	public MapEditorController() {
+		
+		// Ordner Maps wird angelegt
+		String dirName = "maps";
+		File f = new File(dirName);
+		if (!f.isDirectory()) {
+			f.mkdir();
+		}
+
 		view = new MapEditorView(this, map);
 		BaseFrame.getBaseFrame().setJPanel(view);
 	}
@@ -79,7 +80,7 @@ public class MapEditorController implements ActionListener, MouseListener {
 	}
 
 	private void openLoadDialog() {
-		JFileChooser fc = new JFileChooser();
+		JFileChooser fc = new JFileChooser("maps");
 		fc.setDialogTitle("Map laden");
 		fc.setFileFilter(new FileFilter() {
 			public boolean accept(File f) {
@@ -107,12 +108,12 @@ public class MapEditorController implements ActionListener, MouseListener {
 	}
 
 	private void openSaveDialog() {
-		JFileChooser fc = new JFileChooser();
+		JFileChooser fc = new JFileChooser("maps");
 		fc.setDialogTitle("Map speichern");
+		fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		fc.setFileFilter(new FileFilter() {
 			public boolean accept(File f) {
-				return f.getName().toLowerCase().endsWith(".xml")
-						|| f.isDirectory();
+				return f.getName().toLowerCase().endsWith(".xml");
 			}
 
 			public String getDescription() {
@@ -121,6 +122,9 @@ public class MapEditorController implements ActionListener, MouseListener {
 		});
 		if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
 			File datei = fc.getSelectedFile();
+			if (!datei.getPath().toLowerCase().endsWith(".xml")){
+				datei = new File(datei.getPath()+".xml");
+			}
 			// System.out.println(datei.getName());
 			String[][] inhalte = elementeAuslesen();
 			try {
