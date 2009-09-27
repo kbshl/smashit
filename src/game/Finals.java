@@ -17,7 +17,7 @@ public interface Finals {
 	public static final String DB_NAME = "smashit";
 	public static final String DB_USER = "kostja";
 	public static final String DB_PASSWORD = "vologda";
-	public static final String HIGHSCORE_URL = "http://keirinoma.de/smashit/web/index.html";
+	public static final String HIGHSCORE_URL = "http://localhost/SWT-Projektseite/web/highscore.php";
 	
 	public static final String JUMP_SOUND = "jump.wav";
 	public static final String DEAD_SOUND = "dead.wav";
