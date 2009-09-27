@@ -49,7 +49,7 @@ public class GameView extends GamePanel implements Finals {
 		}
 
 		// FPS malen
-		g.drawString("FPS: " + Long.toString(game.getFPS()), 720, 20);
+//		g.drawString("FPS: " + Long.toString(game.getFPS()), 720, 20);
 
 		requestFocus();
 	}
