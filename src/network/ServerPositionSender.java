@@ -4,12 +4,13 @@ package network;
 import game.Position;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Vector;
 
 import map.Map;
-import map.Sprite;
 
 public class ServerPositionSender{
 	private Vector<FullPlayer> p;
@@ -19,6 +20,13 @@ public class ServerPositionSender{
 	private int lives;
 	private Map map;
 	private String playerNames;
+	
+	
+	//UDP
+	DatagramSocket socket;
+	DatagramPacket paket;
+	byte[]daten = new byte[64];
+	private String temp;
 	//braucht alle Player!! und alle printWriter
 	public ServerPositionSender(String playerNames, Object[][] playerData, Map map, int lives){
 		this.p = p;
@@ -28,7 +36,12 @@ public class ServerPositionSender{
 		this.lives = lives;
 		oldPosition = new Vector();
 		this.playerNames = playerNames;
-		
+		//UDP
+		try {
+			socket = new DatagramSocket();
+		} catch (SocketException e) {
+			System.out.println("UDP ging nicht");
+		}
 	
 		
 		if(init()){
@@ -71,12 +84,24 @@ public class ServerPositionSender{
 	
 	public void sendPosition(int x, int y, int playernumber){
 		int j = 0;
+		
 		while(playerData[j][1] != null){
 			//Move_P0_X_100_Y_200
-			sockOut = (PrintWriter)playerData[j][1];
-			sockOut.println("Move:" + playernumber + ":" + x + ":" + y);
-			//System.out.println("Move:" + playernumber + ":" + x + ":" + y);
 			
+			//TCPip
+//			sockOut = (PrintWriter)playerData[j][1];
+//			sockOut.println("Move:" + playernumber + ":" + x + ":" + y);
+			//UPD
+			temp = ("Move:" + playernumber + ":" + x + ":" + y);
+			daten = temp.getBytes();
+			paket = (DatagramPacket)playerData[j][2];
+			paket.setData(daten);
+			//System.out.println("Am Server gesendet: " + daten.toString());
+			try {
+				socket.send(paket);
+			} catch (IOException e) {
+				System.out.println("UDP senden fehlgeschlagen");
+			}
 			
 			++j;
 			
@@ -85,30 +110,73 @@ public class ServerPositionSender{
 	public void sendSound(String sound, int playernumber){
 		int j = 0;
 		
-		if(sound.equals("item")){ //wird an alle geschickt
+//		if(sound.equals("item")){ //wird an alle geschickt
 			while(playerData[j][1] != null){
 				//SFX_item
-				sockOut = (PrintWriter)playerData[j][1];
-				sockOut.println("Sound:" + sound);
+				
+				//TCP
+//				sockOut = (PrintWriter)playerData[j][1];
+//				sockOut.println("Sound:" + sound);
+				
+				//UDP
+				temp = ("Sound:" + sound);
+				daten = temp.getBytes();
+				paket = (DatagramPacket)playerData[j][2];
+				paket.setData(daten);
+				//System.out.println("Am Server gesendet: " + daten.toString());
+				try {
+					socket.send(paket);
+				} catch (IOException e) {
+					System.out.println("UDP senden fehlgeschlagen");
+				}
+				
 				++j;	
 			}
-		}
-		if(sound.equals("jump")){
-			while(playerData[j][1] != null){
-				//SFX_item
-				sockOut = (PrintWriter)playerData[j][1];
-				sockOut.println("Sound:" + sound);
-				++j;	
-			}
-		}
+//		}
+//		if(sound.equals("jump")){
+//			while(playerData[j][1] != null){
+//				//SFX_item
+//				//TCP
+////				sockOut = (PrintWriter)playerData[j][1];
+////				sockOut.println("Sound:" + sound);
+//				
+//				//UDP
+//				temp = ("Sound:" + sound);
+//				daten = temp.getBytes();
+//				paket = (DatagramPacket)playerData[j][2];
+//				paket.setData(daten);
+//				//System.out.println("Am Server gesendet: " + daten.toString());
+//				try {
+//					socket.send(paket);
+//				} catch (IOException e) {
+//					System.out.println("UDP senden fehlgeschlagen");
+//				}
+//				
+//				++j;	
+//			}
+//		}
 	}
 	
 	
 	public void sendAct(String act, int playerNumber){
 		int j = 0;
 		while(playerData[j][1] != null){
-		sockOut = (PrintWriter)playerData[j][1];
-		sockOut.println("Act:" + act +":" + (playerNumber-1) );
+			
+		//tcp
+//		sockOut = (PrintWriter)playerData[j][1];
+//		sockOut.println("Act:" + act +":" + (playerNumber-1) );
+		
+		//udp
+		temp = ("Act:" + act +":" + (playerNumber-1));
+		daten = temp.getBytes();
+		paket = (DatagramPacket)playerData[j][2];
+		paket.setData(daten);
+		//System.out.println("Am Server gesendet: " + daten.toString());
+		try {
+			socket.send(paket);
+		} catch (IOException e) {
+			System.out.println("UDP senden fehlgeschlagen");
+		}
 		
 		++j;
 		
@@ -118,8 +186,22 @@ public class ServerPositionSender{
 	public void sendItem (String item){
 		int j = 0;
 		while(playerData[j][1] != null){
-		sockOut = (PrintWriter)playerData[j][1];
-		sockOut.println(item);
+			
+			//tcp
+//			sockOut = (PrintWriter)playerData[j][1];
+//			sockOut.println(item);
+			
+			//udp
+			temp = (item);
+			daten = temp.getBytes();
+			paket = (DatagramPacket)playerData[j][2];
+			paket.setData(daten);
+			//System.out.println("Am Server gesendet: " + daten.toString());
+			try {
+				socket.send(paket);
+			} catch (IOException e) {
+				System.out.println("UDP senden fehlgeschlagen");
+			}
 		
 		++j;
 		}

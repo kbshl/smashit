@@ -2,6 +2,9 @@ package network;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
 import java.util.Vector;
 
 import manager.SoundManager;
@@ -16,13 +19,33 @@ public class ClientPositionReceiver extends Thread{
 	private InputStream iS;
 	private ClientGameController cGC;
 	
+	
+	//UPD
+	byte[] daten =  new byte[64];
+	DatagramSocket socket;
+	DatagramPacket paket;
+	String temp;
+	
+	
 	public ClientPositionReceiver(BufferedReader sockIn, Vector<FullPlayer> player, InputStream iS, ClientGameController cGC){
 		this.sockIn = sockIn;
 		this.player = player;
 		this.iS = iS;
 		this.cGC = cGC;
-		this.start();
+		
 		System.out.println("ClientPosReceiver gestartet");
+		
+		//UPD
+		try {
+			socket = new DatagramSocket(7777);
+		} catch (SocketException e) {
+			System.out.println("UDP geht nicht client");
+		}
+		
+		paket = new DatagramPacket(daten, daten.length);
+		
+		
+		this.start();
 	}
 	
 	public void run(){
@@ -39,9 +62,17 @@ public class ClientPositionReceiver extends Thread{
 		while(!this.isInterrupted()){
 			
 			try{
-				input = sockIn.readLine();
+				//TCP
+				//input = sockIn.readLine();
 				//iS.read(array);
 				
+				//UDP
+				
+				socket.receive(paket);
+				daten = paket.getData();
+				input = new String(paket.getData(), 0 , paket.getLength());
+				//input = daten.toString();
+				///System.out.println("beim Client angekommen: " + input);
 			}catch(Exception e){
 				System.out.println(e.getMessage() );
 				BaseFrame.getBaseFrame().setJPanel(new MainMenue());

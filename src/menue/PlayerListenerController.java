@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.DatagramPacket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Vector;
@@ -24,7 +25,7 @@ public class PlayerListenerController extends Thread{
 	public PlayerListenerController(CreateNetworkGameMenue cNGM, int maxPlayer){
 		this.cNGM = cNGM;
 		vtr_playerNames = new Vector();
-		sockInOut = new Object[8][2];
+		sockInOut = new Object[8][3];
 		connectCount = 0;
 		this.maxPlayer = maxPlayer-1;
 		this.start();
@@ -52,6 +53,9 @@ public class PlayerListenerController extends Thread{
 			    
 			    sockInOut[connectCount][0] = sockIn;
 			    sockInOut[connectCount][1] = sockOut;
+			    //new DatagramPacket (null, 0,0,clientSocket.getInetAddress(), 7777);
+			    
+			    sockInOut[connectCount][2] = new DatagramPacket(new byte[64],64, clientSocket.getInetAddress(), 7777);
 			    //sockInOut[connectCount][2] = clientSocket.getOutputStream();
 			    
 			    cNGM.setPlayerData(sockInOut);
