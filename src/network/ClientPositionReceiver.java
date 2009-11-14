@@ -8,6 +8,7 @@ import java.net.SocketException;
 import java.util.Vector;
 
 import manager.SoundManager;
+import map.Item;
 import menue.BaseFrame;
 import menue.MainMenue;
 
@@ -128,6 +129,10 @@ public class ClientPositionReceiver extends Thread{
 				if(inputParts[1].equals("kill")){//hat getötet
 					player.get(Integer.parseInt(inputParts[2])).addKill();
 				}
+				if(inputParts[1].equals("reIt")){//remove item
+					player.get(Integer.parseInt(inputParts[2])).looseItem();
+				}
+				
 				/*
 				if(inputParts[1].equals("addItem")){//hat getötet
 					cGC.addItem(Integer.parseInt(inputParts[2]), Integer.parseInt(inputParts[3]));
@@ -135,12 +140,18 @@ public class ClientPositionReceiver extends Thread{
 			}
 			
 			if(inputParts[0].equals("Item")){
-				System.out.println("am client empfangen:" + input);
+			
 				cGC.addItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));	
 			}
 			if(inputParts[0].equals("Itemr")){
-				System.out.println("am client empfangen:" + input);
-				cGC.removeItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));	
+				
+				cGC.removeItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));
+				//?player.get(Integer.parseInt(inputParts[3])).setItem(new Item(1,1, Integer.parseInt(inputParts[4])));
+			}
+			if(inputParts[0].equals("Frame")){
+				
+				player.get(Integer.parseInt(inputParts[1])).setCurrentFrame(Integer.parseInt(inputParts[2]));				
+				
 			}
 			
 			

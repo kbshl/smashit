@@ -33,6 +33,31 @@ public class Item extends Sprite implements Finals {
 
 		}
 	}
+	//brauch ich fürs netzwerk
+	public Item(int x, int y, int ability) {
+		super(x, y, new String[] { "item1.gif", "item2.gif", "item3.gif",
+				"item4.gif" }, true);
+
+		this.ability = ability;
+
+		switch (ability) {
+		case JUMP_LOW:
+			itemImage = "item_jumplow.gif";
+			break;
+		case JUMP_HIGH:
+			itemImage = "item_jumphigh.gif";
+			break;
+		case MOVE_FAST:
+			itemImage = "item_movefast.gif";
+			break;
+		case MOVE_SLOW:
+			itemImage = "item_moveslow.gif";
+			break;
+		default:
+			break;
+
+		}
+	}
 
 	public void act(long delay) {
 		pastAniTime += (delay / 1e9);
@@ -75,4 +100,5 @@ public class Item extends Sprite implements Finals {
 	public String getItemImage(){
 		return itemImage;
 	}
+
 }

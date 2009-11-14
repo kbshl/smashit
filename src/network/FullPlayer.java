@@ -165,10 +165,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 					if (left) {
 						if (!checkCollision(-1, 0)) {
 							x -= 1;
-							/////
-							if(sPS != null){
-								sPS.sendPosition(x, y, (playerNumber-1));
-							}
+							
 
 							if (pastAniTime >= 0) {
 								currentFrame = 8;
@@ -189,20 +186,27 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 								currentFrame = 9;
 								pastAniTime = 0;
 							}
-
+							
+							/////
+							if(sPS != null){
+								sPS.sendPosition(x, y, (playerNumber-1));
+								
+							}
+			
 						} else {
 							currentFrame = 7;
 							pastAniTime = 0;
+						}
+						if(sPS != null){
+							sPS.sendCurrentFrame(playerNumber, currentFrame);
 						}
 					}
 
 					if (right) {
 						if (!checkCollision(1, 0)) {
 							x += 1;
-							/////
-							if(sPS != null){
-								sPS.sendPosition(x, y, (playerNumber-1));
-							}
+							
+							
 							if (pastAniTime >= 0) {
 								currentFrame = 1;
 							}
@@ -222,10 +226,17 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 								currentFrame = 2;
 								pastAniTime = 0;
 							}
+							/////
+							if(sPS != null){
+								sPS.sendPosition(x, y, (playerNumber-1));
+							}
 
 						} else {
 							currentFrame = 0;
 							pastAniTime = 0;
+						}
+						if(sPS != null){
+							sPS.sendCurrentFrame(playerNumber, currentFrame);
 						}
 					}
 				}
@@ -278,6 +289,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 							}
 						}
 					}
+					if(sPS != null){
+						sPS.sendCurrentFrame(playerNumber, currentFrame);
+					}
 				}
 
 				if (jumpSpeed < 0) {
@@ -286,6 +300,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						currentFrame = 5;
 					} else {
 						currentFrame = 12;
+					}
+					if(sPS != null){
+						sPS.sendCurrentFrame(playerNumber, currentFrame);
 					}
 
 					if (!checkCollision(0, (int) jumpSpeed)) {
@@ -310,7 +327,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			}
 		}
 		
+		
 	}
+	
+	
 	
 	public void keyPressed(KeyEvent e) {
 		
@@ -493,8 +513,8 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		}
 		
 		if(sPS != null){
-			System.out.println("gesendetvonFullPlayer_Itemr:" + item.getX() + ":" + item.getY());
-			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY());
+			
+			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + playerNumber + ":" + item.getAbility());
 		}
 		item.collected();
 	}
@@ -558,12 +578,26 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		this.kills = kills + 1;
 	}
 	
-	private void looseItem(){
+	public void looseItem(){
 		pastItemTime = 0;
 		item = null;
 		moveTime = 0.007;
 		jumpSkill = 2;
 		aniTime = 0.15;
+		
+		if(sPS != null){
+			sPS.sendAct("reIt", playerNumber);
+		}
+		
+		//SPS act reIT
+	}
+	
+	public void setCurrentFrame(int currentFrame){
+		this.currentFrame = currentFrame;
+	}
+	
+	public void setItem(Item item){
+		this.item = item;
 	}
 	
 	

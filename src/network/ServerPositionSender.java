@@ -92,7 +92,7 @@ public class ServerPositionSender{
 //			sockOut = (PrintWriter)playerData[j][1];
 //			sockOut.println("Move:" + playernumber + ":" + x + ":" + y);
 			//UPD
-			temp = ("Move:" + playernumber + ":" + x + ":" + y);
+			temp = ("Move:" + playernumber + ":" + x + ":" + y );
 			daten = temp.getBytes();
 			paket = (DatagramPacket)playerData[j][2];
 			paket.setData(daten);
@@ -193,6 +193,27 @@ public class ServerPositionSender{
 			
 			//udp
 			temp = (item);
+			daten = temp.getBytes();
+			paket = (DatagramPacket)playerData[j][2];
+			paket.setData(daten);
+			//System.out.println("Am Server gesendet: " + daten.toString());
+			try {
+				socket.send(paket);
+			} catch (IOException e) {
+				System.out.println("UDP senden fehlgeschlagen");
+			}
+		
+		++j;
+		}
+	}
+	
+	public void sendCurrentFrame(int playerNumber, int currentFrame){
+		int j = 0;
+		while(playerData[j][1] != null){
+			
+			//udp
+			temp = ("Frame:" + (playerNumber-1) +":" + currentFrame);
+			
 			daten = temp.getBytes();
 			paket = (DatagramPacket)playerData[j][2];
 			paket.setData(daten);

@@ -76,13 +76,13 @@ public class ClientGameController implements Finals, Runnable {
 
 	public void updateWorld() {
 		
-		for (Sprite s : map.getSprites()) {
-			s.act(delta);
-		}
+//		for (Sprite s : map.getSprites()) {
+//			s.act(delta);
+//		}
 		
 		for (FullPlayer p : players) {
 			if (!p.isDead()) {
-				p.act(delta);
+				p.actStupid(delta);
 			}
 		}
 		
@@ -93,7 +93,7 @@ public class ClientGameController implements Finals, Runnable {
 			System.out.println(itemTime);
 		}
 	}
-*/
+	*/
 	private void addItem() {
 		boolean collision;
 		Item item = new Item(0, 0);
