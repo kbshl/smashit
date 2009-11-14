@@ -488,6 +488,8 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		SoundManager.getSoundManager().playSound("item.wav");
 		if(sPS != null){
 			sPS.sendSound("item", this.playerNumber);
+			//nicht über send sound, sonder über collect idem
+			
 		}
 		this.item = item;
 		moveTime = 0.007;
@@ -513,8 +515,9 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		}
 		
 		if(sPS != null){
-			
+			//!!
 			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + playerNumber + ":" + item.getAbility());
+			System.out.println("Itemr:" + item.getX() + ":" + item.getY() + ":" + playerNumber + ":" + item.getAbility());
 		}
 		item.collected();
 	}

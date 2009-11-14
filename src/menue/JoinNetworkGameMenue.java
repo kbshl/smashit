@@ -40,7 +40,8 @@ public class JoinNetworkGameMenue extends GamePanel {
 
 		txt_IP = new GameTextField(160, 30);
 		txt_PlayerName = new GameTextField(160, 95);
-
+		
+		txt_IP.setText("localhost");
 		txt_PlayerName.setText("ClientSpieler");
 
 		// ActionCommand

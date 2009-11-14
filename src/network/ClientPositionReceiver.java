@@ -139,11 +139,11 @@ public class ClientPositionReceiver extends Thread{
 				}*/	
 			}
 			
-			if(inputParts[0].equals("Item")){
+			if(inputParts[0].equals("Item")){//add item on stage
 			
 				cGC.addItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));	
 			}
-			if(inputParts[0].equals("Itemr")){
+			if(inputParts[0].equals("Itemr")){//remobe item from stage
 				
 				cGC.removeItem(Integer.parseInt(inputParts[1]), Integer.parseInt(inputParts[2]));
 				//?player.get(Integer.parseInt(inputParts[3])).setItem(new Item(1,1, Integer.parseInt(inputParts[4])));
