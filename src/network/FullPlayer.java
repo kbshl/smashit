@@ -516,8 +516,8 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		
 		if(sPS != null){
 			//!!
-			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + playerNumber + ":" + item.getAbility());
-			System.out.println("Itemr:" + item.getX() + ":" + item.getY() + ":" + playerNumber + ":" + item.getAbility());
+			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + (playerNumber-1) + ":" + item.getAbility());
+			
 		}
 		item.collected();
 	}
