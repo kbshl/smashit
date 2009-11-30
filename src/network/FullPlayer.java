@@ -24,7 +24,7 @@ public class FullPlayer extends Sprite implements KeyListener, Finals{
 	private Map map;
 	private Vector<FullPlayer> players;
 	private boolean realPlayer;
-	private ClientPositionSender cPS;
+	private ClientDataSender cPS;
 	
 	private boolean jumpLock = false, left = false, right = false,
 	isDead = false;
@@ -32,14 +32,14 @@ private double moveTime = 0.007, pastMoveTime = 0, aniTime = 0.15,
 	pastAniTime = 0, jumpTime = 0.005, pastJumpTime = 0, gravity = 0.1,
 	jumpSpeed = 0, jumpStart = -4, pastItemTime = 0;
 private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
-	lostLifes = 0, playerNumber;
+	lostLifes = 0, playerNumber;//player fägt bei 1 an = doof
 	private Sprite collisionObject;
 
 	private Item item;
 	
-	private ServerPositionSender sPS;
+	private ServerDataSender sPS;
 
-	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientPositionSender cPS, int lifes, ServerPositionSender sPS) {
+	public FullPlayer(String n, int playerNumber, Map m, Vector<FullPlayer> p, boolean realPlayer, ClientDataSender cPS, int lifes, ServerDataSender sPS) {
 		super(0, 0, new String[] { "kirby_rosa_rechts_1.gif",
 				"kirby_rosa_rechts_2.gif", "kirby_rosa_rechts_3.gif",
 				"kirby_rosa_rechts_4.gif", "kirby_rosa_rechts_5.gif",
@@ -198,7 +198,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 							pastAniTime = 0;
 						}
 						if(sPS != null){
-							sPS.sendCurrentFrame(playerNumber, currentFrame);
+							sPS.sendCurrentFrame(playerNumber-1, currentFrame);
 						}
 					}
 
@@ -236,7 +236,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 							pastAniTime = 0;
 						}
 						if(sPS != null){
-							sPS.sendCurrentFrame(playerNumber, currentFrame);
+							sPS.sendCurrentFrame(playerNumber-1, currentFrame);
 						}
 					}
 				}
@@ -285,12 +285,12 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 							((FullPlayer) collisionObject).getKilled();
 							kills++;
 							if(sPS != null){
-								sPS.sendAct("kill", playerNumber);
+								sPS.sendAct("kill", playerNumber-1);
 							}
 						}
 					}
 					if(sPS != null){
-						sPS.sendCurrentFrame(playerNumber, currentFrame);
+						sPS.sendCurrentFrame(playerNumber-1, currentFrame);
 					}
 				}
 
@@ -302,7 +302,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						currentFrame = 12;
 					}
 					if(sPS != null){
-						sPS.sendCurrentFrame(playerNumber, currentFrame);
+						sPS.sendCurrentFrame(playerNumber-1, currentFrame);
 					}
 
 					if (!checkCollision(0, (int) jumpSpeed)) {
@@ -342,7 +342,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 					if (jumpCount < jumpSkill) {
 						SoundManager.getSoundManager().playSound("jump.wav");
 						if(sPS != null){
-							sPS.sendSound("jump", this.playerNumber);
+							sPS.sendSound("jump");
 						}
 						jumpSpeed = jumpStart;
 						jumpCount++;
@@ -410,7 +410,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 				if (jumpCount < jumpSkill) {
 					SoundManager.getSoundManager().playSound("jump.wav");
 					if(sPS != null){
-						sPS.sendSound("jump", this.playerNumber);
+						sPS.sendSound("jump");
 					}
 					jumpSpeed = jumpStart;
 					jumpCount++;
@@ -469,7 +469,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 	public void getKilled() {
 		SoundManager.getSoundManager().playSound("dead.wav");
 		if(sPS != null){
-			sPS.sendAct("dead", this.playerNumber);
+			sPS.sendAct("dead", this.playerNumber-1);
 		}
 		looseItem();
 		if (lifes > 1) {
@@ -487,7 +487,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 	private void getItem(Item item) {
 		SoundManager.getSoundManager().playSound("item.wav");
 		if(sPS != null){
-			sPS.sendSound("item", this.playerNumber);
+			sPS.sendSound("item");
 			//nicht über send sound, sonder über collect idem
 			
 		}
@@ -516,8 +516,8 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		
 		if(sPS != null){
 			//!!
-			sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + (playerNumber-1) + ":" + item.getAbility());
-			
+			sPS.sendItem("Itemr:",item.getX(),item.getY(), (playerNumber-1), item.getAbility());
+			//sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + (playerNumber-1) + ":" + item.getAbility());
 		}
 		item.collected();
 	}
@@ -589,7 +589,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		aniTime = 0.15;
 		
 		if(sPS != null){
-			sPS.sendAct("reIt", playerNumber);
+			sPS.sendAct("reIt", playerNumber-1);
 		}
 		
 		//SPS act reIT

@@ -11,8 +11,8 @@ import java.util.Vector;
 
 import map.Map;
 import network.ClientGameController;
-import network.ClientPositionReceiver;
-import network.ClientPositionSender;
+import network.ClientDataReceiver;
+import network.ClientDataSender;
 import network.FullPlayer;
 
 public class JoinNetworkGameMenue extends GamePanel {
@@ -106,7 +106,7 @@ public class JoinNetworkGameMenue extends GamePanel {
 
 				}
 
-				ClientPositionSender cPS = new ClientPositionSender(sockout);
+				ClientDataSender cPS = new ClientDataSender(sockout);
 
 				// Map map = new Map("Standartmap1.xml");
 				Vector<FullPlayer> player = new Vector<FullPlayer>();
@@ -138,7 +138,7 @@ public class JoinNetworkGameMenue extends GamePanel {
 						map, playerNumber);
 
 				try {
-					new ClientPositionReceiver(sockin, player, clientSocket
+					new ClientDataReceiver(sockin, player, clientSocket
 							.getInputStream(), cGC);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block

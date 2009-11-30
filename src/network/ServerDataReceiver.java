@@ -2,12 +2,12 @@ package network;
 
 import java.io.BufferedReader;
 
-public class ServerPositionReceiver extends Thread{
+public class ServerDataReceiver extends Thread{
 	
 	private BufferedReader sockIn;
 	private FullPlayer p;
 	
-	public ServerPositionReceiver(FullPlayer p, BufferedReader sockIn){
+	public ServerDataReceiver(FullPlayer p, BufferedReader sockIn){
 		this.p = p;
 		this.sockIn = sockIn;
 		

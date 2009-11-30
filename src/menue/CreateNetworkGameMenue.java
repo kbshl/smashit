@@ -16,8 +16,8 @@ import map.Map;
 import network.FullPlayer;
 
 import network.NetworkGameController;
-import network.ServerPositionReceiver;
-import network.ServerPositionSender;
+import network.ServerDataReceiver;
+import network.ServerDataSender;
 
 public class CreateNetworkGameMenue extends GamePanel {
 
@@ -114,7 +114,7 @@ public class CreateNetworkGameMenue extends GamePanel {
 	private void startGame() {
 		Map map = new Map(lst_Maps.getSelectedMap());
 
-		ServerPositionSender sPS = new ServerPositionSender(getPlayerNames(),
+		ServerDataSender sPS = new ServerDataSender(getPlayerNames(),
 				playerData, map, playerLives);
 		// map erstellen
 
@@ -133,7 +133,7 @@ public class CreateNetworkGameMenue extends GamePanel {
 															// Normalen Player
 															// und den rest
 															// HostPlayer
-			new ServerPositionReceiver((FullPlayer) player.get(i),
+			new ServerDataReceiver((FullPlayer) player.get(i),
 					(BufferedReader) playerData[i - 1][0]);
 
 			++i;

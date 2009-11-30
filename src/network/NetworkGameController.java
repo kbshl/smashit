@@ -23,9 +23,9 @@ public class NetworkGameController implements Finals, Runnable {
 	private double itemTime = 10, pastItemTime = 0;
 	private Thread t;
 	private static boolean gameruns;
-	private ServerPositionSender sPS;
+	private ServerDataSender sPS;
 	
-	public NetworkGameController(Vector<FullPlayer> players, Map map, ServerPositionSender sPS) {
+	public NetworkGameController(Vector<FullPlayer> players, Map map, ServerDataSender sPS) {
 		
 		this.sPS = sPS;
 		this.players = players;
@@ -153,7 +153,7 @@ public class NetworkGameController implements Finals, Runnable {
 		} while (collision);
 		map.getSprites().add(item);
 		System.out.println("Geschickt:Item:" + item.getX()+":"+item.getY());
-		sPS.sendItem("Item:" + item.getX()+":"+item.getY());
+		sPS.sendItem("Item:", item.getX(), item.getY(), 0, 0);
 	}
 
 	public long getFPS() {

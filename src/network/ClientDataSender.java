@@ -3,11 +3,11 @@ package network;
 import java.io.PrintWriter;
 
 
-public class ClientPositionSender {
+public class ClientDataSender {
 	
 	private PrintWriter sockOut;
 	
-	public ClientPositionSender(PrintWriter sockOut){
+	public ClientDataSender(PrintWriter sockOut){
 		this.sockOut = sockOut;
 	}
 	
