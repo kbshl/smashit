@@ -473,7 +473,7 @@ public class ServerDataSender{
 //		//this.sockOut = sockOut;
 //		this.map = map;
 //		this.lives = lives;
-//		oldPosition = new Vector();
+//		
 //		this.playerNames = playerNames;
 //		//UDP
 //		try {
@@ -589,16 +589,23 @@ public class ServerDataSender{
 //		}	
 //	}
 //	
-//	public void sendItem (String item){
+//	public void sendItem (String itemNumber, int x, int y, int playerNumber, int ability){
 //		int j = 0;
 //		while(playerData[j][1] != null){
+//	
 //			
-//			//tcp
-////			sockOut = (PrintWriter)playerData[j][1];
-////			sockOut.println(item);
+//				
+//				if(itemNumber.equals("Item")){
+//					temp = (itemNumber + ":" + x + ":" +y+ ":" + 0 + ":" + 0);
+//				}
+//				if(itemNumber.equals("Itemr")){
+//					temp = (itemNumber + ":" + x + ":" +y+ ":" + playerNumber + ":" + ability);
+//
+//				}
 //			
+//
 //			//udp
-//			temp = (item);
+//			//temp = (itemNumber + ":" + x + ":" +y+ "" + playerNumber + ":" + ability);
 //			daten = temp.getBytes();
 //			paket = (DatagramPacket)playerData[j][2];
 //			paket.setData(daten);
