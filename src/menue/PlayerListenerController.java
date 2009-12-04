@@ -55,7 +55,7 @@ public class PlayerListenerController extends Thread{
 			    sockInOut[connectCount][1] = sockOut;
 			    //new DatagramPacket (null, 0,0,clientSocket.getInetAddress(), 7777);
 			    
-			    sockInOut[connectCount][2] = new DatagramPacket(new byte[64],64, clientSocket.getInetAddress(), 7777);
+			    sockInOut[connectCount][2] = new DatagramPacket(new byte[64],64, clientSocket.getInetAddress(), 80);
 			    //sockInOut[connectCount][2] = clientSocket.getOutputStream();
 			    
 			    cNGM.setPlayerData(sockInOut);

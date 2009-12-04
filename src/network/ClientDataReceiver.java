@@ -38,7 +38,7 @@ public class ClientDataReceiver extends Thread{
 		
 		//UPD
 		try {
-			socket = new DatagramSocket(7777);
+			socket = new DatagramSocket(80);
 		} catch (SocketException e) {
 			System.out.println("UDP geht nicht client");
 		}
