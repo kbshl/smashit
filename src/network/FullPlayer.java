@@ -34,6 +34,8 @@ private double moveTime = 0.007, pastMoveTime = 0, aniTime = 0.15,
 private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 	lostLifes = 0, playerNumber;//player fägt bei 1 an = doof
 	private Sprite collisionObject;
+	
+	private int oldFrame = 0, oldY;
 
 	private Item item;
 	
@@ -229,6 +231,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 							/////
 							if(sPS != null){
 								sPS.sendPosition(x, y, (playerNumber-1));
+								
 							}
 
 						} else {
@@ -264,7 +267,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						jumpSpeed += gravity;
 						/////
 						if(sPS != null){
-							sPS.sendPosition(x, y, (playerNumber-1));
+							if(y != oldY){
+								sPS.sendPosition(x, y, (playerNumber-1));
+								oldY = y;
+							}	
 						}
 					} else {
 						if (jumpSpeed >= 1.2) {
@@ -277,7 +283,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						y = collisionObject.getY() - height;
 						/////
 						if(sPS != null){
-							sPS.sendPosition(x, y, (playerNumber-1));
+							if(y != oldY){
+								sPS.sendPosition(x, y, (playerNumber-1));
+								oldY = y;
+							}	
 						}
 						jumpCount = 0;
 						jumpSpeed = 0;
@@ -290,7 +299,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						}
 					}
 					if(sPS != null){
-						sPS.sendCurrentFrame(playerNumber-1, currentFrame);
+						if(currentFrame != oldFrame){
+							sPS.sendCurrentFrame(playerNumber-1, currentFrame);
+							oldFrame = currentFrame;
+						}
 					}
 				}
 
@@ -302,7 +314,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						currentFrame = 12;
 					}
 					if(sPS != null){
-						sPS.sendCurrentFrame(playerNumber-1, currentFrame);
+						if(currentFrame != oldFrame){
+							sPS.sendCurrentFrame(playerNumber-1, currentFrame);
+							oldFrame = currentFrame;
+						}
 					}
 
 					if (!checkCollision(0, (int) jumpSpeed)) {
@@ -310,7 +325,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						jumpSpeed += gravity;
 						/////
 						if(sPS != null){
-							sPS.sendPosition(x, y, (playerNumber-1));
+							if(y != oldY){
+								sPS.sendPosition(x, y, (playerNumber-1));
+								oldY = y;
+							}	
 						}
 
 					} else {
@@ -319,7 +337,10 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 						jumpSpeed = 0;
 						/////
 						if(sPS != null){
-							sPS.sendPosition(x, y, (playerNumber-1));
+							if(y != oldY){
+								sPS.sendPosition(x, y, (playerNumber-1));
+								oldY = y;
+							}	
 						}
 
 					}
@@ -360,13 +381,13 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		}
 		else{
 			if (i == jumpKey) {
-				cPS.sendPosition("Move:" + 3 + ":" + 1);
+				cPS.sendPosition("Move", 3, 1);
 			}
 			if (i == leftKey) {
-				cPS.sendPosition("Move:" + 1 + ":" + 1);
+				cPS.sendPosition("Move", 1, 1);
 			}
 			if (i == rightKey) {
-				cPS.sendPosition("Move:" + 2 + ":" + 1);
+				cPS.sendPosition("Move", 2, 1);
 			}
 		}
 		
@@ -388,13 +409,16 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		}
 		else{//Move:3:0
 			if (i == jumpKey) {
-				cPS.sendPosition("Move:" + 3 + ":" + 0);
+				//cPS.sendPosition("Move:" + 3 + ":" + 0);
+				cPS.sendPosition("Move", 3, 0);
 			}
 			if (i == leftKey) {
-				cPS.sendPosition("Move:" + 1 + ":" + 0);
+				//cPS.sendPosition("Move:" + 1 + ":" + 0);
+				cPS.sendPosition("Move", 1, 0);
 			}
 			if (i == rightKey) {
-				cPS.sendPosition("Move:" + 2 + ":" + 0);
+				//cPS.sendPosition("Move:" + 2 + ":" + 0);
+				cPS.sendPosition("Move", 2, 0);
 			}
 		}
 
@@ -516,7 +540,7 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 		
 		if(sPS != null){
 			//!!
-			sPS.sendItem("Itemr:",item.getX(),item.getY(), (playerNumber-1), item.getAbility());
+			sPS.sendItem("Itemr",item.getX(),item.getY(), (playerNumber-1), item.getAbility());
 			//sPS.sendItem("Itemr:" + item.getX() + ":" + item.getY() + ":" + (playerNumber-1) + ":" + item.getAbility());
 		}
 		item.collected();
@@ -530,6 +554,8 @@ private int jumpCount = 0, jumpSkill = 2, lifes = 10, kills = 0,
 			y = (int) (GAME_HEIGHT * Math.random());
 			collision = checkCollision(0, 0);
 		} while (collision);
+		
+		oldY =y;
 	}
 
 	public void paint(Graphics g) {

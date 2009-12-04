@@ -165,7 +165,7 @@ public class ServerDataSender{
 	public void sendItem (String itemNumber, int x, int y, int playerNumber, int ability){
 		int j = 0;
 		
-		if(itemNumber.equals("Itemr")){
+		if(itemNumber.equals("Item")){
 			daten[0] =(byte) (item << 6);  //die 2 bits rachts werden nach links verschoben
 			btemp = (byte)(addItem << 5);
 			daten[0] = (byte) (daten[0] | btemp);
@@ -179,7 +179,7 @@ public class ServerDataSender{
 			
 			daten[2] = (byte) (y << 1);
 		}
-		if(itemNumber.equals("Item")){
+		if(itemNumber.equals("Itemr")){
 			
 			daten[0] =(byte) (item << 6);  //die 2 bits rachts werden nach links verschoben
 			btemp = (byte)(removeItem << 5);
@@ -217,7 +217,7 @@ public class ServerDataSender{
 	
 	public void sendCurrentFrame(int playerNumber, int currentFrame){
 		int j = 0;
-		
+		//System.out.println("Sendet current Frame " + currentFrame + " an " + playerNumber);
 		daten[0] =(byte) (act << 6); 
 		btemp = (byte)(frame << 4);
 		daten[0] = (byte) (daten[0] | btemp);
@@ -265,28 +265,28 @@ public class ServerDataSender{
 //	private int lives;
 //	private Map map;
 //	private String playerNames;
-//	
-//	
-//	//UDP
-//	DatagramSocket socket;
-//	DatagramPacket paket;
-//	byte[]daten = new byte[64];
 //	private String temp;
+//	
+//	
+////	//UDP
+////	DatagramSocket socket;
+////	DatagramPacket paket;
+////	byte[]daten = new byte[64];
+////	
 //	//braucht alle Player!! und alle printWriter
 //	public ServerDataSender(String playerNames, Object[][] playerData, Map map, int lives){
-//		this.p = p;
+//		
 //		this.playerData = playerData;
 //		//this.sockOut = sockOut;
 //		this.map = map;
 //		this.lives = lives;
-//		oldPosition = new Vector();
 //		this.playerNames = playerNames;
-//		//UDP
-//		try {
-//			socket = new DatagramSocket();
-//		} catch (SocketException e) {
-//			System.out.println("UDP ging nicht");
-//		}
+////		//UDP
+////		try {
+////			socket = new DatagramSocket();
+////		} catch (SocketException e) {
+////			System.out.println("UDP ging nicht");
+////		}
 //	
 //		if(init()){
 //			System.out.println("ServerPositionReceiver hat init und wird gestartet");	
@@ -307,15 +307,7 @@ public class ServerDataSender{
 //		return true;
 //	}
 //	
-//	private String getPlayerNames(){
-//		String s = "";
-//		for(int i = 0; i<p.size(); i++){
-//			System.out.println(p.get(i).getName() + " wird zum String geadded");
-//			s = s + p.get(i).getName() + ":" ;
-//		}
-//		s = s + p.lastElement().getName();
-//		return s;
-//	}
+//	
 //	//schleifen -> for each!!!
 //	public void sendPosition(int x, int y, int playernumber){
 //		int j = 0;
@@ -324,20 +316,19 @@ public class ServerDataSender{
 //
 //			
 //			//TCPip
-//			//Move_P0_X_100_Y_200
-////			sockOut = (PrintWriter)playerData[j][1];
-////			sockOut.println("Move:" + playernumber + ":" + x + ":" + y);
+//			sockOut = (PrintWriter)playerData[j][1];
+//			sockOut.println("Move:" + playernumber + ":" + x + ":" + y);
 //			//UPD
-//			temp = ("Move:" + playernumber + ":" + x + ":" + y );
-//			daten = temp.getBytes();
-//			paket = (DatagramPacket)playerData[j][2];
-//			paket.setData(daten);
-//			//System.out.println("Am Server gesendet: " + daten.toString());
-//			try {
-//				socket.send(paket);
-//			} catch (IOException e) {
-//				System.out.println("UDP senden fehlgeschlagen");
-//			}
+////			temp = ("Move:" + playernumber + ":" + x + ":" + y );
+////			daten = temp.getBytes();
+////			paket = (DatagramPacket)playerData[j][2];
+////			paket.setData(daten);
+////			//System.out.println("Am Server gesendet: " + daten.toString());
+////			try {
+////				socket.send(paket);
+////			} catch (IOException e) {
+////				System.out.println("UDP senden fehlgeschlagen");
+////			}
 //			++j;
 //		}
 //	}
@@ -351,21 +342,21 @@ public class ServerDataSender{
 //			if(sound.equals("jump")){
 //				temp = ("Sound:" + sound);
 //			}
-//			daten = temp.getBytes();
+////			daten = temp.getBytes();
 //			
 //			while(playerData[j][1] != null){
 //				//TCP
-////				sockOut = (PrintWriter)playerData[j][1];
-////				sockOut.println(temp);
+//				sockOut = (PrintWriter)playerData[j][1];
+//				sockOut.println(temp);
 //				
 //				//UDP
-//				paket = (DatagramPacket)playerData[j][2];
-//				paket.setData(daten);
-//				try {
-//					socket.send(paket);
-//				} catch (IOException e) {
-//					System.out.println("UDP senden fehlgeschlagen");
-//				}
+////				paket = (DatagramPacket)playerData[j][2];
+////				paket.setData(daten);
+////				try {
+////					socket.send(paket);
+////				} catch (IOException e) {
+////					System.out.println("UDP senden fehlgeschlagen");
+////				}
 //				++j;	
 //			}
 //	}
@@ -376,44 +367,44 @@ public class ServerDataSender{
 //		while(playerData[j][1] != null){
 //			
 //		//tcp
-////		sockOut = (PrintWriter)playerData[j][1];
-////		sockOut.println("Act:" + act +":" + (playerNumber-1) );
+//		sockOut = (PrintWriter)playerData[j][1];
+//		sockOut.println("Act:" + act +":" + playerNumber );
 //		
 //		//udp
-//		temp = ("Act:" + act +":" + (playerNumber));
-//		daten = temp.getBytes();
-//		paket = (DatagramPacket)playerData[j][2];
-//		paket.setData(daten);
-//		try {
-//			socket.send(paket);
-//		} catch (IOException e) {
-//			System.out.println("UDP senden fehlgeschlagen");
-//		}
+////		temp = ("Act:" + act +":" + (playerNumber));
+////		daten = temp.getBytes();
+////		paket = (DatagramPacket)playerData[j][2];
+////		paket.setData(daten);
+////		try {
+////			socket.send(paket);
+////		} catch (IOException e) {
+////			System.out.println("UDP senden fehlgeschlagen");
+////		}
 //		
 //		++j;
 //		
 //		}	
 //	}
 //	
-//	public void sendItem (String item){
+//	public void sendItem (String itemNumber, int x, int y, int playerNumber, int ability){
 //		int j = 0;
 //		while(playerData[j][1] != null){
 //			
 //			//tcp
-////			sockOut = (PrintWriter)playerData[j][1];
-////			sockOut.println(item);
+//			sockOut = (PrintWriter)playerData[j][1];
+//			sockOut.println(itemNumber + ":" + x + ":" + y + ":" + playerNumber + ":" + ability);
 //			
 //			//udp
-//			temp = (item);
-//			daten = temp.getBytes();
-//			paket = (DatagramPacket)playerData[j][2];
-//			paket.setData(daten);
-//			//System.out.println("Am Server gesendet: " + daten.toString());
-//			try {
-//				socket.send(paket);
-//			} catch (IOException e) {
-//				System.out.println("UDP senden fehlgeschlagen");
-//			}
+////			temp = (item);
+////			daten = temp.getBytes();
+////			paket = (DatagramPacket)playerData[j][2];
+////			paket.setData(daten);
+////			//System.out.println("Am Server gesendet: " + daten.toString());
+////			try {
+////				socket.send(paket);
+////			} catch (IOException e) {
+////				System.out.println("UDP senden fehlgeschlagen");
+////			}
 //		
 //		++j;
 //		}
@@ -423,18 +414,23 @@ public class ServerDataSender{
 //		int j = 0;
 //		while(playerData[j][1] != null){
 //			
-//			//udp
-//			temp = ("Frame:" + (playerNumber) +":" + currentFrame);
+//			//tpc
 //			
-//			daten = temp.getBytes();
-//			paket = (DatagramPacket)playerData[j][2];
-//			paket.setData(daten);
-//			//System.out.println("Am Server gesendet: " + daten.toString());
-//			try {
-//				socket.send(paket);
-//			} catch (IOException e) {
-//				System.out.println("UDP senden fehlgeschlagen");
-//			}
+//			sockOut = (PrintWriter)playerData[j][1];
+//			sockOut.println("Frame:" + playerNumber +":" + currentFrame);
+//			
+//			//udp
+////			temp = ("Frame:" + (playerNumber) +":" + currentFrame);
+////			
+////			daten = temp.getBytes();
+////			paket = (DatagramPacket)playerData[j][2];
+////			paket.setData(daten);
+////			//System.out.println("Am Server gesendet: " + daten.toString());
+////			try {
+////				socket.send(paket);
+////			} catch (IOException e) {
+////				System.out.println("UDP senden fehlgeschlagen");
+////			}
 //		
 //		++j;
 //		}

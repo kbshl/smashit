@@ -30,7 +30,7 @@ public class ClientDataReceiver extends Thread{
 	private final static int itemsound = 0, jumpsound = 1;
 	private final static int dead = 0, kill = 1, reIt  =2, frame = 3;
 	private final static int addItem = 0, removeItem = 1;
-	private int option1, x, y, playerNumber, frameNumber, ability;
+	private int option1, option2, x, y, playerNumber, frameNumber, ability;
 	
 	public ClientDataReceiver(BufferedReader sockIn, Vector<FullPlayer> player, InputStream iS, ClientGameController cGC){
 		this.player = player;
@@ -74,6 +74,9 @@ public class ClientDataReceiver extends Thread{
 			option1 = (daten[0] >> 6) & 3;
 			
 			if(option1 == move){
+				
+				
+				
 				x = ((daten[0] & 63) << 4);
 				btemp = (byte) ((daten[1] >>4)& 15);
 				x = ((btemp | x));
@@ -85,7 +88,10 @@ public class ClientDataReceiver extends Thread{
 				playerNumber = (daten[2] & 3);
 				player.get(playerNumber).setX(x);
 				player.get(playerNumber).setY(y);
+				
+				//System.out.println("Move " + x + " " + y + " " + playerNumber);
 			}
+	
 //			
 //			if(inputParts[0].equals("Move")){//Move_P0_Event1
 //				//System.out.println(input);
@@ -94,6 +100,22 @@ public class ClientDataReceiver extends Thread{
 //				
 //			
 //			}
+			
+			if(option1 == sound){
+				
+				
+				
+				option2 = (daten[0] >> 5) & 1;
+				if(option2 == itemsound){
+					SoundManager.getSoundManager().playSound("item.wav");
+				}
+				if(option2 == jumpsound){
+					SoundManager.getSoundManager().playSound("jump.wav");
+				}
+				
+				//System.out.println("Sound: " + option2 );
+			}
+			
 //			if(inputParts[0].equals("Sound")){//Move_P0_Event1
 //				
 //				if(inputParts[1].equals("item")){
@@ -102,8 +124,33 @@ public class ClientDataReceiver extends Thread{
 //				if(inputParts[1].equals("jump")){
 //					SoundManager.getSoundManager().playSound("jump.wav");
 //				}
-//				
-//				
+			
+			
+			if(option1 == act){
+				
+				
+				
+				option2 = (daten[0] >> 4) & 3;
+				playerNumber = (daten[0] >> 2) & 3;
+				
+				if(option2 == dead){
+					player.get(playerNumber).getKilled();
+				}
+				if(option2 == kill){
+					player.get(playerNumber).addKill();
+				}
+				if(option2 == removeItem){
+					player.get(playerNumber).looseItem();
+				}
+				if(option2 == frame){
+					
+					frameNumber = (daten[1] >> 4) & 15;
+					player.get(playerNumber).setCurrentFrame(frameNumber);
+				}
+				
+				//System.out.println("act: " + option2 + " " + playerNumber + " " + frameNumber);
+			}
+	
 //			
 //			}
 //			if(inputParts[0].equals("Act")){//Move_P0_Event1
@@ -118,6 +165,35 @@ public class ClientDataReceiver extends Thread{
 //					player.get(Integer.parseInt(inputParts[2])).looseItem();
 //				}
 //			}
+			
+			if(option1 == item){
+				
+			
+				
+				option2 = (daten[0] >> 5) & 1;
+
+				x = (((daten[0] & 31) <<5) );
+				x = x | ((daten[1] >> 3) & 31);
+				
+				y = (daten[1] & 7) << 7;
+				y = y | ((daten[2] >> 1) & 127);
+				
+				//System.out.println("Item:" + option2 + " " + x + " " + y);
+				
+				if(option2 == addItem){ //add item on stage
+					cGC.addItem(x, y);
+				}
+				
+				if(option2 == removeItem){// remove item from stage
+					playerNumber = (daten[3] >> 6) & 3;
+					ability = (daten[3] >> 4) & 3;
+					
+					cGC.removeItem(x, y);
+					player.get(playerNumber).setItem(new Item(1,1, ability));
+				}
+				
+			}
+			
 //			
 //			if(inputParts[0].equals("Item")){//add item on stage
 //			
@@ -301,10 +377,10 @@ public class ClientDataReceiver extends Thread{
 //	
 //	
 //	//UPD
-//	byte[] daten =  new byte[64];
-//	DatagramSocket socket;
-//	DatagramPacket paket;
-//	String temp;
+////	byte[] daten =  new byte[64];
+////	DatagramSocket socket;
+////	DatagramPacket paket;
+////	String temp;
 //	
 //	
 //	public ClientDataReceiver(BufferedReader sockIn, Vector<FullPlayer> player, InputStream iS, ClientGameController cGC){
@@ -316,13 +392,13 @@ public class ClientDataReceiver extends Thread{
 //		System.out.println("ClientPosReceiver gestartet");
 //		
 //		//UPD
-//		try {
-//			socket = new DatagramSocket(7777);
-//		} catch (SocketException e) {
-//			System.out.println("UDP geht nicht client");
-//		}
-//		
-//		paket = new DatagramPacket(daten, daten.length);
+////		try {
+////			socket = new DatagramSocket(7777);
+////		} catch (SocketException e) {
+////			System.out.println("UDP geht nicht client");
+////		}
+////		
+////		paket = new DatagramPacket(daten, daten.length);
 //		
 //		
 //		this.start();
@@ -343,16 +419,15 @@ public class ClientDataReceiver extends Thread{
 //			
 //			try{
 //				//TCP
-//				//input = sockIn.readLine();
-//				//iS.read(array);
+//				input = sockIn.readLine();
+//				iS.read(array);
 //				
 //				//UDP
 //				
-//				socket.receive(paket);
-//				daten = paket.getData();
-//				input = new String(paket.getData(), 0 , paket.getLength());
-//				//input = daten.toString();
-//				///System.out.println("beim Client angekommen: " + input);
+////				socket.receive(paket);
+////				daten = paket.getData();
+////				input = new String(paket.getData(), 0 , paket.getLength());
+//				
 //			}catch(Exception e){
 //				System.out.println(e.getMessage() );
 //				BaseFrame.getBaseFrame().setJPanel(new MainMenue());

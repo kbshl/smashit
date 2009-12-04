@@ -152,8 +152,8 @@ public class NetworkGameController implements Finals, Runnable {
 			}
 		} while (collision);
 		map.getSprites().add(item);
-		System.out.println("Geschickt:Item:" + item.getX()+":"+item.getY());
-		sPS.sendItem("Item:", item.getX(), item.getY(), 0, 0);
+		//System.out.println("Geschickt:Item:" + item.getX()+":"+item.getY());
+		sPS.sendItem("Item", item.getX(), item.getY(), 0, 0);
 	}
 
 	public long getFPS() {
