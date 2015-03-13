@@ -1,0 +1,4 @@
+“Smash It” is a 2D Jump and Run Game that may be used by everybody who has an interest in playing games. It’s a short game that can be played during small breaks to stimulate the mood of the player in a positive way.
+The game offers different play modes. It can be chosen between a two-player game up to a four player game in non-network mode. That means the game can be played by max four players on one PC. By choosing the network mode the number of players can be increased up to 8 Players.
+Every player has to navigate his character through the 2D-Landscape by jumping and/or moving him to the left or the right. Each players target is to jump onto each other’s character.  The player who gets jumped on loses a life point. If the player lost all his life points he has to leave the game. The player who lasts the longest is the winner.
+To keep the game exciting there is the possibility to create own 2D-landscapes with the level-editor.
